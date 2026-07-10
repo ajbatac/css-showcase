@@ -121,8 +121,20 @@ function RootComponent() {
 
   return (
     <QueryClientProvider client={queryClient}>
-      {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
-      <Outlet />
+      <SidebarProvider defaultOpen>
+        <div className="flex min-h-screen w-full">
+          {/* Sidebar hides on mobile via shadcn's built-in md: breakpoint */}
+          <AppSidebar />
+          <div className="flex min-w-0 flex-1 flex-col">
+            <header className="hidden h-12 items-center gap-2 border-b bg-background/60 px-3 backdrop-blur md:flex">
+              <SidebarTrigger />
+              <span className="text-xs text-muted-foreground">Modern CSS · Live demos</span>
+            </header>
+            {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
+            <Outlet />
+          </div>
+        </div>
+      </SidebarProvider>
     </QueryClientProvider>
   );
 }
