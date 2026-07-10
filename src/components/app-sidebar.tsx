@@ -32,6 +32,14 @@ export const DEMOS: Demo[] = [
     icon: Smartphone,
     status: "live",
   },
+  {
+    slug: "login-screens",
+    name: "Login Screens",
+    short: "Login",
+    path: "/login-screens",
+    icon: LogIn,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
