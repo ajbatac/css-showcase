@@ -10,12 +10,18 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ModalsRoute = ModalsRouteImport.update({
+  id: '/modals',
+  path: '/modals',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginScreensRoute = LoginScreensRouteImport.update({
@@ -32,30 +38,34 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
+  '/modals': typeof ModalsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
+  '/modals': typeof ModalsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
+  '/modals': typeof ModalsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login-screens' | '/toasts'
+  fullPaths: '/' | '/login-screens' | '/modals' | '/toasts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login-screens' | '/toasts'
-  id: '__root__' | '/' | '/login-screens' | '/toasts'
+  to: '/' | '/login-screens' | '/modals' | '/toasts'
+  id: '__root__' | '/' | '/login-screens' | '/modals' | '/toasts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginScreensRoute: typeof LoginScreensRoute
+  ModalsRoute: typeof ModalsRoute
   ToastsRoute: typeof ToastsRoute
 }
 
@@ -66,6 +76,13 @@ declare module '@tanstack/react-router' {
       path: '/toasts'
       fullPath: '/toasts'
       preLoaderRoute: typeof ToastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/modals': {
+      id: '/modals'
+      path: '/modals'
+      fullPath: '/modals'
+      preLoaderRoute: typeof ModalsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login-screens': {
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginScreensRoute: LoginScreensRoute,
+  ModalsRoute: ModalsRoute,
   ToastsRoute: ToastsRoute,
 }
 export const routeTree = rootRouteImport

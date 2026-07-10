@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, LogIn, Smartphone, Sparkles } from "lucide-react";
+import { Bell, LogIn, MessageSquareWarning, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -46,6 +46,14 @@ export const DEMOS: Demo[] = [
     short: "Toasts",
     path: "/toasts",
     icon: Bell,
+    status: "live",
+  },
+  {
+    slug: "modals",
+    name: "Modals",
+    short: "Modals",
+    path: "/modals",
+    icon: MessageSquareWarning,
     status: "live",
   },
 ];
