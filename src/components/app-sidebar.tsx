@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Smartphone, Sparkles } from "lucide-react";
+import { LogIn, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -30,6 +30,14 @@ export const DEMOS: Demo[] = [
     short: "Devices",
     path: "/",
     icon: Smartphone,
+    status: "live",
+  },
+  {
+    slug: "login-screens",
+    name: "Login Screens",
+    short: "Login",
+    path: "/login-screens",
+    icon: LogIn,
     status: "live",
   },
 ];
