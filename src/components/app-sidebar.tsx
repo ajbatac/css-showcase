@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Smartphone, Sparkles } from "lucide-react";
+import { LogIn, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
