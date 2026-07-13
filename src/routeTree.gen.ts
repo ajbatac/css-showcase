@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as IndexRouteImport } from './routes/index'
@@ -17,6 +18,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NavigationRoute = NavigationRouteImport.update({
+  id: '/navigation',
+  path: '/navigation',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModalsRoute = ModalsRouteImport.update({
@@ -39,12 +45,14 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
+  '/navigation': typeof NavigationRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
+  '/navigation': typeof NavigationRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesById {
@@ -52,20 +60,28 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
+  '/navigation': typeof NavigationRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/login-screens' | '/modals' | '/toasts'
+  fullPaths: '/' | '/login-screens' | '/modals' | '/navigation' | '/toasts'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/login-screens' | '/modals' | '/toasts'
-  id: '__root__' | '/' | '/login-screens' | '/modals' | '/toasts'
+  to: '/' | '/login-screens' | '/modals' | '/navigation' | '/toasts'
+  id:
+    | '__root__'
+    | '/'
+    | '/login-screens'
+    | '/modals'
+    | '/navigation'
+    | '/toasts'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
+  NavigationRoute: typeof NavigationRoute
   ToastsRoute: typeof ToastsRoute
 }
 
@@ -76,6 +92,13 @@ declare module '@tanstack/react-router' {
       path: '/toasts'
       fullPath: '/toasts'
       preLoaderRoute: typeof ToastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/navigation': {
+      id: '/navigation'
+      path: '/navigation'
+      fullPath: '/navigation'
+      preLoaderRoute: typeof NavigationRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/modals': {
@@ -106,6 +129,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
+  NavigationRoute: NavigationRoute,
   ToastsRoute: ToastsRoute,
 }
 export const routeTree = rootRouteImport
