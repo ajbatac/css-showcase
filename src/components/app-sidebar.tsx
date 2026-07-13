@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, LogIn, Menu, MessageSquareWarning, Smartphone, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, LogIn, Menu, MessageSquareWarning, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -62,6 +62,14 @@ export const DEMOS: Demo[] = [
     short: "Navigation",
     path: "/navigation",
     icon: Menu,
+    status: "live",
+  },
+  {
+    slug: "dropdowns",
+    name: "Dropdowns · Menu, Popover, Sheet",
+    short: "Dropdowns",
+    path: "/dropdowns",
+    icon: ChevronDown,
     status: "live",
   },
 ];
