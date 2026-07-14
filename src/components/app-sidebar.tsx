@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, ChevronDown, LogIn, Menu, MessageSquareWarning, Smartphone, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -70,6 +70,14 @@ export const DEMOS: Demo[] = [
     short: "Dropdowns",
     path: "/dropdowns",
     icon: ChevronDown,
+    status: "live",
+  },
+  {
+    slug: "flex",
+    name: "Flexbox Playground",
+    short: "Flex",
+    path: "/flex",
+    icon: Rows3,
     status: "live",
   },
 ];

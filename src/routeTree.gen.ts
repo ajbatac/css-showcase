@@ -13,6 +13,7 @@ import { Route as ToastsRouteImport } from './routes/toasts'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
+import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -36,6 +37,11 @@ const LoginScreensRoute = LoginScreensRouteImport.update({
   path: '/login-screens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FlexRoute = FlexRouteImport.update({
+  id: '/flex',
+  path: '/flex',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DropdownsRoute = DropdownsRouteImport.update({
   id: '/dropdowns',
   path: '/dropdowns',
@@ -50,6 +56,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/dropdowns': typeof DropdownsRoute
+  '/flex': typeof FlexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -58,6 +65,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/dropdowns': typeof DropdownsRoute
+  '/flex': typeof FlexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -67,6 +75,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/dropdowns': typeof DropdownsRoute
+  '/flex': typeof FlexRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -77,6 +86,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/dropdowns'
+    | '/flex'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -85,6 +95,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/dropdowns'
+    | '/flex'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -93,6 +104,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/dropdowns'
+    | '/flex'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -102,6 +114,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DropdownsRoute: typeof DropdownsRoute
+  FlexRoute: typeof FlexRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginScreensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/flex': {
+      id: '/flex'
+      path: '/flex'
+      fullPath: '/flex'
+      preLoaderRoute: typeof FlexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dropdowns': {
       id: '/dropdowns'
       path: '/dropdowns'
@@ -158,6 +178,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DropdownsRoute: DropdownsRoute,
+  FlexRoute: FlexRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
