@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, ChevronDown, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
+import { Bell, ChevronDown, LayoutGrid, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -78,6 +78,14 @@ export const DEMOS: Demo[] = [
     short: "Flex",
     path: "/flex",
     icon: Rows3,
+    status: "live",
+  },
+  {
+    slug: "grid",
+    name: "CSS Grid Playground",
+    short: "Grid",
+    path: "/grid",
+    icon: LayoutGrid,
     status: "live",
   },
 ];
