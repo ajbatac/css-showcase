@@ -147,14 +147,38 @@ function GridDemo() {
           aria-labelledby="demo-title"
           className="overflow-hidden rounded-3xl border bg-card shadow-sm"
         >
-          <div className="flex items-center justify-between border-b px-4 py-3">
+          <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
             <h2 id="demo-title" className="text-sm font-semibold">
               Grid playground
             </h2>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device} · {preset}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="hidden text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:inline">
+                {device} · {preset}
+              </span>
+              <button
+                type="button"
+                onClick={copyLink}
+                aria-label="Copy shareable link to this grid state"
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[11px] font-semibold text-foreground transition hover:bg-accent"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5" />
+                  <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5" />
+                </svg>
+                {copied ? "Copied!" : "Copy link"}
+              </button>
+            </div>
           </div>
+
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
