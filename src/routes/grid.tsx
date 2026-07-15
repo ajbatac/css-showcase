@@ -1,7 +1,40 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
+const PRESET_IDS = [
+  "12-col",
+  "holy-grail",
+  "auto-fit",
+  "auto-fill",
+  "dense",
+  "asymmetric",
+] as const;
+const DEVICE_IDS = ["desktop", "ipad", "mobile"] as const;
+
+type GridSearch = {
+  device?: (typeof DEVICE_IDS)[number];
+  preset?: (typeof PRESET_IDS)[number];
+  gap?: number;
+  min?: number;
+};
+
 export const Route = createFileRoute("/grid")({
+  validateSearch: (search: Record<string, unknown>): GridSearch => {
+    const device = DEVICE_IDS.includes(search.device as never)
+      ? (search.device as GridSearch["device"])
+      : undefined;
+    const preset = PRESET_IDS.includes(search.preset as never)
+      ? (search.preset as GridSearch["preset"])
+      : undefined;
+    const gapNum = Number(search.gap);
+    const minNum = Number(search.min);
+    return {
+      device,
+      preset,
+      gap: Number.isFinite(gapNum) ? Math.min(24, Math.max(0, gapNum)) : undefined,
+      min: Number.isFinite(minNum) ? Math.min(160, Math.max(40, minNum)) : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "CSS Grid Demo — Modern CSS" },
@@ -48,12 +81,47 @@ const PRESETS: { id: Preset; label: string; blurb: string }[] = [
 ];
 
 function GridDemo() {
-  const [device, setDevice] = useState<Device>("mobile");
-  const [preset, setPreset] = useState<Preset>("auto-fit");
-  const [gap, setGap] = useState<number>(6);
-  const [minTrack, setMinTrack] = useState<number>(80);
+  const search = Route.useSearch();
+  const navigate = useNavigate({ from: "/grid" });
+  const device: Device = search.device ?? "mobile";
+  const preset: Preset = search.preset ?? "auto-fit";
+  const gap: number = search.gap ?? 6;
+  const minTrack: number = search.min ?? 80;
+  const [copied, setCopied] = useState(false);
+
+  const update = (next: Partial<GridSearch>) => {
+    navigate({
+      search: (prev: GridSearch) => ({ ...prev, ...next }),
+      replace: true,
+    });
+  };
+  const setDevice = (v: Device) => update({ device: v });
+  const setPreset = (v: Preset) => update({ preset: v });
+  const setGap = (v: number) => update({ gap: v });
+  const setMinTrack = (v: number) => update({ min: v });
+
+  const copyLink = async () => {
+    const params = new URLSearchParams({
+      device,
+      preset,
+      gap: String(gap),
+      min: String(minTrack),
+    });
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/grid?${params.toString()}`
+        : `/grid?${params.toString()}`;
+    try {
+      await navigator.clipboard?.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // clipboard unavailable — no-op
+    }
+  };
 
   const cssCode = buildCss(preset, gap, minTrack);
+
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -79,14 +147,38 @@ function GridDemo() {
           aria-labelledby="demo-title"
           className="overflow-hidden rounded-3xl border bg-card shadow-sm"
         >
-          <div className="flex items-center justify-between border-b px-4 py-3">
+          <div className="flex items-center justify-between gap-3 border-b px-4 py-3">
             <h2 id="demo-title" className="text-sm font-semibold">
               Grid playground
             </h2>
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device} · {preset}
-            </span>
+            <div className="flex items-center gap-2">
+              <span className="hidden text-[10px] font-medium uppercase tracking-widest text-muted-foreground sm:inline">
+                {device} · {preset}
+              </span>
+              <button
+                type="button"
+                onClick={copyLink}
+                aria-label="Copy shareable link to this grid state"
+                className="inline-flex min-h-8 items-center gap-1.5 rounded-full border border-border bg-card px-3 text-[11px] font-semibold text-foreground transition hover:bg-accent"
+              >
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="M10 13a5 5 0 0 0 7.07 0l3-3a5 5 0 0 0-7.07-7.07l-1.5 1.5" />
+                  <path d="M14 11a5 5 0 0 0-7.07 0l-3 3a5 5 0 0 0 7.07 7.07l1.5-1.5" />
+                </svg>
+                {copied ? "Copied!" : "Copy link"}
+              </button>
+            </div>
           </div>
+
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
