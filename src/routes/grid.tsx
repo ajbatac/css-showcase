@@ -91,7 +91,7 @@ function GridDemo() {
 
   const update = (next: Partial<GridSearch>) => {
     navigate({
-      search: (prev) => ({ ...prev, ...next }),
+      search: (prev: GridSearch) => ({ ...prev, ...next }),
       replace: true,
     });
   };
