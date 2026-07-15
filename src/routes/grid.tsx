@@ -1,7 +1,40 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 
+const PRESET_IDS = [
+  "12-col",
+  "holy-grail",
+  "auto-fit",
+  "auto-fill",
+  "dense",
+  "asymmetric",
+] as const;
+const DEVICE_IDS = ["desktop", "ipad", "mobile"] as const;
+
+type GridSearch = {
+  device?: (typeof DEVICE_IDS)[number];
+  preset?: (typeof PRESET_IDS)[number];
+  gap?: number;
+  min?: number;
+};
+
 export const Route = createFileRoute("/grid")({
+  validateSearch: (search: Record<string, unknown>): GridSearch => {
+    const device = DEVICE_IDS.includes(search.device as never)
+      ? (search.device as GridSearch["device"])
+      : undefined;
+    const preset = PRESET_IDS.includes(search.preset as never)
+      ? (search.preset as GridSearch["preset"])
+      : undefined;
+    const gapNum = Number(search.gap);
+    const minNum = Number(search.min);
+    return {
+      device,
+      preset,
+      gap: Number.isFinite(gapNum) ? Math.min(24, Math.max(0, gapNum)) : undefined,
+      min: Number.isFinite(minNum) ? Math.min(160, Math.max(40, minNum)) : undefined,
+    };
+  },
   head: () => ({
     meta: [
       { title: "CSS Grid Demo — Modern CSS" },
