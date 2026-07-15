@@ -81,12 +81,47 @@ const PRESETS: { id: Preset; label: string; blurb: string }[] = [
 ];
 
 function GridDemo() {
-  const [device, setDevice] = useState<Device>("mobile");
-  const [preset, setPreset] = useState<Preset>("auto-fit");
-  const [gap, setGap] = useState<number>(6);
-  const [minTrack, setMinTrack] = useState<number>(80);
+  const search = Route.useSearch();
+  const navigate = useNavigate({ from: "/grid" });
+  const device: Device = search.device ?? "mobile";
+  const preset: Preset = search.preset ?? "auto-fit";
+  const gap: number = search.gap ?? 6;
+  const minTrack: number = search.min ?? 80;
+  const [copied, setCopied] = useState(false);
+
+  const update = (next: Partial<GridSearch>) => {
+    navigate({
+      search: (prev) => ({ ...prev, ...next }),
+      replace: true,
+    });
+  };
+  const setDevice = (v: Device) => update({ device: v });
+  const setPreset = (v: Preset) => update({ preset: v });
+  const setGap = (v: number) => update({ gap: v });
+  const setMinTrack = (v: number) => update({ min: v });
+
+  const copyLink = async () => {
+    const params = new URLSearchParams({
+      device,
+      preset,
+      gap: String(gap),
+      min: String(minTrack),
+    });
+    const url =
+      typeof window !== "undefined"
+        ? `${window.location.origin}/grid?${params.toString()}`
+        : `/grid?${params.toString()}`;
+    try {
+      await navigator.clipboard?.writeText(url);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1600);
+    } catch {
+      // clipboard unavailable — no-op
+    }
+  };
 
   const cssCode = buildCss(preset, gap, minTrack);
+
 
   return (
     <main className="min-h-screen bg-background text-foreground">
