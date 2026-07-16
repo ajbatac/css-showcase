@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
+import { toast } from "sonner";
+
 
 const PRESET_IDS = [
   "12-col",
@@ -114,11 +116,17 @@ function GridDemo() {
     try {
       await navigator.clipboard?.writeText(url);
       setCopied(true);
+      toast.success("Link copied to clipboard", {
+        description: "Anyone with this link will see the same grid state.",
+      });
       setTimeout(() => setCopied(false), 1600);
     } catch {
-      // clipboard unavailable — no-op
+      toast.error("Couldn’t copy link", {
+        description: "Your browser blocked clipboard access.",
+      });
     }
   };
+
 
   const cssCode = buildCss(preset, gap, minTrack);
 
