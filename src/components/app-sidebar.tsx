@@ -88,6 +88,14 @@ export const DEMOS: Demo[] = [
     icon: LayoutGrid,
     status: "live",
   },
+  {
+    slug: "accordions",
+    name: "Accordions",
+    short: "Accordions",
+    path: "/accordions",
+    icon: ListCollapse,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
