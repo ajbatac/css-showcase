@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, ChevronDown, LayoutGrid, ListCollapse, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
+import { Bell, CheckSquare, ChevronDown, LayoutGrid, ListCollapse, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
