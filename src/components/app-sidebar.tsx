@@ -104,6 +104,14 @@ export const DEMOS: Demo[] = [
     icon: CheckSquare,
     status: "live",
   },
+  {
+    slug: "selects",
+    name: "Select Dropdowns & Multi-Select",
+    short: "Selects",
+    path: "/selects",
+    icon: ListFilter,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
