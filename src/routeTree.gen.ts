@@ -16,6 +16,7 @@ import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -54,6 +55,11 @@ const DropdownsRoute = DropdownsRouteImport.update({
   path: '/dropdowns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CheckboxesRoute = CheckboxesRouteImport.update({
+  id: '/checkboxes',
+  path: '/checkboxes',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccordionsRoute = AccordionsRouteImport.update({
   id: '/accordions',
   path: '/accordions',
@@ -68,6 +74,7 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/checkboxes': typeof CheckboxesRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -79,6 +86,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/checkboxes': typeof CheckboxesRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -91,6 +99,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/checkboxes': typeof CheckboxesRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -104,6 +113,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accordions'
+    | '/checkboxes'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -115,6 +125,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/accordions'
+    | '/checkboxes'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -126,6 +137,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/accordions'
+    | '/checkboxes'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -138,6 +150,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccordionsRoute: typeof AccordionsRoute
+  CheckboxesRoute: typeof CheckboxesRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   GridRoute: typeof GridRoute
@@ -198,6 +211,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DropdownsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/checkboxes': {
+      id: '/checkboxes'
+      path: '/checkboxes'
+      fullPath: '/checkboxes'
+      preLoaderRoute: typeof CheckboxesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accordions': {
       id: '/accordions'
       path: '/accordions'
@@ -218,6 +238,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccordionsRoute: AccordionsRoute,
+  CheckboxesRoute: CheckboxesRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   GridRoute: GridRoute,
@@ -229,3 +250,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
