@@ -96,6 +96,14 @@ export const DEMOS: Demo[] = [
     icon: ListCollapse,
     status: "live",
   },
+  {
+    slug: "checkboxes",
+    name: "Checkboxes & Multi-Select",
+    short: "Checkboxes",
+    path: "/checkboxes",
+    icon: CheckSquare,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
