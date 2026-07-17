@@ -16,6 +16,7 @@ import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
 
 const ToastsRoute = ToastsRouteImport.update({
@@ -53,6 +54,11 @@ const DropdownsRoute = DropdownsRouteImport.update({
   path: '/dropdowns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AccordionsRoute = AccordionsRouteImport.update({
+  id: '/accordions',
+  path: '/accordions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -61,6 +67,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/accordions': typeof AccordionsRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/accordions': typeof AccordionsRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/accordions': typeof AccordionsRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/accordions'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/accordions'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/accordions'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AccordionsRoute: typeof AccordionsRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   GridRoute: typeof GridRoute
@@ -185,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DropdownsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/accordions': {
+      id: '/accordions'
+      path: '/accordions'
+      fullPath: '/accordions'
+      preLoaderRoute: typeof AccordionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AccordionsRoute: AccordionsRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   GridRoute: GridRoute,
