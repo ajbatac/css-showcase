@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
@@ -23,6 +24,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SelectsRoute = SelectsRouteImport.update({
+  id: '/selects',
+  path: '/selects',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NavigationRoute = NavigationRouteImport.update({
@@ -81,6 +87,7 @@ export interface FileRoutesByFullPath {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/selects': typeof SelectsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesByTo {
@@ -93,6 +100,7 @@ export interface FileRoutesByTo {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/selects': typeof SelectsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesById {
@@ -106,6 +114,7 @@ export interface FileRoutesById {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/selects': typeof SelectsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRouteTypes {
@@ -120,6 +129,7 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/selects'
     | '/toasts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -132,6 +142,7 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/selects'
     | '/toasts'
   id:
     | '__root__'
@@ -144,6 +155,7 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/selects'
     | '/toasts'
   fileRoutesById: FileRoutesById
 }
@@ -157,6 +169,7 @@ export interface RootRouteChildren {
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
+  SelectsRoute: typeof SelectsRoute
   ToastsRoute: typeof ToastsRoute
 }
 
@@ -167,6 +180,13 @@ declare module '@tanstack/react-router' {
       path: '/toasts'
       fullPath: '/toasts'
       preLoaderRoute: typeof ToastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/selects': {
+      id: '/selects'
+      path: '/selects'
+      fullPath: '/selects'
+      preLoaderRoute: typeof SelectsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/navigation': {
@@ -245,6 +265,7 @@ const rootRouteChildren: RootRouteChildren = {
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
+  SelectsRoute: SelectsRoute,
   ToastsRoute: ToastsRoute,
 }
 export const routeTree = rootRouteImport

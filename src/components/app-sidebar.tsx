@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, CheckSquare, ChevronDown, LayoutGrid, ListCollapse, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
+import { Bell, CheckSquare, ChevronDown, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, Rows3, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -102,6 +102,14 @@ export const DEMOS: Demo[] = [
     short: "Checkboxes",
     path: "/checkboxes",
     icon: CheckSquare,
+    status: "live",
+  },
+  {
+    slug: "selects",
+    name: "Select Dropdowns & Multi-Select",
+    short: "Selects",
+    path: "/selects",
+    icon: ListFilter,
     status: "live",
   },
 ];
