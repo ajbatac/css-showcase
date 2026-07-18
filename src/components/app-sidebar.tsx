@@ -112,6 +112,22 @@ export const DEMOS: Demo[] = [
     icon: ListFilter,
     status: "live",
   },
+  {
+    slug: "radios",
+    name: "Radio Buttons",
+    short: "Radios",
+    path: "/radios",
+    icon: CircleDot,
+    status: "live",
+  },
+  {
+    slug: "sliders",
+    name: "Sliders & Range Inputs",
+    short: "Sliders",
+    path: "/sliders",
+    icon: SlidersHorizontal,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {

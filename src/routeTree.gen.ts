@@ -10,7 +10,9 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
+import { Route as RadiosRouteImport } from './routes/radios'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
@@ -26,9 +28,19 @@ const ToastsRoute = ToastsRouteImport.update({
   path: '/toasts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SlidersRoute = SlidersRouteImport.update({
+  id: '/sliders',
+  path: '/sliders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SelectsRoute = SelectsRouteImport.update({
   id: '/selects',
   path: '/selects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RadiosRoute = RadiosRouteImport.update({
+  id: '/radios',
+  path: '/radios',
   getParentRoute: () => rootRouteImport,
 } as any)
 const NavigationRoute = NavigationRouteImport.update({
@@ -87,7 +99,9 @@ export interface FileRoutesByFullPath {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
+  '/sliders': typeof SlidersRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesByTo {
@@ -100,7 +114,9 @@ export interface FileRoutesByTo {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
+  '/sliders': typeof SlidersRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesById {
@@ -114,7 +130,9 @@ export interface FileRoutesById {
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
+  '/sliders': typeof SlidersRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRouteTypes {
@@ -129,7 +147,9 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/radios'
     | '/selects'
+    | '/sliders'
     | '/toasts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -142,7 +162,9 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/radios'
     | '/selects'
+    | '/sliders'
     | '/toasts'
   id:
     | '__root__'
@@ -155,7 +177,9 @@ export interface FileRouteTypes {
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/radios'
     | '/selects'
+    | '/sliders'
     | '/toasts'
   fileRoutesById: FileRoutesById
 }
@@ -169,7 +193,9 @@ export interface RootRouteChildren {
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
+  RadiosRoute: typeof RadiosRoute
   SelectsRoute: typeof SelectsRoute
+  SlidersRoute: typeof SlidersRoute
   ToastsRoute: typeof ToastsRoute
 }
 
@@ -182,11 +208,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToastsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/sliders': {
+      id: '/sliders'
+      path: '/sliders'
+      fullPath: '/sliders'
+      preLoaderRoute: typeof SlidersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/selects': {
       id: '/selects'
       path: '/selects'
       fullPath: '/selects'
       preLoaderRoute: typeof SelectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/radios': {
+      id: '/radios'
+      path: '/radios'
+      fullPath: '/radios'
+      preLoaderRoute: typeof RadiosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/navigation': {
@@ -265,19 +305,11 @@ const rootRouteChildren: RootRouteChildren = {
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
+  RadiosRoute: RadiosRoute,
   SelectsRoute: SelectsRoute,
+  SlidersRoute: SlidersRoute,
   ToastsRoute: ToastsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
