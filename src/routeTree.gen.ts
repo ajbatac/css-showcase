@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as RadiosRouteImport } from './routes/radios'
@@ -26,6 +27,11 @@ import { Route as IndexRouteImport } from './routes/index'
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TabsRoute = TabsRouteImport.update({
+  id: '/tabs',
+  path: '/tabs',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlidersRoute = SlidersRouteImport.update({
@@ -102,6 +108,7 @@ export interface FileRoutesByFullPath {
   '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesByTo {
@@ -117,6 +124,7 @@ export interface FileRoutesByTo {
   '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRoutesById {
@@ -133,6 +141,7 @@ export interface FileRoutesById {
   '/radios': typeof RadiosRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
 }
 export interface FileRouteTypes {
@@ -150,6 +159,7 @@ export interface FileRouteTypes {
     | '/radios'
     | '/selects'
     | '/sliders'
+    | '/tabs'
     | '/toasts'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -165,6 +175,7 @@ export interface FileRouteTypes {
     | '/radios'
     | '/selects'
     | '/sliders'
+    | '/tabs'
     | '/toasts'
   id:
     | '__root__'
@@ -180,6 +191,7 @@ export interface FileRouteTypes {
     | '/radios'
     | '/selects'
     | '/sliders'
+    | '/tabs'
     | '/toasts'
   fileRoutesById: FileRoutesById
 }
@@ -196,6 +208,7 @@ export interface RootRouteChildren {
   RadiosRoute: typeof RadiosRoute
   SelectsRoute: typeof SelectsRoute
   SlidersRoute: typeof SlidersRoute
+  TabsRoute: typeof TabsRoute
   ToastsRoute: typeof ToastsRoute
 }
 
@@ -206,6 +219,13 @@ declare module '@tanstack/react-router' {
       path: '/toasts'
       fullPath: '/toasts'
       preLoaderRoute: typeof ToastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tabs': {
+      id: '/tabs'
+      path: '/tabs'
+      fullPath: '/tabs'
+      preLoaderRoute: typeof TabsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sliders': {
@@ -308,18 +328,9 @@ const rootRouteChildren: RootRouteChildren = {
   RadiosRoute: RadiosRoute,
   SelectsRoute: SelectsRoute,
   SlidersRoute: SlidersRoute,
+  TabsRoute: TabsRoute,
   ToastsRoute: ToastsRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
