@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, Rows3, SlidersHorizontal, Smartphone, Sparkles } from "lucide-react";
+import { Bell, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles } from "lucide-react";
 
 import {
   Sidebar,
@@ -126,6 +126,14 @@ export const DEMOS: Demo[] = [
     short: "Sliders",
     path: "/sliders",
     icon: SlidersHorizontal,
+    status: "live",
+  },
+  {
+    slug: "tabs",
+    name: "Tabs · Keyboard-Navigable",
+    short: "Tabs",
+    path: "/tabs",
+    icon: PanelTop,
     status: "live",
   },
 ];
