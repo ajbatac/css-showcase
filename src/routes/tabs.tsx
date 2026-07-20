@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent } from "react";
-import { Activity, BarChart3, Settings2, Users } from "lucide-react";
+import { Activity, BarChart3, Lock, Settings2, ShieldAlert, Users } from "lucide-react";
 
 export const Route = createFileRoute("/tabs")({
   head: () => ({
@@ -9,13 +9,13 @@ export const Route = createFileRoute("/tabs")({
       {
         name: "description",
         content:
-          "Keyboard-navigable tab panels that reshape across desktop, iPad, and mobile using container queries.",
+          "Keyboard-navigable tab panels with disabled tabs, truncation, and overflow-safe tablist behavior.",
       },
       { property: "og:title", content: "Tabs — Modern CSS Demos" },
       {
         property: "og:description",
         content:
-          "Accessible tabs with arrow-key, Home/End navigation — reshaped for mobile, iPad, and desktop.",
+          "Accessible tabs with disabled states, long-label truncation, and overflow scrolling — reshaped for mobile, iPad, and desktop.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -32,54 +32,92 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.tabs-app {
-  container-type: inline-size;
-}
+const CSS_CODE = `.tabs-app { container-type: inline-size; }
 
 .tablist {
   display: flex;
   gap: 0.25rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
 }
 
 .tab {
   scroll-snap-align: start;
+  min-width: 0;
+  max-width: 12rem;
   border-bottom: 2px solid transparent;
 }
-
-.tab[aria-selected="true"] {
-  border-color: hsl(var(--primary));
-  color: hsl(var(--primary));
+.tab-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
+.tab[aria-selected="true"] { border-color: hsl(var(--primary)); color: hsl(var(--primary)); }
+.tab[aria-disabled="true"] { opacity: .45; cursor: not-allowed; }
 
-/* iPad+: enable equal-width tabs */
 @container (min-width: 420px) {
-  .tablist { overflow: visible; }
-  .tab { flex: 1; }
+  .tablist { overflow-x: auto; }
+  .tab { flex: 1 1 0; }
 }`;
 
 type TabDef = {
   id: string;
   label: string;
   icon: React.ComponentType<{ className?: string }>;
+  disabled?: boolean;
+  disabledReason?: string;
 };
 
 const TABS: TabDef[] = [
   { id: "overview", label: "Overview", icon: Activity },
-  { id: "analytics", label: "Analytics", icon: BarChart3 },
-  { id: "audience", label: "Audience", icon: Users },
+  { id: "analytics", label: "Analytics & Realtime Metrics", icon: BarChart3 },
+  { id: "audience", label: "Audience Segments", icon: Users },
+  {
+    id: "billing",
+    label: "Billing & Invoicing History",
+    icon: Lock,
+    disabled: true,
+    disabledReason: "Upgrade to Pro to access billing",
+  },
   { id: "settings", label: "Settings", icon: Settings2 },
+  {
+    id: "admin",
+    label: "Admin Console — Restricted",
+    icon: ShieldAlert,
+    disabled: true,
+    disabledReason: "Requires admin role",
+  },
 ];
 
 function TabsDemo() {
   const [device, setDevice] = useState<Device>("mobile");
-  const [active, setActive] = useState<string>(TABS[0].id);
+  const firstEnabled = TABS.find((t) => !t.disabled)?.id ?? TABS[0].id;
+  const [active, setActive] = useState<string>(firstEnabled);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const focusTab = (id: string) => {
     setActive(id);
-    requestAnimationFrame(() => tabRefs.current[id]?.focus());
+    requestAnimationFrame(() => {
+      const el = tabRefs.current[id];
+      el?.focus();
+      el?.scrollIntoView({ block: "nearest", inline: "nearest", behavior: "smooth" });
+    });
+  };
+
+  const nextEnabled = (from: number, dir: 1 | -1) => {
+    const n = TABS.length;
+    for (let step = 1; step <= n; step++) {
+      const i = (from + dir * step + n * step) % n;
+      if (!TABS[i].disabled) return i;
+    }
+    return from;
+  };
+  const edgeEnabled = (dir: 1 | -1) => {
+    const range = dir === 1 ? TABS : [...TABS].reverse();
+    const found = range.find((t) => !t.disabled);
+    return TABS.findIndex((t) => t.id === (found?.id ?? TABS[0].id));
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLButtonElement>) => {
@@ -88,16 +126,16 @@ function TabsDemo() {
     let next = idx;
     switch (e.key) {
       case "ArrowRight":
-        next = (idx + 1) % TABS.length;
+        next = nextEnabled(idx, 1);
         break;
       case "ArrowLeft":
-        next = (idx - 1 + TABS.length) % TABS.length;
+        next = nextEnabled(idx, -1);
         break;
       case "Home":
-        next = 0;
+        next = edgeEnabled(1);
         break;
       case "End":
-        next = TABS.length - 1;
+        next = edgeEnabled(-1);
         break;
       default:
         return;
@@ -114,11 +152,12 @@ function TabsDemo() {
             Modern CSS · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Tabs with keyboard navigation.
+            Tabs — disabled, truncated, overflow-safe.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Arrow keys move between tabs, Home/End jump to the ends. On mobile the tablist
-            scroll-snaps; on iPad/desktop tabs stretch to fill the row via container queries.
+            Long labels truncate with ellipsis, disabled tabs are skipped by Arrow / Home / End
+            keys, and the tablist scrolls horizontally when tabs overflow — keeping focus visible
+            in view.
           </p>
         </header>
 
@@ -137,7 +176,7 @@ function TabsDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div className="tabs-app flex h-full w-full flex-col overflow-hidden">
+              <div className="tabs-app flex h-full w-full min-w-0 flex-col overflow-hidden">
                 <div
                   role="tablist"
                   aria-label="Dashboard sections"
@@ -157,19 +196,24 @@ function TabsDemo() {
                         type="button"
                         aria-selected={selected}
                         aria-controls={`panel-${t.id}`}
+                        aria-disabled={t.disabled || undefined}
+                        title={t.disabled ? t.disabledReason : t.label}
                         tabIndex={selected ? 0 : -1}
-                        onClick={() => setActive(t.id)}
+                        onClick={() => {
+                          if (t.disabled) return;
+                          focusTab(t.id);
+                        }}
                         onKeyDown={onKeyDown}
-                        className="tab flex shrink-0 items-center justify-center gap-1.5 px-3 py-2 text-[11px] font-semibold text-muted-foreground outline-none transition hover:text-foreground focus-visible:text-primary"
+                        className="tab flex shrink-0 items-center justify-center gap-1.5 px-3 py-2 text-[11px] font-semibold text-muted-foreground outline-none transition hover:text-foreground focus-visible:text-primary focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-0"
                       >
-                        <Icon className="h-3.5 w-3.5" />
-                        <span>{t.label}</span>
+                        <Icon className="h-3.5 w-3.5 shrink-0" />
+                        <span className="tab-label">{t.label}</span>
                       </button>
                     );
                   })}
                 </div>
 
-                <div className="flex-1 overflow-auto p-3">
+                <div className="min-w-0 flex-1 overflow-auto p-3">
                   {TABS.map((t) => {
                     const selected = t.id === active;
                     return (
@@ -182,7 +226,7 @@ function TabsDemo() {
                         tabIndex={0}
                         className="outline-none"
                       >
-                        <TabContent id={t.id} />
+                        <TabContent tab={t} />
                       </div>
                     );
                   })}
@@ -191,10 +235,10 @@ function TabsDemo() {
             </DeviceFrame>
 
             <p className="mt-4 text-center text-[11px] text-muted-foreground">
-              Try it: click a tab, then use <kbd className="rounded border bg-muted px-1">←</kbd>{" "}
-              <kbd className="rounded border bg-muted px-1">→</kbd>{" "}
+              Try it: <kbd className="rounded border bg-muted px-1">←</kbd>{" "}
+              <kbd className="rounded border bg-muted px-1">→</kbd> skip disabled tabs,{" "}
               <kbd className="rounded border bg-muted px-1">Home</kbd>{" "}
-              <kbd className="rounded border bg-muted px-1">End</kbd>.
+              <kbd className="rounded border bg-muted px-1">End</kbd> jump to first / last enabled.
             </p>
           </div>
 
@@ -251,52 +295,73 @@ function TabsDemo() {
             </p>
             <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-foreground">
               <li>• Container queries</li>
-              <li>• Scroll snap on mobile</li>
+              <li>• Overflow-x scroll + snap</li>
               <li>• Roving <code>tabindex</code></li>
-              <li>• Arrow / Home / End keys</li>
-              <li>• <code>aria-selected</code> + panels</li>
-              <li>• Semantic tokens</li>
+              <li>• Skips <code>aria-disabled</code> tabs</li>
+              <li>• Truncation via <code>min-width:0</code></li>
+              <li>• <code>scrollIntoView</code> on focus</li>
             </ul>
           </div>
         </section>
       </div>
 
       <style>{`
-        .tabs-app {
-          container-type: inline-size;
-        }
+        .tabs-app { container-type: inline-size; }
 
         .tablist {
           display: flex;
           gap: 0.25rem;
           overflow-x: auto;
           scroll-snap-type: x mandatory;
-          scrollbar-width: none;
+          scrollbar-width: thin;
         }
-        .tablist::-webkit-scrollbar { display: none; }
+        .tablist::-webkit-scrollbar { height: 4px; }
+        .tablist::-webkit-scrollbar-thumb {
+          background: hsl(var(--muted-foreground) / 0.3);
+          border-radius: 999px;
+        }
 
         .tab {
           scroll-snap-align: start;
+          min-width: 0;
+          max-width: 12rem;
           border-bottom: 2px solid transparent;
-          transition: color .2s ease, border-color .2s ease, background .2s ease;
+          transition: color .2s ease, border-color .2s ease, background .2s ease, opacity .2s ease;
         }
-
+        .tab-label {
+          min-width: 0;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
         .tab[aria-selected="true"] {
           border-color: hsl(var(--primary));
           color: hsl(var(--primary));
         }
+        .tab[aria-disabled="true"] {
+          opacity: .45;
+          cursor: not-allowed;
+        }
 
         @container (min-width: 420px) {
-          .tablist { overflow: visible; }
-          .tab { flex: 1; }
+          .tab { flex: 1 1 0; }
         }
       `}</style>
     </main>
   );
 }
 
-function TabContent({ id }: { id: string }) {
-  switch (id) {
+function TabContent({ tab }: { tab: TabDef }) {
+  if (tab.disabled) {
+    return (
+      <div className="flex flex-col items-center justify-center gap-1 py-6 text-center">
+        <Lock className="h-4 w-4 text-muted-foreground" />
+        <p className="text-[11px] font-semibold">{tab.label}</p>
+        <p className="text-[10px] text-muted-foreground">{tab.disabledReason}</p>
+      </div>
+    );
+  }
+  switch (tab.id) {
     case "overview":
       return (
         <div className="space-y-2">
@@ -319,7 +384,7 @@ function TabContent({ id }: { id: string }) {
     case "analytics":
       return (
         <div className="space-y-2">
-          <h3 className="text-xs font-bold">Analytics</h3>
+          <h3 className="truncate text-xs font-bold">Analytics & Realtime Metrics</h3>
           <div className="flex h-24 items-end gap-1">
             {[40, 65, 30, 80, 55, 90, 70].map((h, i) => (
               <div
@@ -334,7 +399,7 @@ function TabContent({ id }: { id: string }) {
     case "audience":
       return (
         <div className="space-y-1.5">
-          <h3 className="text-xs font-bold">Audience</h3>
+          <h3 className="text-xs font-bold">Audience Segments</h3>
           {["Aria", "Ben", "Cass", "Dev"].map((n) => (
             <div
               key={n}
@@ -343,7 +408,7 @@ function TabContent({ id }: { id: string }) {
               <div className="grid h-6 w-6 place-items-center rounded-full bg-primary/20 text-[10px] font-bold text-primary">
                 {n[0]}
               </div>
-              <span className="text-[11px]">{n}</span>
+              <span className="truncate text-[11px]">{n}</span>
             </div>
           ))}
         </div>
@@ -357,8 +422,8 @@ function TabContent({ id }: { id: string }) {
               key={s}
               className="flex items-center justify-between rounded-md border bg-muted/30 px-2 py-1.5 text-[11px]"
             >
-              <span>{s}</span>
-              <input type="checkbox" defaultChecked className="h-3.5 w-3.5" />
+              <span className="truncate">{s}</span>
+              <input type="checkbox" defaultChecked className="h-3.5 w-3.5 shrink-0" />
             </label>
           ))}
         </div>
