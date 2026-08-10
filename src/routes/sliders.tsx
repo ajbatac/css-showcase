@@ -1,6 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { SlidersHorizontal } from "lucide-react";
 
 export const Route = createFileRoute("/sliders")({
   head: () => ({
@@ -25,6 +24,7 @@ export const Route = createFileRoute("/sliders")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern = "labelled" | "dual" | "vertical" | "stepped";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,60 +32,107 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.slider-app {
-  container-type: inline-size;
-}
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "labelled", label: "Labelled sliders", desc: "Horizontal, value badges" },
+    { id: "dual", label: "Dual-thumb range", desc: "With tick marks" },
+    { id: "vertical", label: "Vertical group", desc: "Stacked vertical sliders" },
+  ],
+  ipad: [
+    { id: "labelled", label: "Labelled sliders", desc: "Horizontal, value badges" },
+    { id: "dual", label: "Dual-thumb range", desc: "With tick marks" },
+  ],
+  mobile: [
+    { id: "labelled", label: "Large-thumb sliders", desc: "Full-width, big touch target" },
+    { id: "stepped", label: "Segmented stepper", desc: "Tap a segment to set value" },
+  ],
+};
 
-.slider-grid {
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  labelled: `/* Labelled horizontal sliders */
+.slider-grid[data-pattern="labelled"] {
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
 }
 
-/* iPad: two columns */
 @container (min-width: 420px) {
-  .slider-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .slider-grid[data-pattern="labelled"] { grid-template-columns: repeat(2, 1fr); }
 }
-
-/* Desktop: three columns */
 @container (min-width: 680px) {
-  .slider-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
+  .slider-grid[data-pattern="labelled"] { grid-template-columns: repeat(3, 1fr); }
 }
 
-/* Custom range styling */
 input[type="range"] {
   -webkit-appearance: none;
   appearance: none;
   width: 100%;
   height: 0.375rem;
   border-radius: 999px;
-  background: hsl(var(--muted));
+}`,
+  dual: `/* Dual-thumb range with ticks */
+.range-dual { position: relative; }
+.range-ticks {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 0.25rem;
 }
-
-input[type="range"]::-webkit-slider-thumb {
+.range-ticks span {
+  width: 1px;
+  height: 4px;
+  background: hsl(var(--border));
+}
+.range-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
+  background: transparent;
+  pointer-events: auto;
+}`,
+  vertical: `/* Vertical slider group */
+.slider-vertical-group {
+  display: flex;
+  justify-content: space-around;
+  height: 100%;
+}
+
+.slider-vertical input[type="range"] {
+  writing-mode: vertical-lr;
+  direction: rtl;
+  appearance: slider-vertical;
+  width: 0.375rem;
+  height: 100%;
+}`,
+  stepped: `/* Segmented stepper */
+.stepper {
+  display: grid;
+  grid-auto-flow: column;
+  gap: 0.25rem;
+}
+
+.stepper button[data-active="true"] {
   background: hsl(var(--primary));
-  border: 2px solid hsl(var(--background));
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-}`;
+  color: hsl(var(--primary-foreground));
+}`,
+};
 
 function SlidersDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "labelled",
+    ipad: "labelled",
+    mobile: "labelled",
+  });
   const [volume, setVolume] = useState<number>(65);
   const [brightness, setBrightness] = useState<number>(40);
   const [range, setRange] = useState<[number, number]>([20, 75]);
   const [step, setStep] = useState<number>(2);
+  const [vertVals, setVertVals] = useState<[number, number, number]>([30, 60, 45]);
 
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
   const min = range[0];
   const max = range[1];
+  const thumbSize = device === "mobile" ? "1.5rem" : "1rem";
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -98,8 +145,8 @@ function SlidersDemo() {
             Sliders & range inputs.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Single-thumb sliders, dual-thumb ranges, and stepped controls — all styled
-            with CSS and reshaped for mobile, iPad, and desktop with container queries.
+            Single-thumb sliders, dual-thumb ranges, vertical groups, and stepped
+            controls — pick a device, then pick a design pattern for that device.
           </p>
         </header>
 
@@ -112,87 +159,58 @@ function SlidersDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device}
+              {device} · {pattern}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div className="slider-app h-full w-full overflow-auto p-3">
-                <div className="slider-grid">
-                  {/* Volume slider */}
-                  <div className="slider-card">
-                    <div className="mb-2 flex items-center justify-between">
-                      <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Volume
-                      </label>
-                      <span className="text-[10px] font-bold tabular-nums">{volume}%</span>
+              <div className="slider-app h-full w-full overflow-auto p-3" style={{ ["--thumb-size" as string]: thumbSize }}>
+                {pattern === "labelled" && (
+                  <div data-pattern="labelled" className="slider-grid">
+                    <div className="slider-card">
+                      <div className="mb-2 flex items-center justify-between">
+                        <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          Volume
+                        </label>
+                        <span className="text-[10px] font-bold tabular-nums">{volume}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={volume}
+                        onChange={(e) => setVolume(Number(e.target.value))}
+                        className="slider-input"
+                        style={{
+                          background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${volume}%, hsl(var(--muted)) ${volume}%, hsl(var(--muted)) 100%)`,
+                        }}
+                      />
                     </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={100}
-                      value={volume}
-                      onChange={(e) => setVolume(Number(e.target.value))}
-                      className="slider-input"
-                      style={{
-                        background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${volume}%, hsl(var(--muted)) ${volume}%, hsl(var(--muted)) 100%)`,
-                      }}
-                    />
-                  </div>
-
-                  {/* Brightness slider */}
-                  <div className="slider-card">
-                    <div className="mb-2 flex items-center justify-between">
-                      <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Brightness
-                      </label>
-                      <span className="text-[10px] font-bold tabular-nums">{brightness}%</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={0}
-                      max={100}
-                      value={brightness}
-                      onChange={(e) => setBrightness(Number(e.target.value))}
-                      className="slider-input"
-                      style={{
-                        background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${brightness}%, hsl(var(--muted)) ${brightness}%, hsl(var(--muted)) 100%)`,
-                      }}
-                    />
-                  </div>
-
-                  {/* Stepped rating */}
-                  <div className="slider-card">
-                    <div className="mb-2 flex items-center justify-between">
-                      <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                        Rating
-                      </label>
-                      <span className="text-[10px] font-bold tabular-nums">{step} / 5</span>
-                    </div>
-                    <input
-                      type="range"
-                      min={1}
-                      max={5}
-                      step={1}
-                      value={step}
-                      onChange={(e) => setStep(Number(e.target.value))}
-                      className="slider-input slider-stepped"
-                      style={{
-                        background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${((step - 1) / 4) * 100}%, hsl(var(--muted)) ${((step - 1) / 4) * 100}%, hsl(var(--muted)) 100%)`,
-                      }}
-                    />
-                    <div className="mt-1 flex justify-between px-0.5 text-[8px] text-muted-foreground">
-                      <span>1</span>
-                      <span>2</span>
-                      <span>3</span>
-                      <span>4</span>
-                      <span>5</span>
+                    <div className="slider-card">
+                      <div className="mb-2 flex items-center justify-between">
+                        <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                          Brightness
+                        </label>
+                        <span className="text-[10px] font-bold tabular-nums">{brightness}%</span>
+                      </div>
+                      <input
+                        type="range"
+                        min={0}
+                        max={100}
+                        value={brightness}
+                        onChange={(e) => setBrightness(Number(e.target.value))}
+                        className="slider-input"
+                        style={{
+                          background: `linear-gradient(to right, hsl(var(--primary)) 0%, hsl(var(--primary)) ${brightness}%, hsl(var(--muted)) ${brightness}%, hsl(var(--muted)) 100%)`,
+                        }}
+                      />
                     </div>
                   </div>
+                )}
 
-                  {/* Dual-thumb range */}
-                  <div className="slider-card col-span-full">
+                {pattern === "dual" && (
+                  <div className="slider-card">
                     <div className="mb-2 flex items-center justify-between">
                       <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                         Price range
@@ -205,10 +223,7 @@ function SlidersDemo() {
                       <div className="range-track absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-muted" />
                       <div
                         className="range-fill absolute top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-primary"
-                        style={{
-                          left: `${min}%`,
-                          right: `${100 - max}%`,
-                        }}
+                        style={{ left: `${min}%`, right: `${100 - max}%` }}
                       />
                       <input
                         type="range"
@@ -233,8 +248,66 @@ function SlidersDemo() {
                         className="range-thumb range-thumb-right absolute inset-0 w-full"
                       />
                     </div>
+                    <div className="range-ticks">
+                      {Array.from({ length: 11 }).map((_, i) => (
+                        <span key={i} />
+                      ))}
+                    </div>
                   </div>
-                </div>
+                )}
+
+                {pattern === "vertical" && (
+                  <div className="slider-card h-full">
+                    <div className="slider-vertical-group h-40">
+                      {(["Bass", "Mid", "Treble"] as const).map((label, i) => (
+                        <div key={label} className="slider-vertical flex flex-col items-center gap-2">
+                          <span className="text-[9px] font-bold tabular-nums">{vertVals[i]}</span>
+                          <input
+                            type="range"
+                            min={0}
+                            max={100}
+                            value={vertVals[i]}
+                            onChange={(e) => {
+                              const next = [...vertVals] as [number, number, number];
+                              next[i] = Number(e.target.value);
+                              setVertVals(next);
+                            }}
+                            style={{
+                              background: `linear-gradient(to top, hsl(var(--primary)) 0%, hsl(var(--primary)) ${vertVals[i]}%, hsl(var(--muted)) ${vertVals[i]}%, hsl(var(--muted)) 100%)`,
+                            }}
+                          />
+                          <span className="text-[9px] text-muted-foreground">{label}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {pattern === "stepped" && (
+                  <div className="slider-card">
+                    <div className="mb-2 flex items-center justify-between">
+                      <label className="text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
+                        Rating
+                      </label>
+                      <span className="text-[10px] font-bold tabular-nums">{step} / 5</span>
+                    </div>
+                    <div className="stepper" role="radiogroup" aria-label="Rating">
+                      {[1, 2, 3, 4, 5].map((n) => (
+                        <button
+                          key={n}
+                          type="button"
+                          role="radio"
+                          aria-checked={step === n}
+                          data-active={step === n}
+                          onClick={() => setStep(n)}
+                          className="flex h-8 w-full items-center justify-center rounded-md border border-border bg-background text-[10px] font-bold transition-colors"
+                        >
+                          {n}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
             </DeviceFrame>
           </div>
@@ -271,18 +344,62 @@ function SlidersDemo() {
             })}
           </div>
 
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() =>
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
+                    }
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">
+                        {o.label}
+                      </span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">sliders.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                sliders-{pattern}.css
+              </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() =>
+                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
+                }
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -322,7 +439,8 @@ function SlidersDemo() {
           background: hsl(var(--card));
         }
 
-        .slider-input {
+        .slider-input,
+        input[type="range"] {
           -webkit-appearance: none;
           appearance: none;
           width: 100%;
@@ -331,11 +449,12 @@ function SlidersDemo() {
           outline: none;
         }
 
-        .slider-input::-webkit-slider-thumb {
+        .slider-input::-webkit-slider-thumb,
+        input[type="range"]::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
-          width: 1rem;
-          height: 1rem;
+          width: var(--thumb-size, 1rem);
+          height: var(--thumb-size, 1rem);
           border-radius: 50%;
           background: hsl(var(--primary));
           border: 2px solid hsl(var(--background));
@@ -348,37 +467,14 @@ function SlidersDemo() {
           transform: scale(1.1);
         }
 
-        .slider-input::-moz-range-thumb {
-          width: 1rem;
-          height: 1rem;
-          border-radius: 50%;
-          background: hsl(var(--primary));
-          border: 2px solid hsl(var(--background));
-          box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-          cursor: pointer;
-        }
-
-        .slider-stepped {
-          --step-count: 4;
-        }
-
-        /* Dual-thumb range */
-        .range-dual {
-          position: relative;
-        }
-
-        .range-track,
-        .range-fill {
-          pointer-events: none;
-        }
-
+        .range-dual { position: relative; }
+        .range-track, .range-fill { pointer-events: none; }
         .range-thumb {
           -webkit-appearance: none;
           appearance: none;
           background: transparent;
           pointer-events: auto;
         }
-
         .range-thumb::-webkit-slider-thumb {
           -webkit-appearance: none;
           appearance: none;
@@ -391,29 +487,51 @@ function SlidersDemo() {
           cursor: pointer;
           margin-top: -0.25rem;
         }
+        .range-ticks {
+          display: flex;
+          justify-content: space-between;
+          margin-top: 0.5rem;
+          padding-inline: 0.1rem;
+        }
+        .range-ticks span {
+          width: 1px;
+          height: 4px;
+          background: hsl(var(--border));
+        }
 
-        .range-thumb::-moz-range-thumb {
-          width: 1rem;
-          height: 1rem;
-          border-radius: 50%;
+        .slider-vertical-group {
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+        }
+
+        .slider-vertical input[type="range"] {
+          writing-mode: vertical-lr;
+          direction: rtl;
+          width: 0.375rem;
+          height: 8rem;
+        }
+
+        .stepper {
+          display: grid;
+          grid-auto-flow: column;
+          gap: 0.25rem;
+        }
+
+        .stepper button[data-active="true"] {
           background: hsl(var(--primary));
-          border: 2px solid hsl(var(--background));
-          box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-          cursor: pointer;
+          color: hsl(var(--primary-foreground));
+          border-color: hsl(var(--primary));
         }
 
         @container (min-width: 420px) {
-          .slider-grid {
+          .slider-grid[data-pattern="labelled"] {
             grid-template-columns: repeat(2, 1fr);
-          }
-
-          .slider-card.col-span-full {
-            grid-column: 1 / -1;
           }
         }
 
         @container (min-width: 680px) {
-          .slider-grid {
+          .slider-grid[data-pattern="labelled"] {
             grid-template-columns: repeat(3, 1fr);
           }
         }

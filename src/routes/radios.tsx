@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Circle, CircleDot, SlidersHorizontal } from "lucide-react";
+import { Circle, CircleDot } from "lucide-react";
 
 export const Route = createFileRoute("/radios")({
   head: () => ({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/radios")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern = "segmented" | "cards" | "list";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,33 +33,64 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.radio-app {
-  container-type: inline-size;
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "segmented", label: "Segmented control", desc: "Pill toolbar of choices" },
+    { id: "cards", label: "Selectable cards grid", desc: "Grid of plan cards" },
+    { id: "list", label: "Classic list", desc: "Rows with descriptions" },
+  ],
+  ipad: [
+    { id: "cards", label: "Selectable cards grid", desc: "Two-column plan cards" },
+    { id: "segmented", label: "Segmented control", desc: "Pill toolbar of choices" },
+  ],
+  mobile: [
+    { id: "list", label: "Stacked list rows", desc: "Full-width rows" },
+    { id: "cards", label: "Stacked large cards", desc: "One big card per row" },
+  ],
+};
+
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  segmented: `/* Segmented control */
+.segmented-control {
+  display: inline-flex;
+  gap: .25rem;
+  padding: .25rem;
+  border-radius: .625rem;
+  background: var(--muted);
 }
 
-.radio-grid {
+.segmented-item.is-active {
+  background: var(--primary);
+  color: var(--primary-foreground);
+}`,
+  cards: `/* Selectable cards grid */
+.plan-grid {
+  container-type: inline-size;
   display: grid;
-  gap: 0.75rem;
+  gap: .75rem;
   grid-template-columns: 1fr;
 }
 
-/* iPad: two-column cards */
+/* Wider containers (ipad/desktop) get a real grid */
 @container (min-width: 420px) {
-  .radio-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+  .plan-grid { grid-template-columns: repeat(2, 1fr); }
+}`,
+  list: `/* Classic list with descriptions */
+.plan-list {
+  display: grid;
+  gap: .5rem;
 }
 
-/* Desktop: horizontal toolbars */
-@container (min-width: 680px) {
-  .radio-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .segmented-control {
-    flex-direction: row;
-  }
-}`;
+.plan-row {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: .5rem;
+  border-radius: .5rem;
+  border: 1px solid var(--border);
+  padding: .5rem .75rem;
+}`,
+};
 
 const PLANS = [
   { id: "starter", label: "Starter", price: "$0/mo", description: "For side projects" },
@@ -74,8 +106,16 @@ const FREQUENCIES = [
 
 function RadiosDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "segmented",
+    ipad: "cards",
+    mobile: "list",
+  });
   const [plan, setPlan] = useState<string>("pro");
   const [frequency, setFrequency] = useState<string>("monthly");
+
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -85,11 +125,12 @@ function RadiosDemo() {
             Modern CSS · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Radio buttons & single choice.
+            One choice. Many patterns per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Classic radio groups, selectable cards, and segmented controls — all in one
-            component that reshapes for mobile, iPad, and desktop with container queries.
+            Pick a device, then pick a design pattern for that device — desktop offers a
+            segmented control, cards grid, and classic list; mobile offers stacked list rows
+            and stacked large cards.
           </p>
         </header>
 
@@ -102,20 +143,23 @@ function RadiosDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device}
+              {device} · {pattern}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
               <div className="radio-app h-full w-full overflow-auto p-3">
-                <div className="radio-grid">
-                  {/* Segmented control */}
-                  <div className="radio-card col-span-full">
+                <div className="grid gap-3">
+                  <div className="radio-card rounded-xl border bg-card p-2.5">
                     <label className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Billing frequency
                     </label>
-                    <div className="segmented-control" role="radiogroup" aria-label="Billing frequency">
+                    <div
+                      className="segmented-control flex gap-1 rounded-[0.625rem] bg-muted p-1"
+                      role="radiogroup"
+                      aria-label="Billing frequency"
+                    >
                       {FREQUENCIES.map((f) => {
                         const active = f.id === frequency;
                         return (
@@ -138,95 +182,11 @@ function RadiosDemo() {
                     </div>
                   </div>
 
-                  {/* Classic radio list */}
-                  <div className="radio-card">
+                  <div className="radio-card rounded-xl border bg-card p-2.5">
                     <label className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
                       Plan
                     </label>
-                    <div className="space-y-1.5" role="radiogroup" aria-label="Plan">
-                      {PLANS.map((p) => {
-                        const active = p.id === plan;
-                        return (
-                          <label
-                            key={p.id}
-                            className={`radio-row flex cursor-pointer items-center gap-2 rounded-lg border px-2 py-1.5 transition ${
-                              active
-                                ? "border-primary bg-primary/5"
-                                : "border-border hover:bg-accent/50"
-                            }`}
-                          >
-                            <input
-                              type="radio"
-                              name="plan"
-                              value={p.id}
-                              checked={active}
-                              onChange={() => setPlan(p.id)}
-                              className="sr-only"
-                            />
-                            <span
-                              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
-                                active
-                                  ? "border-primary bg-primary text-primary-foreground"
-                                  : "border-border bg-background"
-                              }`}
-                            >
-                              {active && <CircleDot className="h-2.5 w-2.5" />}
-                            </span>
-                            <span className="flex min-w-0 flex-1 flex-col">
-                              <span className="text-[10px] font-semibold">{p.label}</span>
-                              <span className="text-[9px] text-muted-foreground">
-                                {p.price}
-                              </span>
-                            </span>
-                          </label>
-                        );
-                      })}
-                    </div>
-                  </div>
-
-                  {/* Card selector */}
-                  <div className="radio-card col-span-full sm:col-span-2">
-                    <label className="mb-2 block text-[10px] font-semibold uppercase tracking-wider text-muted-foreground">
-                      Select a plan
-                    </label>
-                    <div className="space-y-1.5" role="radiogroup" aria-label="Select a plan">
-                      {PLANS.map((p) => {
-                        const active = p.id === plan;
-                        return (
-                          <button
-                            key={p.id}
-                            type="button"
-                            role="radio"
-                            aria-checked={active}
-                            onClick={() => setPlan(p.id)}
-                            className={`radio-plan w-full rounded-xl border p-2 text-left transition ${
-                              active
-                                ? "border-primary bg-primary/5 ring-1 ring-primary"
-                                : "border-border bg-card hover:bg-accent/50"
-                            }`}
-                          >
-                            <div className="flex items-start justify-between gap-2">
-                              <div>
-                                <div className="text-[10px] font-semibold">{p.label}</div>
-                                <div className="text-[9px] text-muted-foreground">
-                                  {p.description}
-                                </div>
-                              </div>
-                              <span
-                                className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
-                                  active
-                                    ? "border-primary bg-primary text-primary-foreground"
-                                    : "border-border bg-background"
-                                }`}
-                              >
-                                {active && <Circle className="h-2 w-2 fill-current" />}
-                              </span>
-                            </div>
-                            <div className="mt-1 text-[10px] font-bold">{p.price}</div>
-                          </button>
-                        );
-                      })}
-                    </div>
+                    <PlanPicker pattern={pattern} plan={plan} setPlan={setPlan} />
                   </div>
                 </div>
               </div>
@@ -265,18 +225,58 @@ function RadiosDemo() {
             })}
           </div>
 
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() =>
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
+                    }
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">radios.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                radios-{pattern}.css
+              </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -295,65 +295,147 @@ function RadiosDemo() {
           </div>
         </section>
       </div>
-
-      <style>{`
-        .radio-app {
-          container-type: inline-size;
-          position: relative;
-        }
-
-        .radio-grid {
-          display: grid;
-          gap: 0.75rem;
-          grid-template-columns: 1fr;
-          align-content: start;
-        }
-
-        .radio-card {
-          padding: 0.75rem;
-          border-radius: 0.75rem;
-          border: 1px solid hsl(var(--border));
-          background: hsl(var(--card));
-        }
-
-        .segmented-control {
-          display: flex;
-          gap: 0.25rem;
-          padding: 0.25rem;
-          border-radius: 0.625rem;
-          background: hsl(var(--muted));
-        }
-
-        .radio-row {
-          border-color: hsl(var(--border));
-        }
-
-        .radio-plan {
-          border-color: hsl(var(--border));
-        }
-
-        @container (min-width: 420px) {
-          .radio-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
-
-          .radio-card.col-span-full {
-            grid-column: 1 / -1;
-          }
-        }
-
-        @container (min-width: 680px) {
-          .radio-grid {
-            grid-template-columns: repeat(3, 1fr);
-          }
-
-          .segmented-control {
-            display: inline-flex;
-            width: auto;
-          }
-        }
-      `}</style>
     </main>
+  );
+}
+
+function PlanPicker({
+  pattern,
+  plan,
+  setPlan,
+}: {
+  pattern: Pattern;
+  plan: string;
+  setPlan: (id: string) => void;
+}) {
+  if (pattern === "segmented") {
+    return (
+      <div
+        className="segmented-control flex flex-wrap gap-1 rounded-[0.625rem] bg-muted p-1"
+        role="radiogroup"
+        aria-label="Plan"
+      >
+        {PLANS.map((p) => {
+          const active = p.id === plan;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              onClick={() => setPlan(p.id)}
+              className={`segmented-item min-w-0 flex-1 truncate rounded-md px-3 py-1.5 text-[10px] font-semibold transition ${
+                active
+                  ? "bg-primary text-primary-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {p.label}
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (pattern === "cards") {
+    return (
+      <div
+        className="plan-grid grid grid-cols-[minmax(0,1fr)] gap-1.5"
+        role="radiogroup"
+        aria-label="Plan"
+        style={{ containerType: "inline-size" }}
+      >
+        {PLANS.map((p) => {
+          const active = p.id === plan;
+          return (
+            <button
+              key={p.id}
+              type="button"
+              role="radio"
+              aria-checked={active}
+              onClick={() => setPlan(p.id)}
+              className={`radio-plan w-full min-w-0 rounded-xl border p-2 text-left transition ${
+                active
+                  ? "border-primary bg-primary/5 ring-1 ring-primary"
+                  : "border-border bg-card hover:bg-accent/50"
+              }`}
+            >
+              <div className="flex items-start justify-between gap-2">
+                <div className="min-w-0">
+                  <div className="truncate text-[10px] font-semibold">{p.label}</div>
+                  <div className="truncate text-[9px] text-muted-foreground">
+                    {p.description}
+                  </div>
+                </div>
+                <span
+                  className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                    active
+                      ? "border-primary bg-primary text-primary-foreground"
+                      : "border-border bg-background"
+                  }`}
+                >
+                  {active && <Circle className="h-2 w-2 fill-current" />}
+                </span>
+              </div>
+              <div className="mt-1 text-[10px] font-bold">{p.price}</div>
+            </button>
+          );
+        })}
+        <style>{`
+          .plan-grid { grid-template-columns: minmax(0, 1fr); }
+          @container (min-width: 420px) {
+            .plan-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  // list
+  return (
+    <div className="plan-list grid gap-1.5" role="radiogroup" aria-label="Plan">
+      {PLANS.map((p) => {
+        const active = p.id === plan;
+        return (
+          <label
+            key={p.id}
+            className={`radio-row grid min-w-0 grid-cols-[auto_minmax(0,1fr)] items-center gap-2 rounded-lg border px-2 py-1.5 transition ${
+              active ? "border-primary bg-primary/5" : "border-border hover:bg-accent/50"
+            }`}
+          >
+            <input
+              type="radio"
+              name="plan"
+              value={p.id}
+              checked={active}
+              onChange={() => setPlan(p.id)}
+              className="sr-only"
+            />
+            <span
+              className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
+                active
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-background"
+              }`}
+            >
+              {active && <CircleDot className="h-2.5 w-2.5" />}
+            </span>
+            <span className="flex min-w-0 flex-1 flex-col">
+              <span className="flex items-baseline justify-between gap-2">
+                <span className="truncate text-[10px] font-semibold">{p.label}</span>
+                <span className="shrink-0 text-[9px] font-bold text-muted-foreground">
+                  {p.price}
+                </span>
+              </span>
+              <span className="truncate text-[9px] text-muted-foreground">
+                {p.description}
+              </span>
+            </span>
+          </label>
+        );
+      })}
+    </div>
   );
 }
 
@@ -384,9 +466,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }
