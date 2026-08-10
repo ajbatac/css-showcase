@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, CheckSquare, Minus, ToggleLeft } from "lucide-react";
+import { Check, Minus } from "lucide-react";
 
 export const Route = createFileRoute("/checkboxes")({
   head: () => ({
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/checkboxes")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern = "checklist" | "table" | "toggles" | "chips";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,35 +33,99 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.selection-list {
-  container-type: inline-size;
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "checklist", label: "Multi-column checklist", desc: "Cards in a grid" },
+    { id: "table", label: "Table rows", desc: "Bulk select in the header" },
+    { id: "toggles", label: "Toggle settings list", desc: "All items as switches" },
+  ],
+  ipad: [
+    { id: "checklist", label: "Two-column checklist", desc: "Cards in two columns" },
+    { id: "toggles", label: "Toggle list", desc: "Switches in a single column" },
+  ],
+  mobile: [
+    { id: "checklist", label: "Full-width rows", desc: "One card per row" },
+    { id: "chips", label: "Chip multi-select", desc: "Tap chips to select" },
+  ],
+};
+
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  checklist: `/* Checklist grid */
+.selection-list[data-pattern="checklist"] {
   display: grid;
   gap: 0.5rem;
+  grid-template-columns: 1fr;
 }
 
-.selection-row {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem;
-  border-radius: 0.75rem;
-  border: 1px solid hsl(var(--border));
-}
-
-/* iPad+: two-column cards */
 @container (min-width: 420px) {
-  .selection-list {
+  .selection-list[data-pattern="checklist"] {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* Desktop: horizontal toolbar */
 @container (min-width: 680px) {
-  .selection-list {
+  .selection-list[data-pattern="checklist"] {
     grid-template-columns: repeat(4, 1fr);
-    align-content: center;
   }
-}`;
+}`,
+  table: `/* Table rows with bulk header select */
+.selection-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.selection-table th,
+.selection-table td {
+  border-bottom: 1px solid hsl(var(--border));
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+}
+
+.selection-table thead th {
+  background: hsl(var(--muted) / 0.5);
+}`,
+  toggles: `/* Toggle switch settings list */
+.selection-list[data-pattern="toggles"] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.toggle-track {
+  transition: background-color 0.2s ease;
+}
+
+.toggle-thumb {
+  transition: transform 0.2s ease;
+}
+
+@container (min-width: 420px) {
+  .selection-list[data-pattern="toggles"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}`,
+  chips: `/* Chip-style multi-select */
+.chip-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  border: 1px solid hsl(var(--border));
+}
+
+.chip[data-selected="true"] {
+  background: hsl(var(--primary));
+  border-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}`,
+};
 
 const FLAVORS = [
   { id: "vanilla", label: "Vanilla", description: "Classic and creamy" },
@@ -69,19 +134,23 @@ const FLAVORS = [
   { id: "mint", label: "Mint chip", description: "Cool with dark chips" },
 ];
 
-const OPTIONS = [
-  { id: "notifications", label: "Notifications", checked: true },
-  { id: "newsletter", label: "Newsletter", checked: false },
-];
-
 function CheckboxesDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "checklist",
+    ipad: "checklist",
+    mobile: "checklist",
+  });
   const [selected, setSelected] = useState<Set<string>>(new Set(["vanilla"]));
   const [toggles, setToggles] = useState<Record<string, boolean>>({
-    notifications: true,
-    newsletter: false,
+    vanilla: true,
+    chocolate: false,
+    strawberry: true,
+    mint: false,
   });
-  const [master, setMaster] = useState<boolean | "indeterminate">(false);
+
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
 
   const toggleFlavor = (id: string) => {
     setSelected((prev) => {
@@ -92,12 +161,8 @@ function CheckboxesDemo() {
     });
   };
 
-  const toggleOption = (id: string) => {
+  const toggleSwitch = (id: string) => {
     setToggles((prev) => ({ ...prev, [id]: !prev[id] }));
-  };
-
-  const toggleMaster = () => {
-    setMaster((prev) => (prev === true ? false : true));
   };
 
   const allSelected = selected.size === FLAVORS.length;
@@ -115,8 +180,8 @@ function CheckboxesDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             A single selection component that shows classic checkboxes, bulk
-            select, indeterminate state, and toggle switches — reshaped for
-            mobile, iPad, and desktop with container queries.
+            select, table rows, toggle switches, and chips — pick a device,
+            then pick a design pattern for that device.
           </p>
         </header>
 
@@ -129,106 +194,25 @@ function CheckboxesDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device}
+              {device} · {pattern}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div className="selection-list h-full w-full p-3">
-                <div className="selection-row col-span-full flex items-center justify-between">
-                  <span className="text-xs font-semibold">Select all flavors</span>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      if (allSelected) setSelected(new Set());
-                      else setSelected(new Set(FLAVORS.map((f) => f.id)));
-                    }}
-                    className="checkbox-root"
-                    aria-pressed={allSelected}
-                  >
-                    <span
-                      className={`checkbox-box flex h-4 w-4 items-center justify-center rounded border transition-colors ${
-                        allSelected || someSelected
-                          ? "border-primary bg-primary text-primary-foreground"
-                          : "border-border bg-background"
-                      }`}
-                    >
-                      {someSelected ? (
-                        <Minus className="h-3 w-3" />
-                      ) : allSelected ? (
-                        <Check className="h-3 w-3" />
-                      ) : null}
-                    </span>
-                  </button>
-                </div>
-
-                {FLAVORS.map((flavor) => {
-                  const isSelected = selected.has(flavor.id);
-                  return (
-                    <label
-                      key={flavor.id}
-                      className="selection-row cursor-pointer transition-colors hover:bg-accent/50"
-                    >
-                      <span
-                        className={`checkbox-box flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
-                          isSelected
-                            ? "border-primary bg-primary text-primary-foreground"
-                            : "border-border bg-background"
-                        }`}
-                      >
-                        {isSelected && <Check className="h-3 w-3" />}
-                      </span>
-                      <input
-                        type="checkbox"
-                        className="sr-only"
-                        checked={isSelected}
-                        onChange={() => toggleFlavor(flavor.id)}
-                      />
-                      <span className="flex min-w-0 flex-col">
-                        <span className="text-xs font-semibold">{flavor.label}</span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {flavor.description}
-                        </span>
-                      </span>
-                    </label>
-                  );
-                })}
-
-                {OPTIONS.map((option) => {
-                  const isOn = toggles[option.id];
-                  return (
-                    <label
-                      key={option.id}
-                      className="selection-row toggle-row cursor-pointer transition-colors hover:bg-accent/50"
-                    >
-                      <span className="flex min-w-0 flex-1 flex-col">
-                        <span className="text-xs font-semibold">{option.label}</span>
-                        <span className="text-[10px] text-muted-foreground">
-                          {isOn ? "Enabled" : "Disabled"}
-                        </span>
-                      </span>
-                      <span
-                        className={`toggle-track relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors ${
-                          isOn ? "bg-primary" : "bg-input"
-                        }`}
-                      >
-                        <span
-                          className={`toggle-thumb inline-block h-4 w-4 transform rounded-full bg-background shadow transition-transform ${
-                            isOn ? "translate-x-4" : "translate-x-0"
-                          }`}
-                        />
-                      </span>
-                      <input
-                        type="checkbox"
-                        className="sr-only"
-                        checked={isOn}
-                        onChange={() => toggleOption(option.id)}
-                      />
-                    </label>
-                  );
-                })}
-              </div>
+              <SelectionApp
+                pattern={pattern}
+                selected={selected}
+                toggles={toggles}
+                allSelected={allSelected}
+                someSelected={someSelected}
+                onToggleFlavor={toggleFlavor}
+                onToggleSwitch={toggleSwitch}
+                onSelectAll={() => {
+                  if (allSelected) setSelected(new Set());
+                  else setSelected(new Set(FLAVORS.map((f) => f.id)));
+                }}
+              />
             </DeviceFrame>
           </div>
 
@@ -264,20 +248,62 @@ function CheckboxesDemo() {
             })}
           </div>
 
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() =>
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
+                    }
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">
+                        {o.label}
+                      </span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
               <span className="text-xs font-semibold text-muted-foreground">
-                checkboxes.css
+                checkboxes-{pattern}.css
               </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() =>
+                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
+                }
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -323,41 +349,289 @@ function CheckboxesDemo() {
           justify-content: space-between;
         }
 
+        .selection-list[data-pattern="checklist"] {
+          grid-template-columns: 1fr;
+        }
+
+        .selection-list[data-pattern="toggles"] {
+          grid-template-columns: 1fr;
+        }
+
         @container (min-width: 420px) {
-          .selection-list {
+          .selection-list[data-pattern="checklist"] {
             grid-template-columns: repeat(2, 1fr);
           }
-
-          .selection-row {
+          .selection-list[data-pattern="checklist"] .selection-row {
             flex-direction: column;
             align-items: flex-start;
             gap: 0.5rem;
           }
-
-          .toggle-row {
-            flex-direction: row;
-            align-items: center;
+          .selection-list[data-pattern="toggles"] {
+            grid-template-columns: repeat(2, 1fr);
           }
         }
 
         @container (min-width: 680px) {
-          .selection-list {
+          .selection-list[data-pattern="checklist"] {
             grid-template-columns: repeat(4, 1fr);
             align-content: center;
           }
-
-          .selection-row {
+          .selection-list[data-pattern="checklist"] .selection-row {
             align-items: center;
             text-align: center;
           }
-
-          .selection-row .checkbox-box,
-          .selection-row .toggle-track {
+          .selection-list[data-pattern="checklist"] .selection-row .checkbox-box {
             margin-inline: auto;
           }
         }
+
+        .selection-table {
+          width: 100%;
+          border-collapse: collapse;
+          font-size: 11px;
+        }
+
+        .selection-table th,
+        .selection-table td {
+          border-bottom: 1px solid hsl(var(--border));
+          padding: 0.5rem 0.5rem;
+          text-align: left;
+        }
+
+        .selection-table thead th {
+          background: hsl(var(--muted) / 0.5);
+          font-size: 9px;
+          text-transform: uppercase;
+          letter-spacing: 0.05em;
+          color: hsl(var(--muted-foreground));
+        }
+
+        .chip-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 0.5rem;
+        }
+
+        .chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.375rem;
+          border-radius: 999px;
+          padding: 0.4rem 0.75rem;
+          border: 1px solid hsl(var(--border));
+          background: hsl(var(--card));
+          transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .chip[data-selected="true"] {
+          background: hsl(var(--primary));
+          border-color: hsl(var(--primary));
+          color: hsl(var(--primary-foreground));
+        }
       `}</style>
     </main>
+  );
+}
+
+function SelectionApp({
+  pattern,
+  selected,
+  toggles,
+  allSelected,
+  someSelected,
+  onToggleFlavor,
+  onToggleSwitch,
+  onSelectAll,
+}: {
+  pattern: Pattern;
+  selected: Set<string>;
+  toggles: Record<string, boolean>;
+  allSelected: boolean;
+  someSelected: boolean;
+  onToggleFlavor: (id: string) => void;
+  onToggleSwitch: (id: string) => void;
+  onSelectAll: () => void;
+}) {
+  if (pattern === "table") {
+    return (
+      <div className="h-full w-full overflow-auto p-3">
+        <table className="selection-table">
+          <thead>
+            <tr>
+              <th className="w-8">
+                <button
+                  type="button"
+                  onClick={onSelectAll}
+                  aria-pressed={allSelected}
+                  className="checkbox-root"
+                >
+                  <span
+                    className={`checkbox-box flex h-4 w-4 items-center justify-center rounded border transition-colors ${
+                      allSelected || someSelected
+                        ? "border-primary bg-primary text-primary-foreground"
+                        : "border-border bg-background"
+                    }`}
+                  >
+                    {someSelected ? (
+                      <Minus className="h-3 w-3" />
+                    ) : allSelected ? (
+                      <Check className="h-3 w-3" />
+                    ) : null}
+                  </span>
+                </button>
+              </th>
+              <th>Flavor</th>
+              <th>Notes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {FLAVORS.map((flavor) => {
+              const isSelected = selected.has(flavor.id);
+              return (
+                <tr key={flavor.id} className="cursor-pointer hover:bg-accent/40" onClick={() => onToggleFlavor(flavor.id)}>
+                  <td>
+                    <span
+                      className={`checkbox-box flex h-4 w-4 items-center justify-center rounded border transition-colors ${
+                        isSelected
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "border-border bg-background"
+                      }`}
+                    >
+                      {isSelected && <Check className="h-3 w-3" />}
+                    </span>
+                  </td>
+                  <td className="font-semibold">{flavor.label}</td>
+                  <td className="text-muted-foreground">{flavor.description}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    );
+  }
+
+  if (pattern === "toggles") {
+    return (
+      <div data-pattern="toggles" className="selection-list h-full w-full overflow-auto p-3">
+        {FLAVORS.map((flavor) => {
+          const isOn = !!toggles[flavor.id];
+          return (
+            <label
+              key={flavor.id}
+              className="selection-row toggle-row cursor-pointer transition-colors hover:bg-accent/50"
+            >
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-xs font-semibold">{flavor.label}</span>
+                <span className="truncate text-[10px] text-muted-foreground">
+                  {isOn ? "Enabled" : "Disabled"}
+                </span>
+              </span>
+              <span
+                className={`toggle-track relative inline-flex h-5 w-9 shrink-0 items-center rounded-full border-2 border-transparent transition-colors ${
+                  isOn ? "bg-primary" : "bg-input"
+                }`}
+              >
+                <span
+                  className={`toggle-thumb inline-block h-4 w-4 transform rounded-full bg-background shadow transition-transform ${
+                    isOn ? "translate-x-4" : "translate-x-0"
+                  }`}
+                />
+              </span>
+              <input
+                type="checkbox"
+                className="sr-only"
+                checked={isOn}
+                onChange={() => onToggleSwitch(flavor.id)}
+              />
+            </label>
+          );
+        })}
+      </div>
+    );
+  }
+
+  if (pattern === "chips") {
+    return (
+      <div className="chip-list h-full w-full content-start overflow-auto p-3">
+        {FLAVORS.map((flavor) => {
+          const isSelected = selected.has(flavor.id);
+          return (
+            <button
+              key={flavor.id}
+              type="button"
+              data-selected={isSelected}
+              onClick={() => onToggleFlavor(flavor.id)}
+              className="chip text-[10px] font-semibold"
+            >
+              {isSelected && <Check className="h-3 w-3 shrink-0" />}
+              <span className="truncate">{flavor.label}</span>
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
+
+  // checklist
+  return (
+    <div data-pattern="checklist" className="selection-list h-full w-full overflow-auto p-3">
+      <div className="selection-row col-span-full flex items-center justify-between">
+        <span className="text-xs font-semibold">Select all flavors</span>
+        <button
+          type="button"
+          onClick={onSelectAll}
+          className="checkbox-root"
+          aria-pressed={allSelected}
+        >
+          <span
+            className={`checkbox-box flex h-4 w-4 items-center justify-center rounded border transition-colors ${
+              allSelected || someSelected
+                ? "border-primary bg-primary text-primary-foreground"
+                : "border-border bg-background"
+            }`}
+          >
+            {someSelected ? (
+              <Minus className="h-3 w-3" />
+            ) : allSelected ? (
+              <Check className="h-3 w-3" />
+            ) : null}
+          </span>
+        </button>
+      </div>
+
+      {FLAVORS.map((flavor) => {
+        const isSelected = selected.has(flavor.id);
+        return (
+          <label
+            key={flavor.id}
+            className="selection-row cursor-pointer transition-colors hover:bg-accent/50"
+          >
+            <span
+              className={`checkbox-box flex h-4 w-4 shrink-0 items-center justify-center rounded border transition-colors ${
+                isSelected
+                  ? "border-primary bg-primary text-primary-foreground"
+                  : "border-border bg-background"
+              }`}
+            >
+              {isSelected && <Check className="h-3 w-3" />}
+            </span>
+            <input
+              type="checkbox"
+              className="sr-only"
+              checked={isSelected}
+              onChange={() => onToggleFlavor(flavor.id)}
+            />
+            <span className="flex min-w-0 flex-col">
+              <span className="truncate text-xs font-semibold">{flavor.label}</span>
+              <span className="truncate text-[10px] text-muted-foreground">
+                {flavor.description}
+              </span>
+            </span>
+          </label>
+        );
+      })}
+    </div>
   );
 }
 

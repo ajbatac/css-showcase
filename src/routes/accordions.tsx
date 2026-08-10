@@ -25,6 +25,7 @@ export const Route = createFileRoute("/accordions")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern = "panels" | "stacked" | "grid" | "boxed";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,17 +33,28 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.accordion {
-  container-type: inline-size;
-  display: grid;
-  gap: 0.5rem;
-}
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "panels", label: "Side-by-side panels", desc: "Each item is a column" },
+    { id: "stacked", label: "Single-open list", desc: "Classic accordion behaviour" },
+    { id: "grid", label: "Two-column FAQ grid", desc: "Independent grid cells" },
+  ],
+  ipad: [
+    { id: "stacked", label: "Stacked list", desc: "One panel open at a time" },
+    { id: "panels", label: "Side-by-side panels", desc: "Columns per item" },
+  ],
+  mobile: [
+    { id: "stacked", label: "Stacked list", desc: "One panel open at a time" },
+    { id: "boxed", label: "Boxed cards", desc: "Cards separated by dividers" },
+  ],
+};
 
-/* Mobile: stacked single-panel */
-.accordion-item {
-  border-radius: 0.75rem;
-  overflow: clip;
-  transition: flex-grow 0.35s ease;
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  stacked: `/* Stacked list (single-open) */
+.accordion[data-pattern="stacked"] {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
 }
 
 .accordion-panel {
@@ -53,26 +65,51 @@ const CSS_CODE = `.accordion {
 
 .accordion-item[data-open="true"] .accordion-panel {
   grid-template-rows: 1fr;
+}`,
+  panels: `/* Side-by-side panels */
+.accordion[data-pattern="panels"] {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: 0.75rem;
 }
 
-/* iPad+: horizontal tabs */
-@container (min-width: 520px) {
-  .accordion {
-    grid-auto-flow: column;
-    grid-auto-columns: 1fr;
-    gap: 0.75rem;
-  }
+.accordion[data-pattern="panels"] .accordion-item {
+  display: flex;
+  flex-direction: column;
+}
 
-  .accordion-item {
-    display: flex;
-    flex-direction: column;
-  }
+.accordion[data-pattern="panels"] .accordion-panel {
+  grid-template-rows: 1fr;
+  flex: 1;
+}`,
+  grid: `/* Two-column FAQ grid */
+.accordion[data-pattern="grid"] {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+}`,
+  boxed: `/* Boxed cards with dividers */
+.accordion[data-pattern="boxed"] {
+  display: grid;
+  grid-template-columns: 1fr;
+  border: 1px solid hsl(var(--border));
+  border-radius: 0.75rem;
+  overflow: clip;
+}
 
-  .accordion-panel {
-    grid-template-rows: 1fr;
-    flex: 1;
-  }
-}`;
+.accordion[data-pattern="boxed"] .accordion-item {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid hsl(var(--border));
+  box-shadow: none;
+}
+
+.accordion[data-pattern="boxed"] .accordion-item:last-child {
+  border-bottom: 0;
+}`,
+};
 
 const SECTIONS = [
   {
@@ -94,14 +131,34 @@ const SECTIONS = [
 
 function AccordionsDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "panels",
+    ipad: "stacked",
+    mobile: "stacked",
+  });
   const [open, setOpen] = useState<Record<string, boolean>>({
     overview: true,
     details: false,
     settings: false,
   });
 
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
+  const singleOpen = pattern === "stacked" || pattern === "boxed";
+
   const toggle = (id: string) => {
-    setOpen((prev) => ({ ...prev, [id]: !prev[id] }));
+    setOpen((prev) => {
+      if (singleOpen) {
+        const isOpen = !!prev[id];
+        const next: Record<string, boolean> = {};
+        SECTIONS.forEach((s) => {
+          next[s.id] = false;
+        });
+        next[id] = !isOpen;
+        return next;
+      }
+      return { ...prev, [id]: !prev[id] };
+    });
   };
 
   return (
@@ -133,13 +190,16 @@ function AccordionsDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device}
+              {device} · {pattern}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div className="accordion h-full w-full p-2">
+              <div
+                data-pattern={pattern}
+                className="accordion h-full w-full overflow-auto p-2"
+              >
                 {SECTIONS.map((section) => {
                   const isOpen = open[section.id];
                   return (
@@ -153,9 +213,9 @@ function AccordionsDemo() {
                         onClick={() => toggle(section.id)}
                         className="accordion-trigger flex w-full items-center justify-between px-3 py-2 text-left text-[10px] font-semibold sm:text-xs"
                       >
-                        <span className="flex items-center gap-1.5">
+                        <span className="flex min-w-0 items-center gap-1.5">
                           <ListCollapse className="h-3 w-3 shrink-0 text-muted-foreground" />
-                          {section.title}
+                          <span className="truncate">{section.title}</span>
                         </span>
                         <ChevronDown
                           className={`h-3 w-3 shrink-0 text-muted-foreground transition-transform duration-300 ${
@@ -209,20 +269,62 @@ function AccordionsDemo() {
             })}
           </div>
 
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() =>
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
+                    }
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">
+                        {o.label}
+                      </span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
               <span className="text-xs font-semibold text-muted-foreground">
-                accordion.css
+                accordion-{pattern}.css
               </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() =>
+                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
+                }
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -268,22 +370,51 @@ function AccordionsDemo() {
           background-color: hsl(var(--accent));
         }
 
+        .accordion[data-pattern="panels"] {
+          grid-auto-flow: column;
+          grid-auto-columns: 1fr;
+          gap: 0.75rem;
+        }
+
+        .accordion[data-pattern="panels"] .accordion-item {
+          display: flex;
+          flex-direction: column;
+        }
+
+        .accordion[data-pattern="panels"] .accordion-panel {
+          grid-template-rows: 1fr;
+          flex: 1;
+        }
+
+        .accordion[data-pattern="grid"] {
+          grid-template-columns: repeat(2, 1fr);
+          gap: 0.75rem;
+          align-items: start;
+        }
+
+        .accordion[data-pattern="boxed"] {
+          grid-template-columns: 1fr;
+          border: 1px solid hsl(var(--border));
+          border-radius: 0.75rem;
+          overflow: clip;
+          gap: 0;
+        }
+
+        .accordion[data-pattern="boxed"] .accordion-item {
+          border: 0;
+          border-radius: 0;
+          border-bottom: 1px solid hsl(var(--border));
+          box-shadow: none;
+        }
+
+        .accordion[data-pattern="boxed"] .accordion-item:last-child {
+          border-bottom: 0;
+        }
+
         @container (min-width: 520px) {
-          .accordion {
+          .accordion[data-pattern="panels"] {
             grid-auto-flow: column;
             grid-auto-columns: 1fr;
-            gap: 0.75rem;
-            align-content: stretch;
-          }
-
-          .accordion-item {
-            display: flex;
-            flex-direction: column;
-          }
-
-          .accordion-panel {
-            grid-template-rows: 1fr;
-            flex: 1;
           }
         }
       `}</style>

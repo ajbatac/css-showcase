@@ -9,13 +9,13 @@ export const Route = createFileRoute("/modals")({
       {
         name: "description",
         content:
-          "Confirm, cancel, and dismiss modal flows reshaped for desktop, iPad, and mobile with container queries.",
+          "Confirm, cancel, and dismiss modal flows reshaped for desktop, iPad, and mobile with container queries, plus dialog, drawer, full-screen, and sheet design patterns per device.",
       },
       { property: "og:title", content: "Modals — Modern CSS Demos" },
       {
         property: "og:description",
         content:
-          "Three modal flows — confirm, cancel, dismiss — across device shapes using container-type and CSS grid.",
+          "Three modal flows — confirm, cancel, dismiss — across device shapes and design patterns using container-type and CSS grid.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -25,6 +25,7 @@ export const Route = createFileRoute("/modals")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern = "dialog" | "drawer" | "fullscreen" | "sheet";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,38 +33,21 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.modal-scrim {
-  position: absolute; inset: 0;
-  display: grid;
-  place-items: end center;         /* mobile: bottom sheet */
-  background: rgb(0 0 0 / .45);
-  container-type: inline-size;
-}
-
-.modal {
-  width: 100%;
-  border-radius: 1rem 1rem 0 0;    /* mobile sheet corners */
-  padding: 1rem;
-  animation: sheet-in .25s ease both;
-}
-
-/* iPad and up: centered dialog */
-@container (min-width: 520px) {
-  .modal-scrim { place-items: center; }
-  .modal {
-    max-width: 22rem;
-    border-radius: 1rem;
-  }
-}
-
-.modal[data-flow="confirm"] { --accent: var(--primary); }
-.modal[data-flow="cancel"]  { --accent: var(--destructive); }
-.modal[data-flow="dismiss"] { --accent: var(--muted-foreground); }
-
-@keyframes sheet-in {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0); }
-}`;
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "dialog", label: "Centered dialog", desc: "Classic modal on a scrim" },
+    { id: "drawer", label: "Side drawer", desc: "Panel slides in from the right" },
+    { id: "fullscreen", label: "Full-screen takeover", desc: "Modal fills the viewport" },
+  ],
+  ipad: [
+    { id: "dialog", label: "Centered dialog", desc: "Comfortable centered card" },
+    { id: "drawer", label: "Side drawer", desc: "Right-side sheet panel" },
+  ],
+  mobile: [
+    { id: "sheet", label: "Bottom sheet", desc: "Slides up from the bottom" },
+    { id: "fullscreen", label: "Full-screen takeover", desc: "Modal covers the whole screen" },
+  ],
+};
 
 type Flow = "confirm" | "cancel" | "dismiss";
 
@@ -117,10 +101,97 @@ const FLOWS: {
   },
 ];
 
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  dialog: `/* Centered dialog */
+.modal-scrim {
+  position: absolute; inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgb(0 0 0 / .45);
+  container-type: inline-size;
+}
+
+.modal {
+  width: min(92cqw, 320px);
+  border-radius: 1rem;
+  background: var(--card);
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / .4);
+  animation: dialog-in .2s ease both;
+}
+
+@keyframes dialog-in {
+  from { opacity: 0; transform: scale(.96); }
+  to   { opacity: 1; transform: scale(1); }
+}`,
+  drawer: `/* Side drawer */
+.modal-scrim {
+  position: absolute; inset: 0;
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+  background: rgb(0 0 0 / .45);
+}
+
+.modal {
+  width: min(70cqw, 320px);
+  height: 100%;
+  border-radius: 0;
+  border-left: 1px solid var(--border);
+  animation: drawer-in .25s ease both;
+}
+
+@keyframes drawer-in {
+  from { transform: translateX(100%); }
+  to   { transform: translateX(0); }
+}`,
+  fullscreen: `/* Full-screen takeover */
+.modal-scrim {
+  position: absolute; inset: 0;
+}
+
+.modal {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  animation: fade-in .2s ease both;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}`,
+  sheet: `/* Bottom sheet */
+.modal-scrim {
+  position: absolute; inset: 0;
+  display: grid;
+  place-items: end center;
+  background: rgb(0 0 0 / .45);
+}
+
+.modal {
+  width: 100%;
+  border-radius: 1rem 1rem 0 0;
+  animation: sheet-in .25s ease both;
+}
+
+@keyframes sheet-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}`,
+};
+
 function ModalsDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "drawer",
+    ipad: "dialog",
+    mobile: "sheet",
+  });
   const [flow, setFlow] = useState<Flow>("confirm");
   const [open, setOpen] = useState(true);
+
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -130,11 +201,12 @@ function ModalsDemo() {
             Modern CSS · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            One modal. Three flows. Two shapes.
+            One modal. Many flows and patterns.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Confirm, cancel, and dismiss modals that slide up as a sheet on mobile and center as a
-            dialog on larger devices using{" "}
+            Pick a device, then pick a design pattern — dialog, drawer, and
+            full-screen on desktop, bottom sheet or full-screen on mobile —
+            each driven by{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code> and{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">data-flow</code>.
           </p>
@@ -149,12 +221,18 @@ function ModalsDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device} · {flow}
+              {device} · {pattern} · {flow}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
-            <DeviceFrame device={device} flow={flow} open={open} onClose={() => setOpen(false)} />
+            <DeviceFrame
+              device={device}
+              pattern={pattern}
+              flow={flow}
+              open={open}
+              onClose={() => setOpen(false)}
+            />
           </div>
 
           <div
@@ -187,6 +265,47 @@ function ModalsDemo() {
                 </button>
               );
             })}
+          </div>
+
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() => {
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }));
+                      setOpen(true);
+                    }}
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">
+                        {o.label}
+                      </span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
           </div>
 
           <div className="border-t px-4 py-3">
@@ -225,16 +344,18 @@ function ModalsDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">modal.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                modal-{pattern}.css
+              </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -245,7 +366,7 @@ function ModalsDemo() {
             <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-foreground">
               <li>• Container queries</li>
               <li>• data-* flow variants</li>
-              <li>• Bottom-sheet → dialog</li>
+              <li>• Dialog / drawer / sheet</li>
               <li>• Keyframe entrance</li>
               <li>• Semantic tokens</li>
               <li>• Grid place-items</li>
@@ -259,11 +380,13 @@ function ModalsDemo() {
 
 function DeviceFrame({
   device,
+  pattern,
   flow,
   open,
   onClose,
 }: {
   device: Device;
+  pattern: Pattern;
   flow: Flow;
   open: boolean;
   onClose: () => void;
@@ -288,16 +411,39 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <ModalApp flow={flow} open={open} onClose={onClose} />
+      <ModalApp pattern={pattern} flow={flow} open={open} onClose={onClose} />
     </div>
   );
 }
 
+const SCRIM_CLASS: Record<Pattern, string> = {
+  dialog: "items-center justify-center p-2",
+  drawer: "items-stretch justify-end",
+  fullscreen: "",
+  sheet: "items-end justify-center",
+};
+
+const MODAL_CLASS: Record<Pattern, string> = {
+  dialog: "w-[min(92%,220px)] rounded-xl border p-2 shadow-xl",
+  drawer: "h-full w-[62%] rounded-none border-l p-2 shadow-xl",
+  fullscreen: "h-full w-full rounded-none p-2",
+  sheet: "w-full rounded-t-xl border p-2 shadow-xl",
+};
+
+const MODAL_ANIM: Record<Pattern, string> = {
+  dialog: "dialog-in .2s ease both",
+  drawer: "drawer-in .25s ease both",
+  fullscreen: "fade-in .2s ease both",
+  sheet: "sheet-in .25s ease both",
+};
+
 function ModalApp({
+  pattern,
   flow,
   open,
   onClose,
 }: {
+  pattern: Pattern;
   flow: Flow;
   open: boolean;
   onClose: () => void;
@@ -324,15 +470,15 @@ function ModalApp({
 
       {open && (
         <div
-          className="modal-scrim absolute inset-0 grid bg-black/45"
-          style={{ containerType: "inline-size" }}
+          className={`absolute inset-0 z-10 flex bg-black/45 ${SCRIM_CLASS[pattern]}`}
           onClick={onClose}
         >
           <div
             data-flow={flow}
+            data-pattern={pattern}
             onClick={(e) => e.stopPropagation()}
-            className={`modal w-full border p-2 shadow-xl ${f.ring}`}
-            style={{ animation: "sheet-in .25s ease both" }}
+            className={`border shadow-xl ${MODAL_CLASS[pattern]} ${f.ring}`}
+            style={{ animation: MODAL_ANIM[pattern] }}
           >
             <div className="mb-1 flex items-start gap-1.5">
               <f.icon className={`mt-0.5 h-3 w-3 shrink-0 ${f.tone}`} />
@@ -369,15 +515,21 @@ function ModalApp({
       )}
 
       <style>{`
+        @keyframes dialog-in {
+          from { opacity: 0; transform: scale(.96); }
+          to   { opacity: 1; transform: scale(1); }
+        }
+        @keyframes drawer-in {
+          from { transform: translateX(100%); }
+          to   { transform: translateX(0); }
+        }
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to   { opacity: 1; }
+        }
         @keyframes sheet-in {
           from { opacity: 0; transform: translateY(8px); }
           to   { opacity: 1; transform: translateY(0); }
-        }
-        .modal-scrim { place-items: end center; }
-        .modal { border-radius: .6rem .6rem 0 0; }
-        @container (min-width: 520px) {
-          .modal-scrim { place-items: center; }
-          .modal { max-width: 70%; border-radius: .6rem; }
         }
       `}</style>
     </div>

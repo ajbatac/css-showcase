@@ -25,6 +25,13 @@ export const Route = createFileRoute("/toasts")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
+type Pattern =
+  | "top-right"
+  | "bottom-right"
+  | "banner"
+  | "bottom-center"
+  | "bottom-full"
+  | "top-banner";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -32,32 +39,111 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const CSS_CODE = `.toast-stack {
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
+  desktop: [
+    { id: "top-right", label: "Top-right stack", desc: "Corner-anchored stack" },
+    { id: "bottom-right", label: "Bottom-right stack", desc: "Classic corner toasts" },
+    { id: "banner", label: "Centered banner", desc: "Full-width bar under header" },
+  ],
+  ipad: [
+    { id: "bottom-center", label: "Bottom-center stack", desc: "Floating pill stack" },
+    { id: "top-right", label: "Top-right stack", desc: "Corner-anchored stack" },
+  ],
+  mobile: [
+    { id: "bottom-full", label: "Bottom snackbar", desc: "Full-width edge snackbar" },
+    { id: "top-banner", label: "Top inline banner", desc: "Banner under status bar" },
+  ],
+};
+
+const CSS_BY_PATTERN: Record<Pattern, string> = {
+  "top-right": `/* Top-right stack */
+.toast-stack {
   container-type: inline-size;
+  position: absolute;
+  top: .5rem;
+  right: .5rem;
   display: grid;
+  justify-items: end;
   gap: .5rem;
 }
 
-/* Mobile: full-width edge-to-edge */
 .toast {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
-  gap: .5rem;
+  max-width: min(60cqw, 22rem);
   border-radius: .5rem;
-  padding: .5rem .75rem;
+}`,
+  "bottom-right": `/* Bottom-right stack */
+.toast-stack {
+  container-type: inline-size;
+  position: absolute;
+  bottom: .5rem;
+  right: .5rem;
+  display: grid;
+  justify-items: end;
+  gap: .5rem;
 }
 
-/* iPad and up: cap width, right-align */
-@container (min-width: 520px) {
-  .toast-stack { justify-items: end; }
-  .toast { max-width: 22rem; }
+.toast {
+  max-width: min(60cqw, 22rem);
+  border-radius: .5rem;
+}`,
+  banner: `/* Centered banner under header */
+.toast-banner {
+  position: absolute;
+  inset-inline: .5rem;
+  top: .5rem;
+  display: grid;
+  justify-items: center;
 }
 
-/* Variants via data-attribute */
-.toast[data-variant="success"] { background: hsl(var(--success) / .12); }
-.toast[data-variant="error"]   { background: hsl(var(--destructive) / .12); }
-.toast[data-variant="warning"] { background: hsl(var(--warning) / .12); }
-.toast[data-variant="info"]    { background: hsl(var(--muted)); }`;
+.toast {
+  width: 100%;
+  border-radius: .5rem;
+  text-align: center;
+}`,
+  "bottom-center": `/* Bottom-center floating stack */
+.toast-stack {
+  container-type: inline-size;
+  position: absolute;
+  bottom: .5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: grid;
+  justify-items: center;
+  gap: .5rem;
+}
+
+.toast {
+  max-width: min(80cqw, 24rem);
+  border-radius: .75rem;
+}`,
+  "bottom-full": `/* Bottom full-width snackbar */
+.toast-stack {
+  container-type: inline-size;
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: grid;
+  gap: .25rem;
+}
+
+.toast {
+  width: 100%;
+  border-radius: .5rem .5rem 0 0;
+}`,
+  "top-banner": `/* Top inline banner */
+.toast-banner {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: grid;
+}
+
+.toast {
+  width: 100%;
+  border-radius: 0;
+  text-align: left;
+}`,
+};
 
 type Variant = "success" | "error" | "warning" | "info";
 
@@ -110,6 +196,11 @@ const VARIANTS: {
 
 function ToastsDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+    desktop: "top-right",
+    ipad: "bottom-center",
+    mobile: "bottom-full",
+  });
   const [visible, setVisible] = useState<Record<Variant, boolean>>({
     success: true,
     error: true,
@@ -118,6 +209,8 @@ function ToastsDemo() {
   });
 
   const toggle = (v: Variant) => setVisible((s) => ({ ...s, [v]: !s[v] }));
+  const pattern = patterns[device];
+  const options = PATTERNS[device];
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -127,13 +220,12 @@ function ToastsDemo() {
             Modern CSS · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Four toasts. One responsive stack.
+            Four toasts. Many placements per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Success, error, warning, and info feedback that goes full-bleed on mobile and
-            right-anchored on tablet/desktop using{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code> and{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">data-variant</code>.
+            Pick a device, then pick a placement pattern for that device — desktop offers
+            top-right, bottom-right, and centered banner; mobile offers a full-width snackbar
+            and a top inline banner.
           </p>
         </header>
 
@@ -146,12 +238,12 @@ function ToastsDemo() {
               Featured demo
             </h2>
             <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              {device}
+              {device} · {pattern}
             </span>
           </div>
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
-            <DeviceFrame device={device} visible={visible} />
+            <DeviceFrame device={device} pattern={pattern} visible={visible} />
           </div>
 
           <div
@@ -186,6 +278,46 @@ function ToastsDemo() {
             })}
           </div>
 
+          <div className="border-t bg-muted/20 p-3">
+            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+              {device} design patterns
+            </p>
+            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
+              {options.map((o) => {
+                const active = pattern === o.id;
+                return (
+                  <button
+                    key={o.id}
+                    role="tab"
+                    aria-selected={active}
+                    onClick={() =>
+                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
+                    }
+                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
+                    }`}
+                  >
+                    <span className="min-w-0">
+                      <span className="block truncate text-xs font-semibold">
+                        {o.label}
+                      </span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
+                    </span>
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
+                        active ? "bg-primary" : "bg-border"
+                      }`}
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
           <div className="border-t px-4 py-3">
             <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
               Toggle variants
@@ -211,16 +343,18 @@ function ToastsDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">toasts.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                toasts-{pattern}.css
+              </span>
               <button
-                onClick={() => navigator.clipboard?.writeText(CSS_CODE)}
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
               </button>
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
-              <code>{CSS_CODE}</code>
+              <code>{CSS_BY_PATTERN[pattern]}</code>
             </pre>
           </div>
 
@@ -245,9 +379,11 @@ function ToastsDemo() {
 
 function DeviceFrame({
   device,
+  pattern,
   visible,
 }: {
   device: Device;
+  pattern: Pattern;
   visible: Record<Variant, boolean>;
 }) {
   const style: Record<Device, React.CSSProperties> = {
@@ -270,12 +406,31 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <ToastApp visible={visible} />
+      <ToastApp pattern={pattern} visible={visible} />
     </div>
   );
 }
 
-function ToastApp({ visible }: { visible: Record<Variant, boolean> }) {
+function ToastApp({
+  pattern,
+  visible,
+}: {
+  pattern: Pattern;
+  visible: Record<Variant, boolean>;
+}) {
+  const items = VARIANTS.filter((v) => visible[v.id]);
+  const isBanner = pattern === "banner" || pattern === "top-banner";
+  const bannerItem = items[0];
+
+  const stackPositionClass: Record<Pattern, string> = {
+    "top-right": "top-1.5 right-1.5 items-end",
+    "bottom-right": "bottom-1.5 right-1.5 items-end",
+    "bottom-center": "bottom-1.5 left-1/2 -translate-x-1/2 items-center",
+    "bottom-full": "inset-x-0 bottom-0 items-stretch",
+    banner: "",
+    "top-banner": "",
+  };
+
   return (
     <div className="toast-app relative flex h-full w-full flex-col overflow-hidden rounded-lg bg-card">
       {/* Fake app chrome */}
@@ -293,34 +448,56 @@ function ToastApp({ visible }: { visible: Record<Variant, boolean> }) {
         </div>
       </div>
 
-      {/* Toast stack */}
-      <div className="toast-stack pointer-events-none absolute inset-x-1.5 bottom-1.5 grid gap-1">
-        {VARIANTS.filter((v) => visible[v.id]).map((v) => (
+      {isBanner ? (
+        bannerItem && (
           <div
-            key={v.id}
-            data-variant={v.id}
-            className={`toast pointer-events-auto flex items-start gap-1.5 rounded-md border px-1.5 py-1 shadow-sm backdrop-blur ${v.bar} ${v.tone}`}
+            className={`toast-banner absolute inset-x-0 flex items-start gap-1.5 border px-2 py-1.5 shadow-sm backdrop-blur ${bannerItem.bar} ${bannerItem.tone} ${
+              pattern === "banner"
+                ? "top-1.5 mx-1.5 rounded-md text-center justify-center"
+                : "top-0 rounded-none"
+            }`}
+            data-variant={bannerItem.id}
             style={{ animation: "toast-in .3s ease both" }}
           >
-            <v.icon className="mt-0.5 h-2.5 w-2.5 shrink-0" />
+            <bannerItem.icon className="mt-0.5 h-2.5 w-2.5 shrink-0" />
             <div className="min-w-0 flex-1">
-              <div className="truncate text-[8px] font-semibold leading-tight">{v.title}</div>
-              <div className="truncate text-[7px] opacity-70 leading-tight">{v.body}</div>
+              <div className="truncate text-[8px] font-semibold leading-tight">
+                {bannerItem.title}
+              </div>
+              <div className="truncate text-[7px] leading-tight opacity-70">
+                {bannerItem.body}
+              </div>
             </div>
-            <div className="text-[8px] opacity-50">×</div>
           </div>
-        ))}
-      </div>
+        )
+      ) : (
+        <div
+          className={`toast-stack pointer-events-none absolute grid gap-1 p-1.5 ${stackPositionClass[pattern]}`}
+        >
+          {items.map((v) => (
+            <div
+              key={v.id}
+              data-variant={v.id}
+              className={`toast pointer-events-auto flex items-start gap-1.5 border px-1.5 py-1 shadow-sm backdrop-blur ${v.bar} ${v.tone} ${
+                pattern === "bottom-full" ? "w-full rounded-t-md" : "max-w-[60%] rounded-md"
+              }`}
+              style={{ animation: "toast-in .3s ease both" }}
+            >
+              <v.icon className="mt-0.5 h-2.5 w-2.5 shrink-0" />
+              <div className="min-w-0 flex-1">
+                <div className="truncate text-[8px] font-semibold leading-tight">{v.title}</div>
+                <div className="truncate text-[7px] opacity-70 leading-tight">{v.body}</div>
+              </div>
+              <div className="text-[8px] opacity-50">×</div>
+            </div>
+          ))}
+        </div>
+      )}
 
       <style>{`
         @keyframes toast-in {
           from { opacity: 0; transform: translateY(6px); }
           to   { opacity: 1; transform: translateY(0); }
-        }
-        .toast-stack { justify-items: stretch; }
-        @container (min-width: 520px) {
-          .toast-stack { justify-items: end; }
-          .toast { max-width: 60%; }
         }
       `}</style>
     </div>
