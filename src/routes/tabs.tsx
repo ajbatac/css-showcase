@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Activity, BarChart3, Lock, Settings2, ShieldAlert, Users } from "lucide-react";
+import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/tabs")({
   head: () => ({
@@ -200,12 +201,19 @@ const TABS: TabDef[] = [
 ];
 
 function TabsDemo() {
-  const [device, setDevice] = useState<Device>("mobile");
-  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+  const initial = useDemoSearch();
+  const [device, setDevice] = useState<Device>(
+    initial.device && initial.device in PATTERNS
+      ? (initial.device as Device)
+      : "mobile",
+  );
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
+    seedPatterns<Device, Pattern>(PATTERNS, initial, {
     desktop: "underline",
     ipad: "underline",
     mobile: "scroll",
-  });
+    }),
+  );
   const firstEnabled = TABS.find((t) => !t.disabled)?.id ?? TABS[0].id;
   const [active, setActive] = useState<string>(firstEnabled);
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
@@ -404,9 +412,12 @@ function TabsDemo() {
           </div>
 
           <div className="border-t bg-muted/20 p-3">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              {device} design patterns
-            </p>
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                {device} design patterns
+              </p>
+              <CopyLinkButton device={device} pattern={pattern} />
+            </div>
             <div role="tablist" aria-label="Design pattern" className="grid gap-2">
               {options.map((o) => {
                 const isActive = pattern === o.id;

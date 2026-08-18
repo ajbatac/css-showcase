@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/sliders")({
   head: () => ({
@@ -116,12 +117,19 @@ input[type="range"] {
 };
 
 function SlidersDemo() {
-  const [device, setDevice] = useState<Device>("mobile");
-  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+  const initial = useDemoSearch();
+  const [device, setDevice] = useState<Device>(
+    initial.device && initial.device in PATTERNS
+      ? (initial.device as Device)
+      : "mobile",
+  );
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
+    seedPatterns<Device, Pattern>(PATTERNS, initial, {
     desktop: "labelled",
     ipad: "labelled",
     mobile: "labelled",
-  });
+    }),
+  );
   const [volume, setVolume] = useState<number>(65);
   const [brightness, setBrightness] = useState<number>(40);
   const [range, setRange] = useState<[number, number]>([20, 75]);
@@ -345,9 +353,12 @@ function SlidersDemo() {
           </div>
 
           <div className="border-t bg-muted/20 p-3">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              {device} design patterns
-            </p>
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                {device} design patterns
+              </p>
+              <CopyLinkButton device={device} pattern={pattern} />
+            </div>
             <div role="tablist" aria-label="Design pattern" className="grid gap-2">
               {options.map((o) => {
                 const active = pattern === o.id;

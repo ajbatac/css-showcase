@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Menu, X, Search, Bell, ChevronDown, MoreHorizontal, Home, Compass, Bookmark, User } from "lucide-react";
+import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/navigation")({
   head: () => ({
@@ -122,12 +123,19 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 };
 
 function NavigationDemo() {
-  const [device, setDevice] = useState<Device>("mobile");
-  const [patterns, setPatterns] = useState<Record<Device, Pattern>>({
+  const initial = useDemoSearch();
+  const [device, setDevice] = useState<Device>(
+    initial.device && initial.device in PATTERNS
+      ? (initial.device as Device)
+      : "mobile",
+  );
+  const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
+    seedPatterns<Device, Pattern>(PATTERNS, initial, {
     desktop: "topbar",
     ipad: "rail",
     mobile: "drawer",
-  });
+    }),
+  );
 
   const pattern = patterns[device];
   const options = PATTERNS[device];
@@ -201,9 +209,12 @@ function NavigationDemo() {
           </div>
 
           <div className="border-t bg-muted/20 p-3">
-            <p className="mb-2 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
-              {device} design patterns
-            </p>
+            <div className="mb-2 flex items-center justify-between gap-2">
+              <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground">
+                {device} design patterns
+              </p>
+              <CopyLinkButton device={device} pattern={pattern} />
+            </div>
             <div role="tablist" aria-label="Design pattern" className="grid gap-2">
               {options.map((o) => {
                 const active = pattern === o.id;
