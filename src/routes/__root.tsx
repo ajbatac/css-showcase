@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
+import { Toaster } from "@/components/ui/sonner";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -135,6 +136,7 @@ function RootComponent() {
           </div>
         </div>
       </SidebarProvider>
+      <Toaster position="top-center" />
     </QueryClientProvider>
   );
 }
