@@ -136,6 +136,14 @@ export const DEMOS: Demo[] = [
     icon: PanelTop,
     status: "live",
   },
+  {
+    slug: "uploaders",
+    name: "File Uploaders",
+    short: "Uploaders",
+    path: "/uploaders",
+    icon: UploadCloud,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
