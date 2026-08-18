@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles } from "lucide-react";
+import { Bell, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
@@ -134,6 +134,14 @@ export const DEMOS: Demo[] = [
     short: "Tabs",
     path: "/tabs",
     icon: PanelTop,
+    status: "live",
+  },
+  {
+    slug: "uploaders",
+    name: "File Uploaders",
+    short: "Uploaders",
+    path: "/uploaders",
+    icon: UploadCloud,
     status: "live",
   },
 ];

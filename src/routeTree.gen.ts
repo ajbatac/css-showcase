@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as UploadersRouteImport } from './routes/uploaders'
 import { Route as ToastsRouteImport } from './routes/toasts'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as SlidersRouteImport } from './routes/sliders'
@@ -24,6 +25,11 @@ import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
 
+const UploadersRoute = UploadersRouteImport.update({
+  id: '/uploaders',
+  path: '/uploaders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
@@ -110,6 +116,7 @@ export interface FileRoutesByFullPath {
   '/sliders': typeof SlidersRoute
   '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
+  '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -126,6 +133,7 @@ export interface FileRoutesByTo {
   '/sliders': typeof SlidersRoute
   '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
+  '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -143,6 +151,7 @@ export interface FileRoutesById {
   '/sliders': typeof SlidersRoute
   '/tabs': typeof TabsRoute
   '/toasts': typeof ToastsRoute
+  '/uploaders': typeof UploadersRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -161,6 +170,7 @@ export interface FileRouteTypes {
     | '/sliders'
     | '/tabs'
     | '/toasts'
+    | '/uploaders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -177,6 +187,7 @@ export interface FileRouteTypes {
     | '/sliders'
     | '/tabs'
     | '/toasts'
+    | '/uploaders'
   id:
     | '__root__'
     | '/'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/sliders'
     | '/tabs'
     | '/toasts'
+    | '/uploaders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -210,10 +222,18 @@ export interface RootRouteChildren {
   SlidersRoute: typeof SlidersRoute
   TabsRoute: typeof TabsRoute
   ToastsRoute: typeof ToastsRoute
+  UploadersRoute: typeof UploadersRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/uploaders': {
+      id: '/uploaders'
+      path: '/uploaders'
+      fullPath: '/uploaders'
+      preLoaderRoute: typeof UploadersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/toasts': {
       id: '/toasts'
       path: '/toasts'
@@ -330,6 +350,7 @@ const rootRouteChildren: RootRouteChildren = {
   SlidersRoute: SlidersRoute,
   TabsRoute: TabsRoute,
   ToastsRoute: ToastsRoute,
+  UploadersRoute: UploadersRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
