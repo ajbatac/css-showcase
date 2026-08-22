@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles, UploadCloud } from "lucide-react";
+import { Bell, CalendarDays, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
@@ -142,6 +142,14 @@ export const DEMOS: Demo[] = [
     short: "Uploaders",
     path: "/uploaders",
     icon: UploadCloud,
+    status: "live",
+  },
+  {
+    slug: "datepicker",
+    name: "Date Pickers",
+    short: "Datepicker",
+    path: "/datepicker",
+    icon: CalendarDays,
     status: "live",
   },
 ];
