@@ -144,6 +144,14 @@ export const DEMOS: Demo[] = [
     icon: UploadCloud,
     status: "live",
   },
+  {
+    slug: "datepicker",
+    name: "Date Pickers",
+    short: "Datepicker",
+    path: "/datepicker",
+    icon: CalendarDays,
+    status: "live",
+  },
 ];
 
 export function AppSidebar() {
