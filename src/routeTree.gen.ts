@@ -21,6 +21,7 @@ import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
@@ -85,6 +86,11 @@ const DropdownsRoute = DropdownsRouteImport.update({
   path: '/dropdowns',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DatepickerRoute = DatepickerRouteImport.update({
+  id: '/datepicker',
+  path: '/datepicker',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckboxesRoute = CheckboxesRouteImport.update({
   id: '/checkboxes',
   path: '/checkboxes',
@@ -105,6 +111,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -122,6 +129,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -140,6 +148,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/checkboxes'
+    | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -176,6 +186,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/checkboxes'
+    | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -193,6 +204,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/checkboxes'
+    | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
@@ -211,6 +223,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccordionsRoute: typeof AccordionsRoute
   CheckboxesRoute: typeof CheckboxesRoute
+  DatepickerRoute: typeof DatepickerRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   GridRoute: typeof GridRoute
@@ -311,6 +324,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DropdownsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/datepicker': {
+      id: '/datepicker'
+      path: '/datepicker'
+      fullPath: '/datepicker'
+      preLoaderRoute: typeof DatepickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkboxes': {
       id: '/checkboxes'
       path: '/checkboxes'
@@ -339,6 +359,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccordionsRoute: AccordionsRoute,
   CheckboxesRoute: CheckboxesRoute,
+  DatepickerRoute: DatepickerRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   GridRoute: GridRoute,
