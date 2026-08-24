@@ -416,7 +416,7 @@ function LoadersDemo() {
         .inline-skeleton .input {
           background: linear-gradient(90deg,
             hsl(var(--muted)) 25%,
-            hsl(var(--muted-foreground) / 0.12) 50%,
+            hsl(var(--muted-foreground) / 0.28) 50%,
             hsl(var(--muted)) 75%);
           background-size: 200% 100%;
           animation: shimmer 1.5s infinite linear;
