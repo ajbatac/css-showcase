@@ -74,7 +74,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   border-radius: 0.375rem;
   background: linear-gradient(90deg,
     var(--muted) 25%,
-    var(--muted-foreground) / 0.15 50%,
+    color-mix(in oklab, var(--muted-foreground) 15%, transparent) 50%,
     var(--muted) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite linear;
@@ -416,7 +416,7 @@ function LoadersDemo() {
         .inline-skeleton .input {
           background: linear-gradient(90deg,
             var(--muted) 25%,
-            var(--muted-foreground) / 0.28 50%,
+            color-mix(in oklab, var(--muted-foreground) 28%, transparent) 50%,
             var(--muted) 75%);
           background-size: 200% 100%;
           animation: shimmer 1.5s infinite linear;
