@@ -145,6 +145,14 @@ export const DEMOS: Demo[] = [
     status: "live",
   },
   {
+    slug: "loaders",
+    name: "Loaders",
+    short: "Loaders",
+    path: "/loaders",
+    icon: Loader2,
+    status: "live",
+  },
+  {
     slug: "datepicker",
     name: "Date Pickers",
     short: "Datepicker",
