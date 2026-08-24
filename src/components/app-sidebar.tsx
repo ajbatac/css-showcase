@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, CalendarDays, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles, UploadCloud } from "lucide-react";
+import { Bell, CalendarDays, CheckSquare, ChevronDown, CircleDot, LayoutGrid, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, PanelTop, Rows3, SlidersHorizontal, Smartphone, Sparkles, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
