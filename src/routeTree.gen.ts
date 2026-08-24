@@ -18,6 +18,7 @@ import { Route as RadiosRouteImport } from './routes/radios'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
+import { Route as LoadersRouteImport } from './routes/loaders'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
@@ -71,6 +72,11 @@ const LoginScreensRoute = LoginScreensRouteImport.update({
   path: '/login-screens',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoadersRoute = LoadersRouteImport.update({
+  id: '/loaders',
+  path: '/loaders',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GridRoute = GridRouteImport.update({
   id: '/grid',
   path: '/grid',
@@ -115,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -133,6 +140,7 @@ export interface FileRoutesByTo {
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -152,6 +160,7 @@ export interface FileRoutesById {
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
@@ -172,6 +181,7 @@ export interface FileRouteTypes {
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -190,6 +200,7 @@ export interface FileRouteTypes {
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -208,6 +219,7 @@ export interface FileRouteTypes {
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
@@ -227,6 +239,7 @@ export interface RootRouteChildren {
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   GridRoute: typeof GridRoute
+  LoadersRoute: typeof LoadersRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginScreensRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/loaders': {
+      id: '/loaders'
+      path: '/loaders'
+      fullPath: '/loaders'
+      preLoaderRoute: typeof LoadersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/grid': {
       id: '/grid'
       path: '/grid'
@@ -363,6 +383,7 @@ const rootRouteChildren: RootRouteChildren = {
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   GridRoute: GridRoute,
+  LoadersRoute: LoadersRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
