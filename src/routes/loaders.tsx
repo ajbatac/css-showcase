@@ -66,16 +66,16 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   gap: 0.5rem;
   padding: 0.75rem;
   border-radius: 0.75rem;
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+  background: var(--card);
+  border: 1px solid var(--border);
 }
 
 .skeleton {
   border-radius: 0.375rem;
   background: linear-gradient(90deg,
-    hsl(var(--muted)) 25%,
-    hsl(var(--muted-foreground) / 0.15) 50%,
-    hsl(var(--muted)) 75%);
+    var(--muted) 25%,
+    var(--muted-foreground) / 0.15 50%,
+    var(--muted) 75%);
   background-size: 200% 100%;
   animation: shimmer 1.4s infinite linear;
 }
@@ -95,7 +95,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .spinner {
   inline-size: 1.5rem;
   block-size: 1.5rem;
-  border: 2px solid hsl(var(--muted));
+  border: 2px solid var(--muted);
   border-top-color: var(--primary);
   border-radius: 999px;
   animation: spin 0.8s linear infinite;
@@ -113,7 +113,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .progress-track {
   block-size: 0.5rem;
   border-radius: 999px;
-  background: hsl(var(--muted));
+  background: var(--muted);
   overflow: hidden;
 }
 
@@ -141,8 +141,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   gap: 0.625rem;
   padding: 0.625rem;
   border-radius: 0.625rem;
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+  background: var(--card);
+  border: 1px solid var(--border);
 }
 
 .skeleton-avatar {
@@ -191,19 +191,19 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   inline-size: 3.25rem;
   block-size: 3.25rem;
   border-radius: 999px;
-  background: hsl(var(--muted));
+  background: var(--muted);
 }
 
 .post-card {
   padding: 0.75rem;
   border-radius: 0.875rem;
-  background: hsl(var(--card));
-  border: 1px solid hsl(var(--border));
+  background: var(--card);
+  border: 1px solid var(--border);
 }
 
 .skeleton {
   border-radius: 0.25rem;
-  background: hsl(var(--muted));
+  background: var(--muted);
 }`,
   "dot-pulse": `/* Dot pulse */
 .dot-pulse {
@@ -415,9 +415,9 @@ function LoadersDemo() {
         .inline-skeleton .label,
         .inline-skeleton .input {
           background: linear-gradient(90deg,
-            hsl(var(--muted)) 25%,
-            hsl(var(--muted-foreground) / 0.28) 50%,
-            hsl(var(--muted)) 75%);
+            var(--muted) 25%,
+            var(--muted-foreground) / 0.28 50%,
+            var(--muted) 75%);
           background-size: 200% 100%;
           animation: shimmer 1.5s infinite linear;
         }
