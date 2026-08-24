@@ -191,6 +191,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   inline-size: 3.25rem;
   block-size: 3.25rem;
   border-radius: 999px;
+  background: hsl(var(--muted));
 }
 
 .post-card {
@@ -198,6 +199,11 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   border-radius: 0.875rem;
   background: hsl(var(--card));
   border: 1px solid hsl(var(--border));
+}
+
+.skeleton {
+  border-radius: 0.25rem;
+  background: hsl(var(--muted));
 }`,
   "dot-pulse": `/* Dot pulse */
 .dot-pulse {
