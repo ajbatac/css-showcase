@@ -531,9 +531,28 @@ function LoadersDemo() {
           animation: load 2s ease-in-out infinite alternate;
         }
 
+        .blurred-grid {
+          display: grid;
+          gap: 0.75rem;
+          grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+        }
+
+        @container (max-width: 360px) {
+          .blurred-grid { grid-template-columns: 1fr; }
+        }
+
         .blurred-thumb {
+          aspect-ratio: 4 / 3;
+          border-radius: 0.75rem;
+          background: var(--muted);
           filter: blur(10px) brightness(0.95);
           animation: pulse-blur 1.6s ease-in-out infinite;
+        }
+
+        .blurred-caption {
+          display: grid;
+          gap: 0.375rem;
+          margin-block-start: 0.5rem;
         }
 
         .table-row {
