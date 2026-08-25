@@ -751,7 +751,7 @@ function LoaderStage({ pattern }: { pattern: Pattern }) {
           <div className="table-row header">
             <span className="text-[9px] font-medium text-muted-foreground">Project</span>
             <span className="text-[9px] font-medium text-muted-foreground">Status</span>
-            <span className="text-[9px] font-medium text-muted-foreground cell">Date</span>
+            <span className="text-[9px] font-medium text-muted-foreground">Date</span>
             <span className="text-[9px] font-medium text-muted-foreground">Amount</span>
           </div>
           {Array.from({ length: 5 }).map((_, i) => (
