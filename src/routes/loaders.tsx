@@ -10,13 +10,13 @@ export const Route = createFileRoute("/loaders")({
       {
         name: "description",
         content:
-          "Skeleton screens, spinners, progress bars, and shimmer placeholders — one loading system reshaped per device with CSS animations and container queries.",
+          "Skeleton screens, spinners, progress bars, blurred image placeholders, loading table rows, and shimmer placeholders — one loading system reshaped per device with CSS animations and container queries.",
       },
       { property: "og:title", content: "Loaders — Modern CSS Demos" },
       {
         property: "og:description",
         content:
-          "Per-device loading patterns: desktop skeleton grids and spinner rows, iPad list skeletons, mobile shimmer feeds and dot pulses.",
+          "Per-device loading patterns: desktop skeleton grids and spinner rows, iPad list skeletons, mobile shimmer feeds and dot pulses, plus blurred image placeholders and table row loaders.",
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -26,7 +26,17 @@ export const Route = createFileRoute("/loaders")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern = "skeleton-grid" | "spinner-row" | "progress-stack" | "skeleton-list" | "orbital-spinners" | "shimmer-feed" | "dot-pulse" | "inline-skeleton";
+type Pattern =
+  | "skeleton-grid"
+  | "spinner-row"
+  | "progress-stack"
+  | "skeleton-list"
+  | "orbital-spinners"
+  | "shimmer-feed"
+  | "dot-pulse"
+  | "inline-skeleton"
+  | "blurred-image"
+  | "table-rows";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -39,15 +49,21 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "skeleton-grid", label: "Skeleton card grid", desc: "Responsive auto-fill placeholders" },
     { id: "spinner-row", label: "Spinner row", desc: "Circular, dots, and bar loaders" },
     { id: "progress-stack", label: "Progress stack", desc: "Multiple tracked sections" },
+    { id: "blurred-image", label: "Blurred image placeholders", desc: "Image cards with blur + shimmer" },
+    { id: "table-rows", label: "Loading table rows", desc: "Data table skeleton" },
   ],
   ipad: [
     { id: "skeleton-list", label: "Skeleton list", desc: "Two-line rows with avatar blocks" },
     { id: "orbital-spinners", label: "Orbital spinners", desc: "Concentric ring loaders" },
+    { id: "blurred-image", label: "Blurred image placeholders", desc: "Two-column image cards" },
+    { id: "table-rows", label: "Loading table rows", desc: "Compact data table" },
   ],
   mobile: [
     { id: "shimmer-feed", label: "Shimmer feed", desc: "Full-bleed story + post blocks" },
     { id: "dot-pulse", label: "Dot pulse", desc: "Three bouncing dots" },
     { id: "inline-skeleton", label: "Inline skeleton", desc: "Form field placeholders" },
+    { id: "blurred-image", label: "Blurred image placeholders", desc: "Single-column image cards" },
+    { id: "table-rows", label: "Loading table rows", desc: "Scrollable table skeleton" },
   ],
 };
 
@@ -248,6 +264,64 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   block-size: 2.25rem;
   border-radius: 0.5rem;
 }`,
+  "blurred-image": `/* Blurred image placeholders */
+.loader-shell { container-type: inline-size; }
+
+.blurred-grid {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+}
+
+@container (max-width: 360px) {
+  .blurred-grid { grid-template-columns: 1fr; }
+}
+
+.blurred-thumb {
+  aspect-ratio: 4 / 3;
+  border-radius: 0.75rem;
+  background: var(--muted);
+  filter: blur(10px) brightness(0.95);
+  animation: pulse-blur 1.6s ease-in-out infinite;
+}
+
+.blurred-caption {
+  display: grid;
+  gap: 0.375rem;
+  margin-block-start: 0.5rem;
+}
+
+@keyframes pulse-blur {
+  0%, 100% { opacity: 0.7; }
+  50% { opacity: 1; }
+}`,
+  "table-rows": `/* Loading table rows */
+.table-shell {
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.75rem;
+}
+
+.table-row {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 0.75fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.5rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+}
+
+.table-row.header {
+  background: transparent;
+  border-color: transparent;
+}
+
+@container (max-width: 420px) {
+  .table-row { grid-template-columns: 1.5fr 1fr 0.75fr; }
+  .table-row .cell:nth-child(3) { display: none; }
+}`,
 };
 
 function LoadersDemo() {
@@ -402,6 +476,8 @@ function LoadersDemo() {
               <li>• aspect-ratio rings</li>
               <li>• auto-fill grids</li>
               <li>• Semantic tokens</li>
+              <li>• filter: blur() placeholders</li>
+              <li>• Grid table layouts</li>
             </ul>
           </div>
         </section>
@@ -413,7 +489,9 @@ function LoadersDemo() {
         .story-ring,
         .post-card .line,
         .inline-skeleton .label,
-        .inline-skeleton .input {
+        .inline-skeleton .input,
+        .blurred-thumb,
+        .table-row .cell {
           background: linear-gradient(90deg,
             color-mix(in oklab, var(--muted-foreground) 16%, var(--muted)) 25%,
             color-mix(in oklab, var(--muted-foreground) 36%, var(--muted)) 50%,
@@ -453,6 +531,51 @@ function LoadersDemo() {
           animation: load 2s ease-in-out infinite alternate;
         }
 
+        .blurred-grid {
+          display: grid;
+          gap: 0.75rem;
+          grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
+        }
+
+        @container (max-width: 360px) {
+          .blurred-grid { grid-template-columns: 1fr; }
+        }
+
+        .blurred-thumb {
+          aspect-ratio: 4 / 3;
+          border-radius: 0.75rem;
+          background: var(--muted);
+          filter: blur(10px) brightness(0.95);
+          animation: pulse-blur 1.6s ease-in-out infinite;
+        }
+
+        .blurred-caption {
+          display: grid;
+          gap: 0.375rem;
+          margin-block-start: 0.5rem;
+        }
+
+        .table-row {
+          display: grid;
+          grid-template-columns: 1.5fr 1fr 1fr 0.75fr;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.625rem 0.75rem;
+          border-radius: 0.5rem;
+          background: var(--card);
+          border: 1px solid var(--border);
+        }
+
+        .table-row.header {
+          background: transparent;
+          border-color: transparent;
+        }
+
+        @container (max-width: 420px) {
+          .table-row { grid-template-columns: 1.5fr 1fr 0.75fr; }
+          .table-row .cell:nth-child(3) { display: none; }
+        }
+
         @keyframes shimmer {
           from { background-position: 200% 0; }
           to   { background-position: -200% 0; }
@@ -461,6 +584,11 @@ function LoadersDemo() {
         @keyframes load {
           from { inline-size: 20%; }
           to   { inline-size: 90%; }
+        }
+
+        @keyframes pulse-blur {
+          0%, 100% { opacity: 0.7; }
+          50% { opacity: 1; }
         }
       `}</style>
     </main>
@@ -594,6 +722,47 @@ function LoaderStage({ pattern }: { pattern: Pattern }) {
           <span />
         </div>
         <p className="text-[10px] text-muted-foreground">Thinking…</p>
+      </div>
+    );
+  }
+
+  if (pattern === "blurred-image") {
+    return (
+      <div className="loader-shell h-full w-full overflow-auto p-3">
+        <div className="blurred-grid">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <div key={i} className="overflow-hidden rounded-xl bg-card border border-border p-2">
+              <div className="blurred-thumb w-full" />
+              <div className="blurred-caption">
+                <div className="skeleton h-2 w-3/4" />
+                <div className="skeleton h-1.5 w-1/2" />
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  if (pattern === "table-rows") {
+    return (
+      <div className="loader-shell h-full w-full overflow-auto p-2">
+        <div className="table-shell">
+          <div className="table-row header">
+            <span className="text-[9px] font-medium text-muted-foreground">Project</span>
+            <span className="text-[9px] font-medium text-muted-foreground">Status</span>
+            <span className="text-[9px] font-medium text-muted-foreground">Date</span>
+            <span className="text-[9px] font-medium text-muted-foreground">Amount</span>
+          </div>
+          {Array.from({ length: 5 }).map((_, i) => (
+            <div key={i} className="table-row">
+              <div className="cell skeleton h-2 w-4/5" />
+              <div className="cell skeleton h-2 w-3/5" />
+              <div className="cell skeleton h-2 w-3/4" />
+              <div className="cell skeleton h-2 w-2/3" />
+            </div>
+          ))}
+        </div>
       </div>
     );
   }
