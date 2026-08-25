@@ -415,16 +415,52 @@ function LoadersDemo() {
         .inline-skeleton .label,
         .inline-skeleton .input {
           background: linear-gradient(90deg,
-            var(--muted) 25%,
-            color-mix(in oklab, var(--muted-foreground) 28%, transparent) 50%,
-            var(--muted) 75%);
+            color-mix(in oklab, var(--muted-foreground) 16%, var(--muted)) 25%,
+            color-mix(in oklab, var(--muted-foreground) 36%, var(--muted)) 50%,
+            color-mix(in oklab, var(--muted-foreground) 16%, var(--muted)) 75%);
           background-size: 200% 100%;
           animation: shimmer 1.5s infinite linear;
+        }
+
+        .story-ring {
+          background: color-mix(in oklab, var(--muted-foreground) 22%, var(--muted));
+        }
+
+        .post-card {
+          background: var(--card);
+          border: 1px solid var(--border);
+        }
+
+        .skeleton-card {
+          background: var(--card);
+          border: 1px solid var(--border);
+        }
+
+        .skeleton-row {
+          background: var(--card);
+          border: 1px solid var(--border);
+        }
+
+        .progress-track {
+          background: var(--muted);
+          border-radius: 999px;
+          overflow: hidden;
+        }
+
+        .progress-bar {
+          background: var(--primary);
+          border-radius: inherit;
+          animation: load 2s ease-in-out infinite alternate;
         }
 
         @keyframes shimmer {
           from { background-position: 200% 0; }
           to   { background-position: -200% 0; }
+        }
+
+        @keyframes load {
+          from { inline-size: 20%; }
+          to   { inline-size: 90%; }
         }
       `}</style>
     </main>
