@@ -14,6 +14,25 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
+export type DemoCategory =
+  | "Layout"
+  | "Forms"
+  | "Navigation"
+  | "Feedback"
+  | "Overlays"
+  | "Data Display"
+  | "Utilities";
+
+export const CATEGORY_ORDER: DemoCategory[] = [
+  "Layout",
+  "Forms",
+  "Navigation",
+  "Feedback",
+  "Overlays",
+  "Data Display",
+  "Utilities",
+];
+
 export type Demo = {
   slug: string;
   name: string;
@@ -21,6 +40,7 @@ export type Demo = {
   path: string;
   icon: React.ComponentType<{ className?: string }>;
   status: "live" | "soon";
+  category: DemoCategory;
 };
 
 export const DEMOS: Demo[] = [
