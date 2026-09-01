@@ -51,6 +51,7 @@ export const DEMOS: Demo[] = [
     path: "/",
     icon: Smartphone,
     status: "live",
+    category: "Layout",
   },
   {
     slug: "login-screens",
@@ -59,6 +60,7 @@ export const DEMOS: Demo[] = [
     path: "/login-screens",
     icon: LogIn,
     status: "live",
+    category: "Forms",
   },
   {
     slug: "toasts",
@@ -67,6 +69,7 @@ export const DEMOS: Demo[] = [
     path: "/toasts",
     icon: Bell,
     status: "live",
+    category: "Feedback",
   },
   {
     slug: "modals",
@@ -75,6 +78,7 @@ export const DEMOS: Demo[] = [
     path: "/modals",
     icon: MessageSquareWarning,
     status: "live",
+    category: "Overlays",
   },
   {
     slug: "navigation",
@@ -83,6 +87,7 @@ export const DEMOS: Demo[] = [
     path: "/navigation",
     icon: Menu,
     status: "live",
+    category: "Navigation",
   },
   {
     slug: "dropdowns",
@@ -91,6 +96,7 @@ export const DEMOS: Demo[] = [
     path: "/dropdowns",
     icon: ChevronDown,
     status: "live",
+    category: "Overlays",
   },
   {
     slug: "flex",
@@ -99,6 +105,7 @@ export const DEMOS: Demo[] = [
     path: "/flex",
     icon: Rows3,
     status: "live",
+    category: "Layout",
   },
   {
     slug: "grid",
@@ -107,6 +114,7 @@ export const DEMOS: Demo[] = [
     path: "/grid",
     icon: LayoutGrid,
     status: "live",
+    category: "Layout",
   },
   {
     slug: "accordions",
@@ -115,6 +123,7 @@ export const DEMOS: Demo[] = [
     path: "/accordions",
     icon: ListCollapse,
     status: "live",
+    category: "Data Display",
   },
   {
     slug: "checkboxes",
@@ -123,6 +132,7 @@ export const DEMOS: Demo[] = [
     path: "/checkboxes",
     icon: CheckSquare,
     status: "live",
+    category: "Forms",
   },
   {
     slug: "selects",
@@ -131,6 +141,7 @@ export const DEMOS: Demo[] = [
     path: "/selects",
     icon: ListFilter,
     status: "live",
+    category: "Forms",
   },
   {
     slug: "radios",
@@ -139,6 +150,7 @@ export const DEMOS: Demo[] = [
     path: "/radios",
     icon: CircleDot,
     status: "live",
+    category: "Forms",
   },
   {
     slug: "sliders",
@@ -147,6 +159,7 @@ export const DEMOS: Demo[] = [
     path: "/sliders",
     icon: SlidersHorizontal,
     status: "live",
+    category: "Forms",
   },
   {
     slug: "tabs",
@@ -155,6 +168,7 @@ export const DEMOS: Demo[] = [
     path: "/tabs",
     icon: PanelTop,
     status: "live",
+    category: "Navigation",
   },
   {
     slug: "uploaders",
@@ -163,6 +177,7 @@ export const DEMOS: Demo[] = [
     path: "/uploaders",
     icon: UploadCloud,
     status: "live",
+    category: "Utilities",
   },
   {
     slug: "loaders",
@@ -171,6 +186,7 @@ export const DEMOS: Demo[] = [
     path: "/loaders",
     icon: Loader2,
     status: "live",
+    category: "Feedback",
   },
   {
     slug: "datepicker",
@@ -179,6 +195,7 @@ export const DEMOS: Demo[] = [
     path: "/datepicker",
     icon: CalendarDays,
     status: "live",
+    category: "Forms",
   },
 ];
 
