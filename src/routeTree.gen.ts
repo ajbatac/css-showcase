@@ -11,19 +11,26 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadersRouteImport } from './routes/uploaders'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as TextareasRouteImport } from './routes/textareas'
 import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as SwitchesRouteImport } from './routes/switches'
 import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
+import { Route as SearchRouteImport } from './routes/search'
 import { Route as RadiosRouteImport } from './routes/radios'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as LoadersRouteImport } from './routes/loaders'
+import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
+import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
+import { Route as CardsRouteImport } from './routes/cards'
+import { Route as ButtonsRouteImport } from './routes/buttons'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
 
@@ -37,9 +44,19 @@ const ToastsRoute = ToastsRouteImport.update({
   path: '/toasts',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TextareasRoute = TextareasRouteImport.update({
+  id: '/textareas',
+  path: '/textareas',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TabsRoute = TabsRouteImport.update({
   id: '/tabs',
   path: '/tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SwitchesRoute = SwitchesRouteImport.update({
+  id: '/switches',
+  path: '/switches',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlidersRoute = SlidersRouteImport.update({
@@ -50,6 +67,11 @@ const SlidersRoute = SlidersRouteImport.update({
 const SelectsRoute = SelectsRouteImport.update({
   id: '/selects',
   path: '/selects',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SearchRoute = SearchRouteImport.update({
+  id: '/search',
+  path: '/search',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RadiosRoute = RadiosRouteImport.update({
@@ -77,6 +99,11 @@ const LoadersRoute = LoadersRouteImport.update({
   path: '/loaders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const InputsRoute = InputsRouteImport.update({
+  id: '/inputs',
+  path: '/inputs',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const GridRoute = GridRouteImport.update({
   id: '/grid',
   path: '/grid',
@@ -97,9 +124,24 @@ const DatepickerRoute = DatepickerRouteImport.update({
   path: '/datepicker',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ContainersRoute = ContainersRouteImport.update({
+  id: '/containers',
+  path: '/containers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckboxesRoute = CheckboxesRouteImport.update({
   id: '/checkboxes',
   path: '/checkboxes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CardsRoute = CardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ButtonsRoute = ButtonsRouteImport.update({
+  id: '/buttons',
+  path: '/buttons',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccordionsRoute = AccordionsRouteImport.update({
@@ -116,38 +158,52 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/buttons': typeof ButtonsRoute
+  '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/radios': typeof RadiosRoute
+  '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/switches': typeof SwitchesRoute
   '/tabs': typeof TabsRoute
+  '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/buttons': typeof ButtonsRoute
+  '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/radios': typeof RadiosRoute
+  '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/switches': typeof SwitchesRoute
   '/tabs': typeof TabsRoute
+  '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/uploaders': typeof UploadersRoute
 }
@@ -155,19 +211,26 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/buttons': typeof ButtonsRoute
+  '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/grid': typeof GridRoute
+  '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/radios': typeof RadiosRoute
+  '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/switches': typeof SwitchesRoute
   '/tabs': typeof TabsRoute
+  '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/uploaders': typeof UploadersRoute
 }
@@ -176,57 +239,78 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accordions'
+    | '/buttons'
+    | '/cards'
     | '/checkboxes'
+    | '/containers'
     | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/inputs'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/radios'
+    | '/search'
     | '/selects'
     | '/sliders'
+    | '/switches'
     | '/tabs'
+    | '/textareas'
     | '/toasts'
     | '/uploaders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accordions'
+    | '/buttons'
+    | '/cards'
     | '/checkboxes'
+    | '/containers'
     | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/inputs'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/radios'
+    | '/search'
     | '/selects'
     | '/sliders'
+    | '/switches'
     | '/tabs'
+    | '/textareas'
     | '/toasts'
     | '/uploaders'
   id:
     | '__root__'
     | '/'
     | '/accordions'
+    | '/buttons'
+    | '/cards'
     | '/checkboxes'
+    | '/containers'
     | '/datepicker'
     | '/dropdowns'
     | '/flex'
     | '/grid'
+    | '/inputs'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/radios'
+    | '/search'
     | '/selects'
     | '/sliders'
+    | '/switches'
     | '/tabs'
+    | '/textareas'
     | '/toasts'
     | '/uploaders'
   fileRoutesById: FileRoutesById
@@ -234,19 +318,26 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccordionsRoute: typeof AccordionsRoute
+  ButtonsRoute: typeof ButtonsRoute
+  CardsRoute: typeof CardsRoute
   CheckboxesRoute: typeof CheckboxesRoute
+  ContainersRoute: typeof ContainersRoute
   DatepickerRoute: typeof DatepickerRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   GridRoute: typeof GridRoute
+  InputsRoute: typeof InputsRoute
   LoadersRoute: typeof LoadersRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
   RadiosRoute: typeof RadiosRoute
+  SearchRoute: typeof SearchRoute
   SelectsRoute: typeof SelectsRoute
   SlidersRoute: typeof SlidersRoute
+  SwitchesRoute: typeof SwitchesRoute
   TabsRoute: typeof TabsRoute
+  TextareasRoute: typeof TextareasRoute
   ToastsRoute: typeof ToastsRoute
   UploadersRoute: typeof UploadersRoute
 }
@@ -267,11 +358,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ToastsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/textareas': {
+      id: '/textareas'
+      path: '/textareas'
+      fullPath: '/textareas'
+      preLoaderRoute: typeof TextareasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/tabs': {
       id: '/tabs'
       path: '/tabs'
       fullPath: '/tabs'
       preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/switches': {
+      id: '/switches'
+      path: '/switches'
+      fullPath: '/switches'
+      preLoaderRoute: typeof SwitchesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sliders': {
@@ -286,6 +391,13 @@ declare module '@tanstack/react-router' {
       path: '/selects'
       fullPath: '/selects'
       preLoaderRoute: typeof SelectsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/search': {
+      id: '/search'
+      path: '/search'
+      fullPath: '/search'
+      preLoaderRoute: typeof SearchRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/radios': {
@@ -323,6 +435,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoadersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/inputs': {
+      id: '/inputs'
+      path: '/inputs'
+      fullPath: '/inputs'
+      preLoaderRoute: typeof InputsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/grid': {
       id: '/grid'
       path: '/grid'
@@ -351,11 +470,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DatepickerRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/containers': {
+      id: '/containers'
+      path: '/containers'
+      fullPath: '/containers'
+      preLoaderRoute: typeof ContainersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkboxes': {
       id: '/checkboxes'
       path: '/checkboxes'
       fullPath: '/checkboxes'
       preLoaderRoute: typeof CheckboxesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cards': {
+      id: '/cards'
+      path: '/cards'
+      fullPath: '/cards'
+      preLoaderRoute: typeof CardsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/buttons': {
+      id: '/buttons'
+      path: '/buttons'
+      fullPath: '/buttons'
+      preLoaderRoute: typeof ButtonsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accordions': {
@@ -378,19 +518,26 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccordionsRoute: AccordionsRoute,
+  ButtonsRoute: ButtonsRoute,
+  CardsRoute: CardsRoute,
   CheckboxesRoute: CheckboxesRoute,
+  ContainersRoute: ContainersRoute,
   DatepickerRoute: DatepickerRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   GridRoute: GridRoute,
+  InputsRoute: InputsRoute,
   LoadersRoute: LoadersRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
   RadiosRoute: RadiosRoute,
+  SearchRoute: SearchRoute,
   SelectsRoute: SelectsRoute,
   SlidersRoute: SlidersRoute,
+  SwitchesRoute: SwitchesRoute,
   TabsRoute: TabsRoute,
+  TextareasRoute: TextareasRoute,
   ToastsRoute: ToastsRoute,
   UploadersRoute: UploadersRoute,
 }
