@@ -24,8 +24,10 @@ import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as LoadersRouteImport } from './routes/loaders'
 import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
+import { Route as FormValidationRouteImport } from './routes/form-validation'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as DividersRouteImport } from './routes/dividers'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
@@ -109,6 +111,11 @@ const GridRoute = GridRouteImport.update({
   path: '/grid',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FormValidationRoute = FormValidationRouteImport.update({
+  id: '/form-validation',
+  path: '/form-validation',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const FlexRoute = FlexRouteImport.update({
   id: '/flex',
   path: '/flex',
@@ -117,6 +124,11 @@ const FlexRoute = FlexRouteImport.update({
 const DropdownsRoute = DropdownsRouteImport.update({
   id: '/dropdowns',
   path: '/dropdowns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DividersRoute = DividersRouteImport.update({
+  id: '/dividers',
+  path: '/dividers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DatepickerRoute = DatepickerRouteImport.update({
@@ -163,8 +175,10 @@ export interface FileRoutesByFullPath {
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
+  '/dividers': typeof DividersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
+  '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
@@ -189,8 +203,10 @@ export interface FileRoutesByTo {
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
+  '/dividers': typeof DividersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
+  '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
@@ -216,8 +232,10 @@ export interface FileRoutesById {
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
+  '/dividers': typeof DividersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
+  '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
   '/loaders': typeof LoadersRoute
@@ -244,8 +262,10 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
+    | '/dividers'
     | '/dropdowns'
     | '/flex'
+    | '/form-validation'
     | '/grid'
     | '/inputs'
     | '/loaders'
@@ -270,8 +290,10 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
+    | '/dividers'
     | '/dropdowns'
     | '/flex'
+    | '/form-validation'
     | '/grid'
     | '/inputs'
     | '/loaders'
@@ -296,8 +318,10 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
+    | '/dividers'
     | '/dropdowns'
     | '/flex'
+    | '/form-validation'
     | '/grid'
     | '/inputs'
     | '/loaders'
@@ -323,8 +347,10 @@ export interface RootRouteChildren {
   CheckboxesRoute: typeof CheckboxesRoute
   ContainersRoute: typeof ContainersRoute
   DatepickerRoute: typeof DatepickerRoute
+  DividersRoute: typeof DividersRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
+  FormValidationRoute: typeof FormValidationRoute
   GridRoute: typeof GridRoute
   InputsRoute: typeof InputsRoute
   LoadersRoute: typeof LoadersRoute
@@ -449,6 +475,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof GridRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/form-validation': {
+      id: '/form-validation'
+      path: '/form-validation'
+      fullPath: '/form-validation'
+      preLoaderRoute: typeof FormValidationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/flex': {
       id: '/flex'
       path: '/flex'
@@ -461,6 +494,13 @@ declare module '@tanstack/react-router' {
       path: '/dropdowns'
       fullPath: '/dropdowns'
       preLoaderRoute: typeof DropdownsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dividers': {
+      id: '/dividers'
+      path: '/dividers'
+      fullPath: '/dividers'
+      preLoaderRoute: typeof DividersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/datepicker': {
@@ -523,8 +563,10 @@ const rootRouteChildren: RootRouteChildren = {
   CheckboxesRoute: CheckboxesRoute,
   ContainersRoute: ContainersRoute,
   DatepickerRoute: DatepickerRoute,
+  DividersRoute: DividersRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
+  FormValidationRoute: FormValidationRoute,
   GridRoute: GridRoute,
   InputsRoute: InputsRoute,
   LoadersRoute: LoadersRoute,
