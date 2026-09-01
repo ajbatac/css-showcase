@@ -219,26 +219,32 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel>Demos</SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {DEMOS.map((demo) => {
-                const active = currentPath === demo.path;
-                return (
-                  <SidebarMenuItem key={demo.slug}>
-                    <SidebarMenuButton asChild isActive={active} tooltip={demo.name}>
-                      <Link to={demo.path} className="flex items-center gap-2">
-                        <demo.icon className="h-4 w-4 shrink-0" />
-                        <span className="truncate">{demo.short}</span>
-                      </Link>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+        {CATEGORY_ORDER.map((category) => {
+          const items = DEMOS.filter((d) => d.category === category);
+          if (items.length === 0) return null;
+          return (
+            <SidebarGroup key={category}>
+              <SidebarGroupLabel>{category}</SidebarGroupLabel>
+              <SidebarGroupContent>
+                <SidebarMenu>
+                  {items.map((demo) => {
+                    const active = currentPath === demo.path;
+                    return (
+                      <SidebarMenuItem key={demo.slug}>
+                        <SidebarMenuButton asChild isActive={active} tooltip={`${category} · ${demo.name}`}>
+                          <Link to={demo.path} className="flex items-center gap-2">
+                            <demo.icon className="h-4 w-4 shrink-0" />
+                            <span className="truncate">{demo.short}</span>
+                          </Link>
+                        </SidebarMenuButton>
+                      </SidebarMenuItem>
+                    );
+                  })}
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          );
+        })}
 
         <SidebarGroup>
           <SidebarGroupLabel>Coming soon</SidebarGroupLabel>
