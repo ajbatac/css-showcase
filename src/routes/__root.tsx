@@ -12,6 +12,7 @@ import { useEffect, type ReactNode } from "react";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
+import { ThemeToggle } from "@/components/theme-toggle";
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
 
@@ -130,7 +131,13 @@ function RootComponent() {
             <header className="hidden h-12 items-center gap-2 border-b bg-background/60 px-3 backdrop-blur md:flex">
               <SidebarTrigger />
               <span className="text-xs text-muted-foreground">Modern CSS · Live demos</span>
+              <div className="ml-auto">
+                <ThemeToggle />
+              </div>
             </header>
+            <div className="fixed right-3 top-3 z-50 md:hidden">
+              <ThemeToggle />
+            </div>
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
           </div>
