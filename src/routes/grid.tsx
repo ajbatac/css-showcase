@@ -133,7 +133,7 @@ function GridDemo() {
 
   return (
     <main className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 pb-24 pt-10">
+      <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             Modern CSS · Live Demo
