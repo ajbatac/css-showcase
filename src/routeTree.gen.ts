@@ -40,6 +40,7 @@ import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as ButtonsRouteImport } from './routes/buttons'
 import { Route as BreadcrumbsRouteImport } from './routes/breadcrumbs'
+import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
@@ -199,6 +200,11 @@ const BreadcrumbsRoute = BreadcrumbsRouteImport.update({
   path: '/breadcrumbs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BadgesRoute = BadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AlertsRoute = AlertsRouteImport.update({
   id: '/alerts',
   path: '/alerts',
@@ -219,6 +225,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
+  '/badges': typeof BadgesRoute
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
@@ -255,6 +262,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
+  '/badges': typeof BadgesRoute
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
@@ -292,6 +300,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
+  '/badges': typeof BadgesRoute
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/alerts'
+    | '/badges'
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
@@ -366,6 +376,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/alerts'
+    | '/badges'
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
@@ -402,6 +413,7 @@ export interface FileRouteTypes {
     | '/'
     | '/accordions'
     | '/alerts'
+    | '/badges'
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
@@ -439,6 +451,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccordionsRoute: typeof AccordionsRoute
   AlertsRoute: typeof AlertsRoute
+  BadgesRoute: typeof BadgesRoute
   BreadcrumbsRoute: typeof BreadcrumbsRoute
   ButtonsRoute: typeof ButtonsRoute
   CardsRoute: typeof CardsRoute
@@ -691,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BreadcrumbsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/badges': {
+      id: '/badges'
+      path: '/badges'
+      fullPath: '/badges'
+      preLoaderRoute: typeof BadgesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/alerts': {
       id: '/alerts'
       path: '/alerts'
@@ -719,6 +739,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccordionsRoute: AccordionsRoute,
   AlertsRoute: AlertsRoute,
+  BadgesRoute: BadgesRoute,
   BreadcrumbsRoute: BreadcrumbsRoute,
   ButtonsRoute: ButtonsRoute,
   CardsRoute: CardsRoute,
