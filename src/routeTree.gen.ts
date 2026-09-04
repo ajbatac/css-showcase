@@ -10,35 +10,48 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadersRouteImport } from './routes/uploaders'
+import { Route as TooltipsRouteImport } from './routes/tooltips'
 import { Route as ToastsRouteImport } from './routes/toasts'
 import { Route as TextareasRouteImport } from './routes/textareas'
 import { Route as TabsRouteImport } from './routes/tabs'
+import { Route as TablesRouteImport } from './routes/tables'
 import { Route as SwitchesRouteImport } from './routes/switches'
 import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RadiosRouteImport } from './routes/radios'
+import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PaginationRouteImport } from './routes/pagination'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as LoadersRouteImport } from './routes/loaders'
+import { Route as ListsRouteImport } from './routes/lists'
 import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FormValidationRouteImport } from './routes/form-validation'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as DrawersRouteImport } from './routes/drawers'
 import { Route as DividersRouteImport } from './routes/dividers'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as ButtonsRouteImport } from './routes/buttons'
+import { Route as BreadcrumbsRouteImport } from './routes/breadcrumbs'
+import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as AccordionsRouteImport } from './routes/accordions'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UploadersRoute = UploadersRouteImport.update({
   id: '/uploaders',
   path: '/uploaders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TooltipsRoute = TooltipsRouteImport.update({
+  id: '/tooltips',
+  path: '/tooltips',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ToastsRoute = ToastsRouteImport.update({
@@ -54,6 +67,11 @@ const TextareasRoute = TextareasRouteImport.update({
 const TabsRoute = TabsRouteImport.update({
   id: '/tabs',
   path: '/tabs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TablesRoute = TablesRouteImport.update({
+  id: '/tables',
+  path: '/tables',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SwitchesRoute = SwitchesRouteImport.update({
@@ -81,6 +99,16 @@ const RadiosRoute = RadiosRouteImport.update({
   path: '/radios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PaginationRoute = PaginationRouteImport.update({
+  id: '/pagination',
+  path: '/pagination',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NavigationRoute = NavigationRouteImport.update({
   id: '/navigation',
   path: '/navigation',
@@ -99,6 +127,11 @@ const LoginScreensRoute = LoginScreensRouteImport.update({
 const LoadersRoute = LoadersRouteImport.update({
   id: '/loaders',
   path: '/loaders',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ListsRoute = ListsRouteImport.update({
+  id: '/lists',
+  path: '/lists',
   getParentRoute: () => rootRouteImport,
 } as any)
 const InputsRoute = InputsRouteImport.update({
@@ -124,6 +157,11 @@ const FlexRoute = FlexRouteImport.update({
 const DropdownsRoute = DropdownsRouteImport.update({
   id: '/dropdowns',
   path: '/dropdowns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DrawersRoute = DrawersRouteImport.update({
+  id: '/drawers',
+  path: '/drawers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DividersRoute = DividersRouteImport.update({
@@ -156,6 +194,16 @@ const ButtonsRoute = ButtonsRouteImport.update({
   path: '/buttons',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BreadcrumbsRoute = BreadcrumbsRouteImport.update({
+  id: '/breadcrumbs',
+  path: '/breadcrumbs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AlertsRoute = AlertsRouteImport.update({
+  id: '/alerts',
+  path: '/alerts',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AccordionsRoute = AccordionsRouteImport.update({
   id: '/accordions',
   path: '/accordions',
@@ -170,86 +218,110 @@ const IndexRoute = IndexRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/alerts': typeof AlertsRoute
+  '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
   '/switches': typeof SwitchesRoute
+  '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
+  '/tooltips': typeof TooltipsRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/alerts': typeof AlertsRoute
+  '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
   '/switches': typeof SwitchesRoute
+  '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
+  '/tooltips': typeof TooltipsRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accordions': typeof AccordionsRoute
+  '/alerts': typeof AlertsRoute
+  '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
   '/switches': typeof SwitchesRoute
+  '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
+  '/tooltips': typeof TooltipsRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRouteTypes {
@@ -257,114 +329,146 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accordions'
+    | '/alerts'
+    | '/breadcrumbs'
     | '/buttons'
     | '/cards'
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
     | '/sliders'
     | '/switches'
+    | '/tables'
     | '/tabs'
     | '/textareas'
     | '/toasts'
+    | '/tooltips'
     | '/uploaders'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/accordions'
+    | '/alerts'
+    | '/breadcrumbs'
     | '/buttons'
     | '/cards'
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
     | '/sliders'
     | '/switches'
+    | '/tables'
     | '/tabs'
     | '/textareas'
     | '/toasts'
+    | '/tooltips'
     | '/uploaders'
   id:
     | '__root__'
     | '/'
     | '/accordions'
+    | '/alerts'
+    | '/breadcrumbs'
     | '/buttons'
     | '/cards'
     | '/checkboxes'
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
+    | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
     | '/sliders'
     | '/switches'
+    | '/tables'
     | '/tabs'
     | '/textareas'
     | '/toasts'
+    | '/tooltips'
     | '/uploaders'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccordionsRoute: typeof AccordionsRoute
+  AlertsRoute: typeof AlertsRoute
+  BreadcrumbsRoute: typeof BreadcrumbsRoute
   ButtonsRoute: typeof ButtonsRoute
   CardsRoute: typeof CardsRoute
   CheckboxesRoute: typeof CheckboxesRoute
   ContainersRoute: typeof ContainersRoute
   DatepickerRoute: typeof DatepickerRoute
   DividersRoute: typeof DividersRoute
+  DrawersRoute: typeof DrawersRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   FormValidationRoute: typeof FormValidationRoute
   GridRoute: typeof GridRoute
   InputsRoute: typeof InputsRoute
+  ListsRoute: typeof ListsRoute
   LoadersRoute: typeof LoadersRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
+  PaginationRoute: typeof PaginationRoute
+  ProgressRoute: typeof ProgressRoute
   RadiosRoute: typeof RadiosRoute
   SearchRoute: typeof SearchRoute
   SelectsRoute: typeof SelectsRoute
   SlidersRoute: typeof SlidersRoute
   SwitchesRoute: typeof SwitchesRoute
+  TablesRoute: typeof TablesRoute
   TabsRoute: typeof TabsRoute
   TextareasRoute: typeof TextareasRoute
   ToastsRoute: typeof ToastsRoute
+  TooltipsRoute: typeof TooltipsRoute
   UploadersRoute: typeof UploadersRoute
 }
 
@@ -375,6 +479,13 @@ declare module '@tanstack/react-router' {
       path: '/uploaders'
       fullPath: '/uploaders'
       preLoaderRoute: typeof UploadersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tooltips': {
+      id: '/tooltips'
+      path: '/tooltips'
+      fullPath: '/tooltips'
+      preLoaderRoute: typeof TooltipsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/toasts': {
@@ -396,6 +507,13 @@ declare module '@tanstack/react-router' {
       path: '/tabs'
       fullPath: '/tabs'
       preLoaderRoute: typeof TabsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tables': {
+      id: '/tables'
+      path: '/tables'
+      fullPath: '/tables'
+      preLoaderRoute: typeof TablesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/switches': {
@@ -433,6 +551,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadiosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pagination': {
+      id: '/pagination'
+      path: '/pagination'
+      fullPath: '/pagination'
+      preLoaderRoute: typeof PaginationRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/navigation': {
       id: '/navigation'
       path: '/navigation'
@@ -459,6 +591,13 @@ declare module '@tanstack/react-router' {
       path: '/loaders'
       fullPath: '/loaders'
       preLoaderRoute: typeof LoadersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/lists': {
+      id: '/lists'
+      path: '/lists'
+      fullPath: '/lists'
+      preLoaderRoute: typeof ListsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/inputs': {
@@ -494,6 +633,13 @@ declare module '@tanstack/react-router' {
       path: '/dropdowns'
       fullPath: '/dropdowns'
       preLoaderRoute: typeof DropdownsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/drawers': {
+      id: '/drawers'
+      path: '/drawers'
+      fullPath: '/drawers'
+      preLoaderRoute: typeof DrawersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dividers': {
@@ -538,6 +684,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ButtonsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/breadcrumbs': {
+      id: '/breadcrumbs'
+      path: '/breadcrumbs'
+      fullPath: '/breadcrumbs'
+      preLoaderRoute: typeof BreadcrumbsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/alerts': {
+      id: '/alerts'
+      path: '/alerts'
+      fullPath: '/alerts'
+      preLoaderRoute: typeof AlertsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/accordions': {
       id: '/accordions'
       path: '/accordions'
@@ -558,29 +718,37 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccordionsRoute: AccordionsRoute,
+  AlertsRoute: AlertsRoute,
+  BreadcrumbsRoute: BreadcrumbsRoute,
   ButtonsRoute: ButtonsRoute,
   CardsRoute: CardsRoute,
   CheckboxesRoute: CheckboxesRoute,
   ContainersRoute: ContainersRoute,
   DatepickerRoute: DatepickerRoute,
   DividersRoute: DividersRoute,
+  DrawersRoute: DrawersRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   FormValidationRoute: FormValidationRoute,
   GridRoute: GridRoute,
   InputsRoute: InputsRoute,
+  ListsRoute: ListsRoute,
   LoadersRoute: LoadersRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
+  PaginationRoute: PaginationRoute,
+  ProgressRoute: ProgressRoute,
   RadiosRoute: RadiosRoute,
   SearchRoute: SearchRoute,
   SelectsRoute: SelectsRoute,
   SlidersRoute: SlidersRoute,
   SwitchesRoute: SwitchesRoute,
+  TablesRoute: TablesRoute,
   TabsRoute: TabsRoute,
   TextareasRoute: TextareasRoute,
   ToastsRoute: ToastsRoute,
+  TooltipsRoute: TooltipsRoute,
   UploadersRoute: UploadersRoute,
 }
 export const routeTree = rootRouteImport
