@@ -20,16 +20,19 @@ import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RadiosRouteImport } from './routes/radios'
+import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PaginationRouteImport } from './routes/pagination'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as LoadersRouteImport } from './routes/loaders'
+import { Route as ListsRouteImport } from './routes/lists'
 import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FormValidationRouteImport } from './routes/form-validation'
 import { Route as FlexRouteImport } from './routes/flex'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
+import { Route as DrawersRouteImport } from './routes/drawers'
 import { Route as DividersRouteImport } from './routes/dividers'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as ContainersRouteImport } from './routes/containers'
@@ -96,6 +99,11 @@ const RadiosRoute = RadiosRouteImport.update({
   path: '/radios',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProgressRoute = ProgressRouteImport.update({
+  id: '/progress',
+  path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PaginationRoute = PaginationRouteImport.update({
   id: '/pagination',
   path: '/pagination',
@@ -121,6 +129,11 @@ const LoadersRoute = LoadersRouteImport.update({
   path: '/loaders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ListsRoute = ListsRouteImport.update({
+  id: '/lists',
+  path: '/lists',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const InputsRoute = InputsRouteImport.update({
   id: '/inputs',
   path: '/inputs',
@@ -144,6 +157,11 @@ const FlexRoute = FlexRouteImport.update({
 const DropdownsRoute = DropdownsRouteImport.update({
   id: '/dropdowns',
   path: '/dropdowns',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DrawersRoute = DrawersRouteImport.update({
+  id: '/drawers',
+  path: '/drawers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DividersRoute = DividersRouteImport.update({
@@ -208,16 +226,19 @@ export interface FileRoutesByFullPath {
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
@@ -241,16 +262,19 @@ export interface FileRoutesByTo {
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
@@ -275,16 +299,19 @@ export interface FileRoutesById {
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/dividers': typeof DividersRoute
+  '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
   '/inputs': typeof InputsRoute
+  '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
@@ -310,16 +337,19 @@ export interface FileRouteTypes {
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
@@ -343,16 +373,19 @@ export interface FileRouteTypes {
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
@@ -376,16 +409,19 @@ export interface FileRouteTypes {
     | '/containers'
     | '/datepicker'
     | '/dividers'
+    | '/drawers'
     | '/dropdowns'
     | '/flex'
     | '/form-validation'
     | '/grid'
     | '/inputs'
+    | '/lists'
     | '/loaders'
     | '/login-screens'
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/progress'
     | '/radios'
     | '/search'
     | '/selects'
@@ -410,16 +446,19 @@ export interface RootRouteChildren {
   ContainersRoute: typeof ContainersRoute
   DatepickerRoute: typeof DatepickerRoute
   DividersRoute: typeof DividersRoute
+  DrawersRoute: typeof DrawersRoute
   DropdownsRoute: typeof DropdownsRoute
   FlexRoute: typeof FlexRoute
   FormValidationRoute: typeof FormValidationRoute
   GridRoute: typeof GridRoute
   InputsRoute: typeof InputsRoute
+  ListsRoute: typeof ListsRoute
   LoadersRoute: typeof LoadersRoute
   LoginScreensRoute: typeof LoginScreensRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
   PaginationRoute: typeof PaginationRoute
+  ProgressRoute: typeof ProgressRoute
   RadiosRoute: typeof RadiosRoute
   SearchRoute: typeof SearchRoute
   SelectsRoute: typeof SelectsRoute
@@ -512,6 +551,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RadiosRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/progress': {
+      id: '/progress'
+      path: '/progress'
+      fullPath: '/progress'
+      preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/pagination': {
       id: '/pagination'
       path: '/pagination'
@@ -547,6 +593,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoadersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/lists': {
+      id: '/lists'
+      path: '/lists'
+      fullPath: '/lists'
+      preLoaderRoute: typeof ListsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/inputs': {
       id: '/inputs'
       path: '/inputs'
@@ -580,6 +633,13 @@ declare module '@tanstack/react-router' {
       path: '/dropdowns'
       fullPath: '/dropdowns'
       preLoaderRoute: typeof DropdownsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/drawers': {
+      id: '/drawers'
+      path: '/drawers'
+      fullPath: '/drawers'
+      preLoaderRoute: typeof DrawersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dividers': {
@@ -666,16 +726,19 @@ const rootRouteChildren: RootRouteChildren = {
   ContainersRoute: ContainersRoute,
   DatepickerRoute: DatepickerRoute,
   DividersRoute: DividersRoute,
+  DrawersRoute: DrawersRoute,
   DropdownsRoute: DropdownsRoute,
   FlexRoute: FlexRoute,
   FormValidationRoute: FormValidationRoute,
   GridRoute: GridRoute,
   InputsRoute: InputsRoute,
+  ListsRoute: ListsRoute,
   LoadersRoute: LoadersRoute,
   LoginScreensRoute: LoginScreensRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
   PaginationRoute: PaginationRoute,
+  ProgressRoute: ProgressRoute,
   RadiosRoute: RadiosRoute,
   SearchRoute: SearchRoute,
   SelectsRoute: SelectsRoute,
