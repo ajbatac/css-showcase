@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Bell, BadgeCheck, Box, CalendarDays, CheckSquare, ChevronDown, CircleDot, Columns3, LayoutGrid, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, Minus, MousePointerClick, PanelTop, Rows3, Search, SlidersHorizontal, Smartphone, Sparkles, SquarePen, TextCursorInput, ToggleLeft, UploadCloud } from "lucide-react";
+import { Activity, AlertTriangle, Bell, BadgeCheck, Box, CalendarDays, CheckSquare, ChevronDown, ChevronRight, CircleDot, Columns3, HelpCircle, Inbox, LayoutGrid, List, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, Minus, MousePointerClick, PanelLeft, PanelTop, Rows3, Search, SlidersHorizontal, Smartphone, Sparkles, SquarePen, Table, Tag, TextCursorInput, ToggleLeft, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
