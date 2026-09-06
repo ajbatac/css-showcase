@@ -31,6 +31,7 @@ import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FormValidationRouteImport } from './routes/form-validation'
 import { Route as FlexRouteImport } from './routes/flex'
+import { Route as EmptyStatesRouteImport } from './routes/empty-states'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
 import { Route as DrawersRouteImport } from './routes/drawers'
 import { Route as DividersRouteImport } from './routes/dividers'
@@ -155,6 +156,11 @@ const FlexRoute = FlexRouteImport.update({
   path: '/flex',
   getParentRoute: () => rootRouteImport,
 } as any)
+const EmptyStatesRoute = EmptyStatesRouteImport.update({
+  id: '/empty-states',
+  path: '/empty-states',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DropdownsRoute = DropdownsRouteImport.update({
   id: '/dropdowns',
   path: '/dropdowns',
@@ -235,6 +241,7 @@ export interface FileRoutesByFullPath {
   '/dividers': typeof DividersRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
+  '/empty-states': typeof EmptyStatesRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/dividers': typeof DividersRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
+  '/empty-states': typeof EmptyStatesRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -310,6 +318,7 @@ export interface FileRoutesById {
   '/dividers': typeof DividersRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
+  '/empty-states': typeof EmptyStatesRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/dividers'
     | '/drawers'
     | '/dropdowns'
+    | '/empty-states'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -386,6 +396,7 @@ export interface FileRouteTypes {
     | '/dividers'
     | '/drawers'
     | '/dropdowns'
+    | '/empty-states'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -423,6 +434,7 @@ export interface FileRouteTypes {
     | '/dividers'
     | '/drawers'
     | '/dropdowns'
+    | '/empty-states'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -461,6 +473,7 @@ export interface RootRouteChildren {
   DividersRoute: typeof DividersRoute
   DrawersRoute: typeof DrawersRoute
   DropdownsRoute: typeof DropdownsRoute
+  EmptyStatesRoute: typeof EmptyStatesRoute
   FlexRoute: typeof FlexRoute
   FormValidationRoute: typeof FormValidationRoute
   GridRoute: typeof GridRoute
@@ -641,6 +654,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof FlexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/empty-states': {
+      id: '/empty-states'
+      path: '/empty-states'
+      fullPath: '/empty-states'
+      preLoaderRoute: typeof EmptyStatesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dropdowns': {
       id: '/dropdowns'
       path: '/dropdowns'
@@ -749,6 +769,7 @@ const rootRouteChildren: RootRouteChildren = {
   DividersRoute: DividersRoute,
   DrawersRoute: DrawersRoute,
   DropdownsRoute: DropdownsRoute,
+  EmptyStatesRoute: EmptyStatesRoute,
   FlexRoute: FlexRoute,
   FormValidationRoute: FormValidationRoute,
   GridRoute: GridRoute,
