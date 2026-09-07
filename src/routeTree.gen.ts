@@ -38,6 +38,7 @@ import { Route as DividersRouteImport } from './routes/dividers'
 import { Route as DemosRouteImport } from './routes/demos'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as ContainersRouteImport } from './routes/containers'
+import { Route as ComponentsRouteImport } from './routes/components'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as ButtonsRouteImport } from './routes/buttons'
@@ -192,6 +193,11 @@ const ContainersRoute = ContainersRouteImport.update({
   path: '/containers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ComponentsRoute = ComponentsRouteImport.update({
+  id: '/components',
+  path: '/components',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CheckboxesRoute = CheckboxesRouteImport.update({
   id: '/checkboxes',
   path: '/checkboxes',
@@ -242,6 +248,7 @@ export interface FileRoutesByFullPath {
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
@@ -281,6 +288,7 @@ export interface FileRoutesByTo {
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
@@ -321,6 +329,7 @@ export interface FileRoutesById {
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
@@ -362,6 +371,7 @@ export interface FileRouteTypes {
     | '/buttons'
     | '/cards'
     | '/checkboxes'
+    | '/components'
     | '/containers'
     | '/datepicker'
     | '/demos'
@@ -401,6 +411,7 @@ export interface FileRouteTypes {
     | '/buttons'
     | '/cards'
     | '/checkboxes'
+    | '/components'
     | '/containers'
     | '/datepicker'
     | '/demos'
@@ -440,6 +451,7 @@ export interface FileRouteTypes {
     | '/buttons'
     | '/cards'
     | '/checkboxes'
+    | '/components'
     | '/containers'
     | '/datepicker'
     | '/demos'
@@ -480,6 +492,7 @@ export interface RootRouteChildren {
   ButtonsRoute: typeof ButtonsRoute
   CardsRoute: typeof CardsRoute
   CheckboxesRoute: typeof CheckboxesRoute
+  ComponentsRoute: typeof ComponentsRoute
   ContainersRoute: typeof ContainersRoute
   DatepickerRoute: typeof DatepickerRoute
   DemosRoute: typeof DemosRoute
@@ -716,6 +729,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContainersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/components': {
+      id: '/components'
+      path: '/components'
+      fullPath: '/components'
+      preLoaderRoute: typeof ComponentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/checkboxes': {
       id: '/checkboxes'
       path: '/checkboxes'
@@ -784,6 +804,7 @@ const rootRouteChildren: RootRouteChildren = {
   ButtonsRoute: ButtonsRoute,
   CardsRoute: CardsRoute,
   CheckboxesRoute: CheckboxesRoute,
+  ComponentsRoute: ComponentsRoute,
   ContainersRoute: ContainersRoute,
   DatepickerRoute: DatepickerRoute,
   DemosRoute: DemosRoute,
