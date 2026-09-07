@@ -390,6 +390,34 @@ export function AppSidebar() {
       </SidebarHeader>
 
       <SidebarContent>
+        <SidebarGroup>
+          <SidebarGroupLabel>Library</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild isActive={currentPath === "/demos"} tooltip="All demos">
+                  <Link to="/demos" className="flex items-center gap-2">
+                    <LayoutGrid className="h-4 w-4 shrink-0" />
+                    <span className="truncate">All demos</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  asChild
+                  isActive={currentPath === "/components"}
+                  tooltip="Reusable components"
+                >
+                  <Link to="/components" className="flex items-center gap-2">
+                    <Box className="h-4 w-4 shrink-0" />
+                    <span className="truncate">Components</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
         {CATEGORY_ORDER.map((category) => {
           const items = DEMOS.filter((d) => d.category === category);
           if (items.length === 0) return null;
