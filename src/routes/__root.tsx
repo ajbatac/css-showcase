@@ -15,6 +15,7 @@ import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SendToLLM } from "@/components/send-to-llm";
+import { NotFoundPage } from "@/components/not-found";
 import appCss from "../styles.css?url";
 
 function GitHubLink() {
@@ -28,28 +29,6 @@ function GitHubLink() {
     >
       <Github className="h-4 w-4" />
     </a>
-  );
-}
-
-function NotFoundComponent() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <div className="max-w-md text-center">
-        <h1 className="text-7xl font-bold text-foreground">404</h1>
-        <h2 className="mt-4 text-xl font-semibold text-foreground">Page not found</h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          The page you're looking for doesn't exist or has been moved.
-        </p>
-        <div className="mt-6">
-          <Link
-            to="/"
-            className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary/90"
-          >
-            Go home
-          </Link>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -89,36 +68,69 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  head: () => ({
-    meta: [
-      { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "CSS Showcase" },
-      { name: "description", content: "Live CSS demos with the code for each example." },
-      { property: "og:title", content: "CSS Showcase" },
-      { property: "og:description", content: "Live CSS demos with the code for each example." },
-      { property: "og:type", content: "website" },
-    ],
-    links: [
-      {
-        rel: "stylesheet",
-        href: appCss,
-      },
-      { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
-      { rel: "icon", sizes: "32x32", href: "/favicon.ico" },
-      { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
-      { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
-      { rel: "icon", type: "image/png", sizes: "48x48", href: "/favicon-48x48.png" },
-      { rel: "icon", type: "image/png", sizes: "128x128", href: "/favicon-128x128.png" },
-      { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
-      { rel: "icon", type: "image/png", sizes: "192x192", href: "/android-chrome-192x192.png" },
-      { rel: "icon", type: "image/png", sizes: "512x512", href: "/android-chrome-512x512.png" },
-      { rel: "manifest", href: "/site.webmanifest" },
-    ],
-  }),
+  loader: async () => {
+    let origin = "";
+    if (import.meta.env.SSR) {
+      try {
+        const { getRequest } = await import("@tanstack/react-start/server");
+        const req = getRequest();
+        if (req) origin = new URL(req.url).origin;
+      } catch {
+        origin = "";
+      }
+    }
+    return { origin };
+  },
+  head: ({ loaderData }) => {
+    console.log("[dbg] head loaderData:", JSON.stringify(loaderData));
+    const origin = loaderData?.origin ?? "";
+    const ogImage = `${origin}/og-2.png`;
+    const description = "Live CSS demos with the code for each example.";
+    return {
+      meta: [
+        { charSet: "utf-8" },
+        { name: "viewport", content: "width=device-width, initial-scale=1" },
+        { title: "CSS Showcase" },
+        { name: "description", content: description },
+        { name: "robots", content: "index, follow" },
+        { name: "theme-color", content: "#ffffff", media: "(prefers-color-scheme: light)" },
+        { name: "theme-color", content: "#0f1014", media: "(prefers-color-scheme: dark)" },
+        { property: "og:site_name", content: "CSS Showcase" },
+        { property: "og:title", content: "CSS Showcase" },
+        { property: "og:description", content: description },
+        { property: "og:type", content: "website" },
+        { property: "og:url", content: origin },
+        { property: "og:image", content: ogImage },
+        { property: "og:image:type", content: "image/png" },
+        { property: "og:image:width", content: "1678" },
+        { property: "og:image:height", content: "937" },
+        { property: "og:image:alt", content: "CSS Showcase logo on a demo interface" },
+        { name: "twitter:card", content: "summary_large_image" },
+        { name: "twitter:title", content: "CSS Showcase" },
+        { name: "twitter:description", content: description },
+        { name: "twitter:image", content: ogImage },
+      ],
+      links: [
+        {
+          rel: "stylesheet",
+          href: appCss,
+        },
+        { rel: "icon", type: "image/svg+xml", href: "/favicon.svg" },
+        { rel: "icon", sizes: "32x32", href: "/favicon.ico" },
+        { rel: "icon", type: "image/png", sizes: "16x16", href: "/favicon-16x16.png" },
+        { rel: "icon", type: "image/png", sizes: "32x32", href: "/favicon-32x32.png" },
+        { rel: "icon", type: "image/png", sizes: "48x48", href: "/favicon-48x48.png" },
+        { rel: "icon", type: "image/png", sizes: "128x128", href: "/favicon-128x128.png" },
+        { rel: "apple-touch-icon", href: "/apple-touch-icon.png" },
+        { rel: "icon", type: "image/png", sizes: "192x192", href: "/android-chrome-192x192.png" },
+        { rel: "icon", type: "image/png", sizes: "512x512", href: "/android-chrome-512x512.png" },
+        { rel: "manifest", href: "/site.webmanifest" },
+      ],
+    };
+  },
   shellComponent: RootShell,
   component: RootComponent,
-  notFoundComponent: NotFoundComponent,
+  notFoundComponent: NotFoundPage,
   errorComponent: ErrorComponent,
 });
 

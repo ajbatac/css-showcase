@@ -52,6 +52,7 @@ import { Route as BreadcrumbsRouteImport } from './routes/breadcrumbs'
 import { Route as BadgesRouteImport } from './routes/badges'
 import { Route as AlertsRouteImport } from './routes/alerts'
 import { Route as AccordionsRouteImport } from './routes/accordions'
+import { Route as SplatRouteImport } from './routes/$'
 import { Route as IndexRouteImport } from './routes/index'
 
 const UploadersRoute = UploadersRouteImport.update({
@@ -269,6 +270,11 @@ const AccordionsRoute = AccordionsRouteImport.update({
   path: '/accordions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SplatRoute = SplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -277,6 +283,7 @@ const IndexRoute = IndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
   '/badges': typeof BadgesRoute
@@ -323,6 +330,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
   '/badges': typeof BadgesRoute
@@ -370,6 +378,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/$': typeof SplatRoute
   '/accordions': typeof AccordionsRoute
   '/alerts': typeof AlertsRoute
   '/badges': typeof BadgesRoute
@@ -418,6 +427,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/$'
     | '/accordions'
     | '/alerts'
     | '/badges'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/$'
     | '/accordions'
     | '/alerts'
     | '/badges'
@@ -510,6 +521,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/$'
     | '/accordions'
     | '/alerts'
     | '/badges'
@@ -557,6 +569,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  SplatRoute: typeof SplatRoute
   AccordionsRoute: typeof AccordionsRoute
   AlertsRoute: typeof AlertsRoute
   BadgesRoute: typeof BadgesRoute
@@ -905,6 +918,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AccordionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/$': {
+      id: '/$'
+      path: '/$'
+      fullPath: '/$'
+      preLoaderRoute: typeof SplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -917,6 +937,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  SplatRoute: SplatRoute,
   AccordionsRoute: AccordionsRoute,
   AlertsRoute: AlertsRoute,
   BadgesRoute: BadgesRoute,
