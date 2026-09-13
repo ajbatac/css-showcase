@@ -21,8 +21,20 @@ export default defineConfig(({ command }) => ({
       // nitro/vite builds from this
       server: { entry: "server" },
     }),
-    // nitro() returns an array of plugins, so it can only be spread conditionally
-    ...(command === "build" ? [nitro({ preset: "node-server" })] : []),
+    // nitro() returns an array of plugins, so it can only be spread conditionally.
+    // Preset resolution: NITRO_PRESET wins; Cloudflare Pages sets CF_PAGES during
+    // its build and nitro's cloudflare-pages preset is used there; locally we
+    // default to node-server (run with `npm run preview`).
+    ...(command === "build"
+      ? [
+          nitro({
+            preset:
+              process.env.NITRO_PRESET ??
+              (process.env.CF_PAGES ? "cloudflare-pages" : "node-server"),
+            cloudflare: { nodeCompat: true, deployConfig: true },
+          }),
+        ]
+      : []),
     viteReact(),
   ],
   css: { transformer: "lightningcss" },

@@ -21,3 +21,11 @@ jobs:
 
       - name: Build
         run: bun run build
+
+      - name: Build (Cloudflare Pages)
+        run: bun run build
+        env:
+          CF_PAGES: "1"
+
+      - name: Build (Cloudflare Workers)
+        run: bun run build:cf

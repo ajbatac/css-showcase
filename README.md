@@ -86,6 +86,32 @@ The build lands in `.output`. The server listens on port 3000 by default; set `P
 
 TanStack Start with server-side rendering, TanStack Router, React 19, Tailwind CSS v4, Radix UI primitives, Vite, and Nitro for the server build. TypeScript throughout.
 
+## Deploy
+
+**Cloudflare Pages** (recommended): connect the repository in the Cloudflare dashboard with these settings:
+
+- Production branch: `main`
+- Build command: `npm run build`
+- Build output directory: `dist`
+
+The build detects Cloudflare's `CF_PAGES` environment and produces a Pages artifact (`_worker.js` plus static assets) in `dist`.
+
+**Cloudflare Workers** as an alternative: `npm run deploy:cf` builds and deploys in one command after a one-time `npx wrangler login`.
+
+Any other Node host works with the standard build: `npm run build` produces a server in `.output` that `npm run preview` runs.
+
 ## Contributing
 
 Issues and pull requests are welcome. Run `npm run lint` before opening a pull request.
+
+---
+
+<div align="center">
+
+**CSS Showcase** · live demos with the code · [ajbatac/css-showcase](https://github.com/ajbatac/css-showcase)
+
+**Support our other projects:** [Launch Wizard](https://launch-wizard.techhive.net/) · by [Allan Batac](https://ajbatac.com)
+
+[Terms](src/routes/terms.tsx) · [Privacy](src/routes/privacy.tsx) · [DMCA](src/routes/dmca.tsx) · [Cookies](src/routes/cookies.tsx) · [Disclaimer](src/routes/disclaimer.tsx) · [UGC](src/routes/ugc-disclaimer.tsx)
+
+</div>
