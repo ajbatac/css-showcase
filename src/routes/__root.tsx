@@ -7,13 +7,28 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import type { ReactNode } from "react";
+import { useEffect, type ReactNode } from "react";
+import { Github } from "lucide-react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import appCss from "../styles.css?url";
+
+function GitHubLink() {
+  return (
+    <a
+      href="https://github.com/ajbatac/css-showcase"
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label="CSS Showcase on GitHub"
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-border bg-background/80 text-foreground shadow-sm backdrop-blur transition-colors hover:bg-accent"
+    >
+      <Github className="h-4 w-4" />
+    </a>
+  );
+}
 
 function NotFoundComponent() {
   return (
@@ -132,16 +147,83 @@ function RootComponent() {
           <div className="flex min-w-0 flex-1 flex-col">
             <header className="hidden h-20 items-center gap-2 bg-background/60 px-3 backdrop-blur md:flex">
               <SidebarTrigger />
-              <div className="ml-auto">
+              <div className="ml-auto flex items-center gap-1.5">
                 <ThemeToggle />
+                <GitHubLink />
               </div>
             </header>
             <hr className="hidden border-t border-border md:block" />
-            <div className="fixed right-3 top-3 z-50 md:hidden">
+            <div className="fixed right-3 top-3 z-50 flex items-center gap-1.5 md:hidden">
               <ThemeToggle />
+              <GitHubLink />
             </div>
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
+            <footer className="mt-auto">
+              <hr className="border-t border-border" />
+              <div className="mx-auto max-w-3xl px-5 py-4 md:max-w-5xl xl:max-w-6xl">
+                <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
+                  <span>CSS Showcase · live demos with the code</span>
+                  <a
+                    href="https://github.com/ajbatac/css-showcase"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 transition-colors hover:text-foreground"
+                  >
+                    <Github className="h-3.5 w-3.5" />
+                    ajbatac/css-showcase
+                  </a>
+                </div>
+                <div className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground">
+                  <span className="font-medium text-foreground/70">
+                    Support our other projects:
+                  </span>
+                  <a
+                    href="https://launch-wizard.techhive.net/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="transition-colors hover:text-foreground"
+                  >
+                    Launch Wizard
+                  </a>
+                  <span className="inline-flex items-center gap-1.5">
+                    by
+                    <a
+                      href="https://ajbatac.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="transition-colors hover:text-foreground"
+                    >
+                      Allan Batac
+                    </a>
+                  </span>
+                </div>
+                <nav
+                  aria-label="Legal"
+                  className="mt-2 flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground"
+                >
+                  <span className="font-medium text-foreground/70">Legal:</span>
+                  <Link to="/terms" className="transition-colors hover:text-foreground">
+                    Terms
+                  </Link>
+                  <Link to="/privacy" className="transition-colors hover:text-foreground">
+                    Privacy
+                  </Link>
+                  <Link to="/dmca" className="transition-colors hover:text-foreground">
+                    DMCA
+                  </Link>
+                  <Link to="/cookies" className="transition-colors hover:text-foreground">
+                    Cookies
+                  </Link>
+                  <Link to="/disclaimer" className="transition-colors hover:text-foreground">
+                    Disclaimer
+                  </Link>
+                  <Link to="/ugc-disclaimer" className="transition-colors hover:text-foreground">
+                    UGC
+                  </Link>
+                </nav>
+              </div>
+            </footer>
           </div>
         </div>
       </SidebarProvider>

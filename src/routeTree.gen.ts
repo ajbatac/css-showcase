@@ -10,9 +10,11 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as UploadersRouteImport } from './routes/uploaders'
+import { Route as UgcDisclaimerRouteImport } from './routes/ugc-disclaimer'
 import { Route as TooltipsRouteImport } from './routes/tooltips'
 import { Route as ToastsRouteImport } from './routes/toasts'
 import { Route as TextareasRouteImport } from './routes/textareas'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TablesRouteImport } from './routes/tables'
 import { Route as SwitchesRouteImport } from './routes/switches'
@@ -21,6 +23,7 @@ import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as SearchRouteImport } from './routes/search'
 import { Route as RadiosRouteImport } from './routes/radios'
 import { Route as ProgressRouteImport } from './routes/progress'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PaginationRouteImport } from './routes/pagination'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
@@ -34,9 +37,12 @@ import { Route as FlexRouteImport } from './routes/flex'
 import { Route as EmptyStatesRouteImport } from './routes/empty-states'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
 import { Route as DrawersRouteImport } from './routes/drawers'
+import { Route as DmcaRouteImport } from './routes/dmca'
 import { Route as DividersRouteImport } from './routes/dividers'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as DemosRouteImport } from './routes/demos'
 import { Route as DatepickerRouteImport } from './routes/datepicker'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as ComponentsRouteImport } from './routes/components'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
@@ -53,6 +59,11 @@ const UploadersRoute = UploadersRouteImport.update({
   path: '/uploaders',
   getParentRoute: () => rootRouteImport,
 } as any)
+const UgcDisclaimerRoute = UgcDisclaimerRouteImport.update({
+  id: '/ugc-disclaimer',
+  path: '/ugc-disclaimer',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TooltipsRoute = TooltipsRouteImport.update({
   id: '/tooltips',
   path: '/tooltips',
@@ -66,6 +77,11 @@ const ToastsRoute = ToastsRouteImport.update({
 const TextareasRoute = TextareasRouteImport.update({
   id: '/textareas',
   path: '/textareas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TabsRoute = TabsRouteImport.update({
@@ -106,6 +122,11 @@ const RadiosRoute = RadiosRouteImport.update({
 const ProgressRoute = ProgressRouteImport.update({
   id: '/progress',
   path: '/progress',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PaginationRoute = PaginationRouteImport.update({
@@ -173,9 +194,19 @@ const DrawersRoute = DrawersRouteImport.update({
   path: '/drawers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DmcaRoute = DmcaRouteImport.update({
+  id: '/dmca',
+  path: '/dmca',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DividersRoute = DividersRouteImport.update({
   id: '/dividers',
   path: '/dividers',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DemosRoute = DemosRouteImport.update({
@@ -186,6 +217,11 @@ const DemosRoute = DemosRouteImport.update({
 const DatepickerRoute = DatepickerRouteImport.update({
   id: '/datepicker',
   path: '/datepicker',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ContainersRoute = ContainersRouteImport.update({
@@ -250,9 +286,12 @@ export interface FileRoutesByFullPath {
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
+  '/cookies': typeof CookiesRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/dividers': typeof DividersRoute
+  '/dmca': typeof DmcaRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
@@ -266,6 +305,7 @@ export interface FileRoutesByFullPath {
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
@@ -274,9 +314,11 @@ export interface FileRoutesByFullPath {
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
+  '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
+  '/ugc-disclaimer': typeof UgcDisclaimerRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesByTo {
@@ -290,9 +332,12 @@ export interface FileRoutesByTo {
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
+  '/cookies': typeof CookiesRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/dividers': typeof DividersRoute
+  '/dmca': typeof DmcaRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
@@ -306,6 +351,7 @@ export interface FileRoutesByTo {
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
@@ -314,9 +360,11 @@ export interface FileRoutesByTo {
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
+  '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
+  '/ugc-disclaimer': typeof UgcDisclaimerRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRoutesById {
@@ -331,9 +379,12 @@ export interface FileRoutesById {
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
+  '/cookies': typeof CookiesRoute
   '/datepicker': typeof DatepickerRoute
   '/demos': typeof DemosRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/dividers': typeof DividersRoute
+  '/dmca': typeof DmcaRoute
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
@@ -347,6 +398,7 @@ export interface FileRoutesById {
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
   '/pagination': typeof PaginationRoute
+  '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
   '/radios': typeof RadiosRoute
   '/search': typeof SearchRoute
@@ -355,9 +407,11 @@ export interface FileRoutesById {
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
+  '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
+  '/ugc-disclaimer': typeof UgcDisclaimerRoute
   '/uploaders': typeof UploadersRoute
 }
 export interface FileRouteTypes {
@@ -373,9 +427,12 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/components'
     | '/containers'
+    | '/cookies'
     | '/datepicker'
     | '/demos'
+    | '/disclaimer'
     | '/dividers'
+    | '/dmca'
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
@@ -389,6 +446,7 @@ export interface FileRouteTypes {
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/privacy'
     | '/progress'
     | '/radios'
     | '/search'
@@ -397,9 +455,11 @@ export interface FileRouteTypes {
     | '/switches'
     | '/tables'
     | '/tabs'
+    | '/terms'
     | '/textareas'
     | '/toasts'
     | '/tooltips'
+    | '/ugc-disclaimer'
     | '/uploaders'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -413,9 +473,12 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/components'
     | '/containers'
+    | '/cookies'
     | '/datepicker'
     | '/demos'
+    | '/disclaimer'
     | '/dividers'
+    | '/dmca'
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
@@ -429,6 +492,7 @@ export interface FileRouteTypes {
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/privacy'
     | '/progress'
     | '/radios'
     | '/search'
@@ -437,9 +501,11 @@ export interface FileRouteTypes {
     | '/switches'
     | '/tables'
     | '/tabs'
+    | '/terms'
     | '/textareas'
     | '/toasts'
     | '/tooltips'
+    | '/ugc-disclaimer'
     | '/uploaders'
   id:
     | '__root__'
@@ -453,9 +519,12 @@ export interface FileRouteTypes {
     | '/checkboxes'
     | '/components'
     | '/containers'
+    | '/cookies'
     | '/datepicker'
     | '/demos'
+    | '/disclaimer'
     | '/dividers'
+    | '/dmca'
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
@@ -469,6 +538,7 @@ export interface FileRouteTypes {
     | '/modals'
     | '/navigation'
     | '/pagination'
+    | '/privacy'
     | '/progress'
     | '/radios'
     | '/search'
@@ -477,9 +547,11 @@ export interface FileRouteTypes {
     | '/switches'
     | '/tables'
     | '/tabs'
+    | '/terms'
     | '/textareas'
     | '/toasts'
     | '/tooltips'
+    | '/ugc-disclaimer'
     | '/uploaders'
   fileRoutesById: FileRoutesById
 }
@@ -494,9 +566,12 @@ export interface RootRouteChildren {
   CheckboxesRoute: typeof CheckboxesRoute
   ComponentsRoute: typeof ComponentsRoute
   ContainersRoute: typeof ContainersRoute
+  CookiesRoute: typeof CookiesRoute
   DatepickerRoute: typeof DatepickerRoute
   DemosRoute: typeof DemosRoute
+  DisclaimerRoute: typeof DisclaimerRoute
   DividersRoute: typeof DividersRoute
+  DmcaRoute: typeof DmcaRoute
   DrawersRoute: typeof DrawersRoute
   DropdownsRoute: typeof DropdownsRoute
   EmptyStatesRoute: typeof EmptyStatesRoute
@@ -510,6 +585,7 @@ export interface RootRouteChildren {
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
   PaginationRoute: typeof PaginationRoute
+  PrivacyRoute: typeof PrivacyRoute
   ProgressRoute: typeof ProgressRoute
   RadiosRoute: typeof RadiosRoute
   SearchRoute: typeof SearchRoute
@@ -518,9 +594,11 @@ export interface RootRouteChildren {
   SwitchesRoute: typeof SwitchesRoute
   TablesRoute: typeof TablesRoute
   TabsRoute: typeof TabsRoute
+  TermsRoute: typeof TermsRoute
   TextareasRoute: typeof TextareasRoute
   ToastsRoute: typeof ToastsRoute
   TooltipsRoute: typeof TooltipsRoute
+  UgcDisclaimerRoute: typeof UgcDisclaimerRoute
   UploadersRoute: typeof UploadersRoute
 }
 
@@ -531,6 +609,13 @@ declare module '@tanstack/react-router' {
       path: '/uploaders'
       fullPath: '/uploaders'
       preLoaderRoute: typeof UploadersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ugc-disclaimer': {
+      id: '/ugc-disclaimer'
+      path: '/ugc-disclaimer'
+      fullPath: '/ugc-disclaimer'
+      preLoaderRoute: typeof UgcDisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tooltips': {
@@ -552,6 +637,13 @@ declare module '@tanstack/react-router' {
       path: '/textareas'
       fullPath: '/textareas'
       preLoaderRoute: typeof TextareasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/tabs': {
@@ -608,6 +700,13 @@ declare module '@tanstack/react-router' {
       path: '/progress'
       fullPath: '/progress'
       preLoaderRoute: typeof ProgressRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/pagination': {
@@ -701,11 +800,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DrawersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dmca': {
+      id: '/dmca'
+      path: '/dmca'
+      fullPath: '/dmca'
+      preLoaderRoute: typeof DmcaRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dividers': {
       id: '/dividers'
       path: '/dividers'
       fullPath: '/dividers'
       preLoaderRoute: typeof DividersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/demos': {
@@ -720,6 +833,13 @@ declare module '@tanstack/react-router' {
       path: '/datepicker'
       fullPath: '/datepicker'
       preLoaderRoute: typeof DatepickerRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/containers': {
@@ -806,9 +926,12 @@ const rootRouteChildren: RootRouteChildren = {
   CheckboxesRoute: CheckboxesRoute,
   ComponentsRoute: ComponentsRoute,
   ContainersRoute: ContainersRoute,
+  CookiesRoute: CookiesRoute,
   DatepickerRoute: DatepickerRoute,
   DemosRoute: DemosRoute,
+  DisclaimerRoute: DisclaimerRoute,
   DividersRoute: DividersRoute,
+  DmcaRoute: DmcaRoute,
   DrawersRoute: DrawersRoute,
   DropdownsRoute: DropdownsRoute,
   EmptyStatesRoute: EmptyStatesRoute,
@@ -822,6 +945,7 @@ const rootRouteChildren: RootRouteChildren = {
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
   PaginationRoute: PaginationRoute,
+  PrivacyRoute: PrivacyRoute,
   ProgressRoute: ProgressRoute,
   RadiosRoute: RadiosRoute,
   SearchRoute: SearchRoute,
@@ -830,9 +954,11 @@ const rootRouteChildren: RootRouteChildren = {
   SwitchesRoute: SwitchesRoute,
   TablesRoute: TablesRoute,
   TabsRoute: TabsRoute,
+  TermsRoute: TermsRoute,
   TextareasRoute: TextareasRoute,
   ToastsRoute: ToastsRoute,
   TooltipsRoute: TooltipsRoute,
+  UgcDisclaimerRoute: UgcDisclaimerRoute,
   UploadersRoute: UploadersRoute,
 }
 export const routeTree = rootRouteImport

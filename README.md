@@ -1,26 +1,46 @@
+<div align="center">
+
+<img src="public/logo.png" width="112" alt="CSS Showcase logo" />
+
 # CSS Showcase
 
-A collection of live CSS demos. Every page pairs a working example with the CSS that drives it, so you can watch a pattern behave and read the code behind it without leaving the page.
+**Live CSS demos with the code for each example.**
 
-The site is mobile-first. Demos are sized for phone screens first and scale up on desktop, and a toggle switches between light and dark themes.
+[![Stars](https://img.shields.io/github/stars/ajbatac/css-showcase?style=for-the-badge&logo=github)](https://github.com/ajbatac/css-showcase/stargazers)
+[![Forks](https://img.shields.io/github/forks/ajbatac/css-showcase?style=for-the-badge&logo=github)](https://github.com/ajbatac/css-showcase/forks)
+[![Issues](https://img.shields.io/github/issues/ajbatac/css-showcase?style=for-the-badge&logo=githubissues)](https://github.com/ajbatac/css-showcase/issues)
+[![Last commit](https://img.shields.io/github/last-commit/ajbatac/css-showcase?style=for-the-badge&logo=git&color=blue)](https://github.com/ajbatac/css-showcase/commits/main)
+[![CI](https://img.shields.io/github/actions/workflow/status/ajbatac/css-showcase/ci.yml?style=for-the-badge&label=CI)](https://github.com/ajbatac/css-showcase/actions/workflows/ci.yml)
+
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TanStack Start](https://img.shields.io/badge/TanStack_Start-1-FFBF00?style=for-the-badge&logo=tanstack&logoColor=black)](https://tanstack.com/start)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![Nitro](https://img.shields.io/badge/Nitro-3-20B2AA?style=for-the-badge)](https://nitro.build/)
+
+<img src="docs/screenshot.png" alt="CSS Showcase running the device switcher demo" width="880" />
+
+</div>
+
+---
+
+A collection of live CSS demos. Every page pairs a working example with the CSS that drives it, so you can watch a pattern behave and read the code behind it without leaving the page. Mobile-first, dark mode included.
 
 ## What's inside
 
-37 demos grouped into seven categories: layout, forms, navigation, feedback, overlays, data display, and utilities. The full list lives in the app sidebar, and `/demos` is an index page for all of them.
+- **37 demos** across seven categories: layout, forms, navigation, feedback, overlays, data display, and utilities
+- **The device switcher** (home page): a skeleton app that reshapes itself between desktop, iPad, and mobile using container queries, `aspect-ratio`, and custom properties, with no JavaScript driving the layout
+- **Code beside every demo**: the example first, the CSS for the selected pattern right below it
+- **Light and dark themes** with a toggle, driven by CSS custom properties
 
-The home page is the flagship demo: a device switcher. A skeleton app reshapes itself between desktop, iPad, and mobile views using container queries, `aspect-ratio`, and custom properties, with no JavaScript driving the layout.
-
-Each demo page shows the example first and the CSS for the selected pattern below it in a code panel.
-
-## Running locally
-
-You need Node.js 20.19 or newer (Bun 1.1+ also works; the repo ships a `bun.lock`).
+## Quick start
 
 ```sh
 git clone https://github.com/ajbatac/css-showcase.git
 cd css-showcase
-npm install
-npm run dev
+bun install        # or: npm install
+bun run dev        # or: npm run dev
 ```
 
 The dev server URL is printed in the terminal.
@@ -28,8 +48,8 @@ The dev server URL is printed in the terminal.
 For a production build and a running server:
 
 ```sh
-npm run build
-npm run preview
+bun run build
+bun run preview
 ```
 
 The build lands in `.output`. The server listens on port 3000 by default; set `PORT` to change it.
@@ -47,18 +67,20 @@ The build lands in `.output`. The server listens on port 3000 by default; set `P
 
 ## Project layout
 
-- `src/routes/` one file per demo, mounted through TanStack file-based routing
-- `src/components/patterns/` the demo implementations the routes render
-- `src/components/ui/` UI primitives built on Radix UI and Tailwind CSS
-- `src/components/app-sidebar.tsx` the demo registry (`DEMOS` array) and the sidebar
-- `src/styles.css` theme tokens for light and dark mode
+| Path                       | Contents                                                       |
+| -------------------------- | -------------------------------------------------------------- |
+| `src/routes/`              | One file per demo, mounted through TanStack file-based routing |
+| `src/components/patterns/` | The demo implementations the routes render                     |
+| `src/components/ui/`       | UI primitives built on Radix UI and Tailwind CSS               |
+| `src/lib/demos.ts`         | The demo registry: slugs, icons, paths, categories             |
+| `src/styles.css`           | Theme tokens for light and dark mode                           |
 
 ## Adding a demo
 
-1. Create a route file in `src/routes/`, for example `toggles.tsx`.
-2. Build the demo in `src/components/patterns/` or inline in the route.
-3. Register it in the `DEMOS` array in `src/components/app-sidebar.tsx` with a category, icon, and path.
-4. Run `npm run dev` and check it in the sidebar.
+1. Register it in the `DEMOS` array in `src/lib/demos.ts` with a category, icon, and path.
+2. Create a route file in `src/routes/`, for example `toggles.tsx`.
+3. Build the demo in `src/components/patterns/` or inline in the route.
+4. Run `bun run dev` and check it in the sidebar.
 
 ## Tech stack
 
