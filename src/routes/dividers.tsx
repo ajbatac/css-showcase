@@ -5,13 +5,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/dividers")({
   head: () => ({
     meta: [
-      { title: "Dividers — Modern CSS Demos" },
+      { title: "Dividers — CSS Showcase" },
       {
         name: "description",
         content:
           "Divider and separator patterns — hairlines, labelled separators, vertical rules, inset list dividers, and spacer blocks — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Dividers — Modern CSS Demos" },
+      { property: "og:title", content: "Dividers — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -137,7 +137,7 @@ function DividersDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Dividers that fade.

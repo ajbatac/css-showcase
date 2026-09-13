@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/datepicker")({
   head: () => ({
     meta: [
-      { title: "Date Pickers — Modern CSS Demos" },
+      { title: "Date Pickers — CSS Showcase" },
       {
         name: "description",
         content:
           "Inline calendars, anchored popovers, two-month range pickers, and mobile date sheets built with CSS grid and container queries.",
       },
-      { property: "og:title", content: "Date Pickers — Modern CSS Demos" },
+      { property: "og:title", content: "Date Pickers — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -188,7 +188,7 @@ function DatePickerDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One date picker. Many patterns per device.

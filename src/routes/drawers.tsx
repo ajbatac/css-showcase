@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/drawers")({
   head: () => ({
     meta: [
-      { title: "Drawers & Sheets — Modern CSS Demos" },
+      { title: "Drawers & Sheets — CSS Showcase" },
       {
         name: "description",
         content:
           "Drawer and sheet patterns — sliding right panels, push-in left navigation, docked inspectors, bottom sheets with drag handles, and full-screen modal pages — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Drawers & Sheets — Modern CSS Demos" },
+      { property: "og:title", content: "Drawers & Sheets — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -169,7 +169,7 @@ function DrawersDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Drawers that slide in with intent.

@@ -12,13 +12,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/alerts")({
   head: () => ({
     meta: [
-      { title: "Alerts & Banners — Modern CSS Demos" },
+      { title: "Alerts & Banners — CSS Showcase" },
       {
         name: "description",
         content:
           "Inline alert and banner patterns — success/warning/error/info cards, sticky top banners, field-level alerts, compact stacked alerts, and bottom-anchored banners — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Alerts & Banners — Modern CSS Demos" },
+      { property: "og:title", content: "Alerts & Banners — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -188,7 +188,7 @@ function AlertsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Alerts that get noticed.

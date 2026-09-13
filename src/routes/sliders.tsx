@@ -5,13 +5,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/sliders")({
   head: () => ({
     meta: [
-      { title: "Sliders — Modern CSS Demos" },
+      { title: "Sliders — CSS Showcase" },
       {
         name: "description",
         content:
           "Range sliders, dual-thumb ranges, and stepped controls morphed for mobile, iPad, and desktop using container queries.",
       },
-      { property: "og:title", content: "Sliders — Modern CSS Demos" },
+      { property: "og:title", content: "Sliders — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -147,7 +147,7 @@ function SlidersDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Sliders & range inputs.

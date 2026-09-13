@@ -1,5 +1,5 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Activity, AlertTriangle, Bell, BadgeCheck, Box, CalendarDays, CheckSquare, ChevronDown, ChevronRight, CircleDot, Columns3, HelpCircle, Inbox, LayoutGrid, List, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, Minus, MoreHorizontal, MousePointerClick, PanelLeft, PanelTop, Rows3, Search, SlidersHorizontal, Smartphone, Sparkles, SquarePen, Table, Tag, TextCursorInput, ToggleLeft, UploadCloud } from "lucide-react";
+import { Activity, AlertTriangle, Bell, BadgeCheck, Box, CalendarDays, CheckSquare, ChevronDown, ChevronRight, CircleDot, Columns3, HelpCircle, Inbox, LayoutGrid, List, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, Minus, MoreHorizontal, MousePointerClick, PanelLeft, PanelTop, Rows3, Search, SlidersHorizontal, Smartphone, SquarePen, Table, Tag, TextCursorInput, ToggleLeft, UploadCloud } from "lucide-react";
 
 import {
   Sidebar,
@@ -379,11 +379,13 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b">
         <div className="flex items-center gap-2 px-2 py-1.5">
-          <div className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-primary text-primary-foreground">
-            <Sparkles className="h-4 w-4" />
-          </div>
+          <img
+            src="/logo.png"
+            alt="CSS Showcase"
+            className="h-9 w-9 shrink-0 rounded-lg object-cover"
+          />
           <div className="flex min-w-0 flex-col group-data-[collapsible=icon]:hidden">
-            <span className="truncate text-sm font-semibold">Modern CSS</span>
+            <span className="truncate text-sm font-semibold">CSS Showcase</span>
             <span className="truncate text-[11px] text-muted-foreground">Live demos</span>
           </div>
         </div>

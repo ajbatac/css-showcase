@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/accordions")({
   head: () => ({
     meta: [
-      { title: "Accordions — Modern CSS Demos" },
+      { title: "Accordions — CSS Showcase" },
       {
         name: "description",
         content:
           "Animated accordions that morph between a compact stacked list on mobile and an expanded multi-panel layout on desktop using container queries.",
       },
-      { property: "og:title", content: "Accordions — Modern CSS Demos" },
+      { property: "og:title", content: "Accordions — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -174,7 +174,7 @@ function AccordionsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Accordions that stretch.

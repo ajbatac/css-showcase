@@ -12,7 +12,7 @@ export const Route = createFileRoute("/navigation")({
         content:
           "Top bar, left rail, split logo, hamburger drawer, and bottom tab bar navigation patterns reshaped per device with container queries.",
       },
-      { property: "og:title", content: "Navigation — Modern CSS Demos" },
+      { property: "og:title", content: "Navigation — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -145,7 +145,7 @@ function NavigationDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One nav. Many shapes per device.

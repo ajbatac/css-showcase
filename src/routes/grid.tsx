@@ -39,13 +39,13 @@ export const Route = createFileRoute("/grid")({
   },
   head: () => ({
     meta: [
-      { title: "CSS Grid Demo — Modern CSS" },
+      { title: "CSS Grid Demo — CSS Showcase" },
       {
         name: "description",
         content:
           "Interactive CSS Grid playground: swap between template presets and auto-placement across desktop, iPad, and mobile frames.",
       },
-      { property: "og:title", content: "CSS Grid Demo — Modern CSS" },
+      { property: "og:title", content: "CSS Grid Demo — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -136,7 +136,7 @@ function GridDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             CSS Grid, six presets deep.

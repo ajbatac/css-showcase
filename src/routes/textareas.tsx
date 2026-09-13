@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/textareas")({
   head: () => ({
     meta: [
-      { title: "Textareas — Modern CSS Demos" },
+      { title: "Textareas — CSS Showcase" },
       {
         name: "description",
         content:
           "Textarea patterns from auto-growing composers to fixed resizable boxes and bottom-anchored chat inputs, with a live character counter.",
       },
-      { property: "og:title", content: "Textareas — Modern CSS Demos" },
+      { property: "og:title", content: "Textareas — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -140,7 +140,7 @@ function TextareasDemo() {
     }),
   );
   const maxLength = 140;
-  const [value, setValue] = useState("Modern CSS lets a textarea grow with content.");
+  const [value, setValue] = useState("CSS Showcase lets a textarea grow with content.");
 
   const pattern = patterns[device];
   const options = PATTERNS[device];
@@ -192,7 +192,7 @@ function TextareasDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Textareas that flex.

@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/switches")({
   head: () => ({
     meta: [
-      { title: "Switches — Modern CSS Demos" },
+      { title: "Switches — CSS Showcase" },
       {
         name: "description",
         content:
           "Animated toggle switch patterns — settings rows, compact grids, card toggles, iOS-style lists, and chip toggles — reshaped for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Switches — Modern CSS Demos" },
+      { property: "og:title", content: "Switches — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -237,7 +237,7 @@ function SwitchesDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Switches that adapt.

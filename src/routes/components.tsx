@@ -24,13 +24,13 @@ import tabsSource from "@/components/patterns/pattern-tabs.tsx?raw";
 export const Route = createFileRoute("/components")({
   head: () => ({
     meta: [
-      { title: "Reusable Components — Modern CSS Pattern Library" },
+      { title: "Reusable Components — CSS Showcase" },
       {
         name: "description",
         content:
           "Drop-in React components extracted from the demos: buttons, inputs, cards, tabs, alerts, badges, empty states and skeleton loaders.",
       },
-      { property: "og:title", content: "Reusable Components — Modern CSS Pattern Library" },
+      { property: "og:title", content: "Reusable Components — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -233,7 +233,7 @@ function ComponentsPage() {
       <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Components
+            CSS Showcase · Components
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Reusable components

@@ -5,13 +5,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/containers")({
   head: () => ({
     meta: [
-      { title: "Containers — Modern CSS Demos" },
+      { title: "Containers — CSS Showcase" },
       {
         name: "description",
         content:
           "Content container and width patterns — centered prose, sidebar layouts, and full-bleed bands — reshaped for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Containers — Modern CSS Demos" },
+      { property: "og:title", content: "Containers — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -113,7 +113,7 @@ function ContainersDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Containers that adapt.

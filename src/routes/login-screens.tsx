@@ -5,13 +5,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/login-screens")({
   head: () => ({
     meta: [
-      { title: "Login Screens — Modern CSS Demos" },
+      { title: "Login Screens — CSS Showcase" },
       {
         name: "description",
         content:
           "Multiple login design patterns per device: centered card, split half/half, hero overlay on desktop, and stacked or sheet layouts on mobile.",
       },
-      { property: "og:title", content: "Login Screens — Modern CSS Demos" },
+      { property: "og:title", content: "Login Screens — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -131,7 +131,7 @@ function LoginScreens() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One login. Many patterns per device.

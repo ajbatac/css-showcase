@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/modals")({
   head: () => ({
     meta: [
-      { title: "Modals — Modern CSS Demos" },
+      { title: "Modals — CSS Showcase" },
       {
         name: "description",
         content:
           "Confirm, cancel, and dismiss modal flows reshaped for desktop, iPad, and mobile with container queries, plus dialog, drawer, full-screen, and sheet design patterns per device.",
       },
-      { property: "og:title", content: "Modals — Modern CSS Demos" },
+      { property: "og:title", content: "Modals — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -206,7 +206,7 @@ function ModalsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One modal. Many flows and patterns.

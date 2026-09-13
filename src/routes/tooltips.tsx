@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/tooltips")({
   head: () => ({
     meta: [
-      { title: "Tooltips & Popovers — Modern CSS Demos" },
+      { title: "Tooltips & Popovers — CSS Showcase" },
       {
         name: "description",
         content:
           "Tooltip and popover-hint patterns — hover arrows, rich hover cards, inline help icons, tap bubbles, long-press sheets, and persistent helper text — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Tooltips & Popovers — Modern CSS Demos" },
+      { property: "og:title", content: "Tooltips & Popovers — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -207,7 +207,7 @@ function TooltipsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Tooltips that stay out of the way.

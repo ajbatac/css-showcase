@@ -4,13 +4,13 @@ import { CATEGORY_ORDER, DEMOS } from "@/components/app-sidebar";
 export const Route = createFileRoute("/demos")({
   head: () => ({
     meta: [
-      { title: "All Demos — Modern CSS Pattern Library" },
+      { title: "All Demos — CSS Showcase" },
       {
         name: "description",
         content:
           "Browse every modern CSS demo by category: layout, forms, navigation, feedback, overlays, data display and utilities.",
       },
-      { property: "og:title", content: "All Demos — Modern CSS Pattern Library" },
+      { property: "og:title", content: "All Demos — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -68,7 +68,7 @@ function DemosIndex() {
       <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Library
+            CSS Showcase · Library
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">All demos</h1>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">

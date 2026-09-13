@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/loaders")({
   head: () => ({
     meta: [
-      { title: "Loaders — Modern CSS Demos" },
+      { title: "Loaders — CSS Showcase" },
       {
         name: "description",
         content:
           "Skeleton screens, spinners, progress bars, blurred image placeholders, loading table rows, and shimmer placeholders — one loading system reshaped per device with CSS animations and container queries.",
       },
-      { property: "og:title", content: "Loaders — Modern CSS Demos" },
+      { property: "og:title", content: "Loaders — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -345,7 +345,7 @@ function LoadersDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Loading states, per device.

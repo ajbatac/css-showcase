@@ -4,13 +4,13 @@ import { useState } from "react";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Modern CSS Demos — Device Switcher" },
+      { title: "CSS Showcase — Device Switcher" },
       {
         name: "description",
         content:
           "Interactive, mobile-first showcase of modern CSS: switch a skeleton app between desktop, iPad, and mobile with pure CSS.",
       },
-      { property: "og:title", content: "Modern CSS Demos — Device Switcher" },
+      { property: "og:title", content: "CSS Showcase — Device Switcher" },
       {
         property: "og:description",
         content:
@@ -64,7 +64,7 @@ function Index() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One tap. Three devices. Pure CSS.

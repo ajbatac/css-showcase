@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/progress")({
   head: () => ({
     meta: [
-      { title: "Progress Indicators — Modern CSS Demos" },
+      { title: "Progress Indicators — CSS Showcase" },
       {
         name: "description",
         content:
           "Animated progress indicator patterns — labelled linear bars, indeterminate stripes, conic-gradient rings, step wizards, top-of-page bars, and ring badges — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Progress Indicators — Modern CSS Demos" },
+      { property: "og:title", content: "Progress Indicators — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -216,7 +216,7 @@ function ProgressDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Progress that keeps moving.

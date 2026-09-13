@@ -7,13 +7,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/form-validation")({
   head: () => ({
     meta: [
-      { title: "Form Validation — Modern CSS Demos" },
+      { title: "Form Validation — CSS Showcase" },
       {
         name: "description",
         content:
           "Form validation patterns — inline errors, error summaries, live password strength, and step-by-step flows — validated with zod and reshaped for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Form Validation — Modern CSS Demos" },
+      { property: "og:title", content: "Form Validation — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -218,7 +218,7 @@ function FormValidationDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Validation that guides you.

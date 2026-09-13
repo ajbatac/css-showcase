@@ -12,7 +12,7 @@ export const Route = createFileRoute("/dropdowns")({
         content:
           "Compact menu or mega menu on desktop, popover or centered dialog picker on iPad, bottom sheet or inline expanding list on mobile — driven by container queries.",
       },
-      { property: "og:title", content: "Dropdowns — Modern CSS Demos" },
+      { property: "og:title", content: "Dropdowns — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -176,7 +176,7 @@ function DropdownsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One trigger. Many menu patterns.

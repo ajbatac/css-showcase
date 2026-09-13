@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/breadcrumbs")({
   head: () => ({
     meta: [
-      { title: "Breadcrumbs — Modern CSS Demos" },
+      { title: "Breadcrumbs — CSS Showcase" },
       {
         name: "description",
         content:
           "Breadcrumb trail patterns — chevron and slash separators, collapsed overflow trails, mobile back-links, and scrollable trails — for mobile, iPad, and desktop.",
       },
-      { property: "og:title", content: "Breadcrumbs — Modern CSS Demos" },
+      { property: "og:title", content: "Breadcrumbs — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -181,7 +181,7 @@ function BreadcrumbsDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             Breadcrumbs that never break.

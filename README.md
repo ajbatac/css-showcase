@@ -1,6 +1,6 @@
-# CSS Showcase Studio
+# CSS Showcase
 
-Here’s a short PRD for the concept you described, shaped around a mobile-first interactive demo page and grounded in common PRD structure plus responsive/device-frame reference patterns.atlassian+2
+A short PRD for a mobile-first interactive demo page, following common PRD structure and responsive device-frame reference patterns.
 
 Overview
 

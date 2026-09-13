@@ -6,13 +6,13 @@ import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalin
 export const Route = createFileRoute("/radios")({
   head: () => ({
     meta: [
-      { title: "Radio Buttons — Modern CSS Demos" },
+      { title: "Radio Buttons — CSS Showcase" },
       {
         name: "description",
         content:
           "Radio groups, card selectors, and segmented controls morphed for mobile, iPad, and desktop using container queries.",
       },
-      { property: "og:title", content: "Radio Buttons — Modern CSS Demos" },
+      { property: "og:title", content: "Radio Buttons — CSS Showcase" },
       {
         property: "og:description",
         content:
@@ -130,7 +130,7 @@ function RadiosDemo() {
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
-            Modern CSS · Live Demo
+            CSS Showcase · Live Demo
           </p>
           <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
             One choice. Many patterns per device.
