@@ -24,11 +24,17 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarHeader className="gap-0 p-0">
         <div className="flex h-20 items-center gap-4 px-3 group-data-[collapsible=icon]:px-2">
-          <img
-            src="/logo.png"
-            alt="CSS Showcase"
-            className="h-16 w-16 shrink-0 rounded-xl object-cover group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8"
-          />
+          <Link
+            to="/"
+            aria-label="CSS Showcase home"
+            className="inline-flex shrink-0 rounded-xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sidebar-ring"
+          >
+            <img
+              src="/logo.png"
+              alt="CSS Showcase"
+              className="h-16 w-16 rounded-xl object-cover group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8"
+            />
+          </Link>
           <div className="flex min-w-0 flex-col gap-1 group-data-[collapsible=icon]:hidden">
             <span className="truncate text-base font-semibold leading-none">CSS Showcase</span>
             <span className="truncate text-xs leading-none text-muted-foreground">Live demos</span>

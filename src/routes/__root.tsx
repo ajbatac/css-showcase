@@ -16,6 +16,7 @@ import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SendToLLM } from "@/components/send-to-llm";
 import { NotFoundPage } from "@/components/not-found";
+import { SITE_URL } from "@/lib/seo";
 import appCss from "../styles.css?url";
 
 function GitHubLink() {
@@ -69,22 +70,21 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
   loader: async () => {
-    let origin = "";
+    let pathname = "";
     if (import.meta.env.SSR) {
       try {
         const { getRequest } = await import("@tanstack/react-start/server");
         const req = getRequest();
-        if (req) origin = new URL(req.url).origin;
+        if (req) pathname = new URL(req.url).pathname;
       } catch {
-        origin = "";
+        pathname = "";
       }
     }
-    return { origin };
+    return { pathname };
   },
   head: ({ loaderData }) => {
-    console.log("[dbg] head loaderData:", JSON.stringify(loaderData));
-    const origin = loaderData?.origin ?? "";
-    const ogImage = `${origin}/og-2.png`;
+    const canonical = `${SITE_URL}${loaderData?.pathname ?? ""}`;
+    const ogImage = `${SITE_URL}/og-2.png`;
     const description = "Live CSS demos with the code for each example.";
     return {
       meta: [
@@ -99,7 +99,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { property: "og:title", content: "CSS Showcase" },
         { property: "og:description", content: description },
         { property: "og:type", content: "website" },
-        { property: "og:url", content: origin },
+        { property: "og:url", content: canonical },
         { property: "og:image", content: ogImage },
         { property: "og:image:type", content: "image/png" },
         { property: "og:image:width", content: "1678" },
@@ -111,6 +111,7 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
         { name: "twitter:image", content: ogImage },
       ],
       links: [
+        { rel: "canonical", href: canonical },
         {
           rel: "stylesheet",
           href: appCss,

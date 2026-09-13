@@ -112,6 +112,6 @@ Issues and pull requests are welcome. Run `npm run lint` before opening a pull r
 
 **Support our other projects:** [Launch Wizard](https://launch-wizard.techhive.net/) · by [Allan Batac](https://ajbatac.com)
 
-[Terms](src/routes/terms.tsx) · [Privacy](src/routes/privacy.tsx) · [DMCA](src/routes/dmca.tsx) · [Cookies](src/routes/cookies.tsx) · [Disclaimer](src/routes/disclaimer.tsx) · [UGC](src/routes/ugc-disclaimer.tsx)
+[Terms](https://css.techhive.net/terms) · [Privacy](https://css.techhive.net/privacy) · [DMCA](https://css.techhive.net/dmca) · [Cookies](https://css.techhive.net/cookies) · [Disclaimer](https://css.techhive.net/disclaimer) · [UGC](https://css.techhive.net/ugc-disclaimer)
 
 </div>
