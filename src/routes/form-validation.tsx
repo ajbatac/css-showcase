@@ -2,7 +2,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { z } from "zod";
 import { AlertCircle, Check, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
-import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
+import { CopyLinkButton } from "@/lib/demo-permalink";
+import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
 
 export const Route = createFileRoute("/form-validation")({
   head: () => ({

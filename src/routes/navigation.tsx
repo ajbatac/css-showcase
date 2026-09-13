@@ -12,7 +12,8 @@ import {
   Bookmark,
   User,
 } from "lucide-react";
-import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
+import { CopyLinkButton } from "@/lib/demo-permalink";
+import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
 
 export const Route = createFileRoute("/navigation")({
   head: () => ({

@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Activity, BarChart3, Lock, Settings2, ShieldAlert, Users } from "lucide-react";
-import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
+import { CopyLinkButton } from "@/lib/demo-permalink";
+import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
 
 export const Route = createFileRoute("/tabs")({
   head: () => ({

@@ -1,7 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
-import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
+import { CopyLinkButton } from "@/lib/demo-permalink";
+import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
 
 export const Route = createFileRoute("/loaders")({
   head: () => ({
