@@ -69,11 +69,7 @@ export function PatternSkeleton({
     <div className={`space-y-2 ${className}`}>
       {keyframes}
       {Array.from({ length: lines }).map((_, i) => (
-        <div
-          key={i}
-          className={`h-3 rounded ${shimmer}`}
-          style={{ width: `${100 - i * 12}%` }}
-        />
+        <div key={i} className={`h-3 rounded ${shimmer}`} style={{ width: `${100 - i * 12}%` }} />
       ))}
     </div>
   );

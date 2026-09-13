@@ -25,7 +25,13 @@ export const Route = createFileRoute("/flex")({
 
 type Device = "desktop" | "ipad" | "mobile";
 type Direction = "row" | "row-reverse" | "column" | "column-reverse";
-type Justify = "flex-start" | "center" | "flex-end" | "space-between" | "space-around" | "space-evenly";
+type Justify =
+  | "flex-start"
+  | "center"
+  | "flex-end"
+  | "space-between"
+  | "space-around"
+  | "space-evenly";
 type Align = "stretch" | "flex-start" | "center" | "flex-end";
 type Wrap = "nowrap" | "wrap";
 
@@ -36,7 +42,14 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
 ];
 
 const DIRECTIONS: Direction[] = ["row", "row-reverse", "column", "column-reverse"];
-const JUSTIFIES: Justify[] = ["flex-start", "center", "flex-end", "space-between", "space-around", "space-evenly"];
+const JUSTIFIES: Justify[] = [
+  "flex-start",
+  "center",
+  "flex-end",
+  "space-between",
+  "space-around",
+  "space-evenly",
+];
 const ALIGNS: Align[] = ["stretch", "flex-start", "center", "flex-end"];
 
 const ITEMS = [
@@ -82,12 +95,12 @@ function FlexDemo() {
             Flexbox, one tap at a time.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Toggle{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">flex-direction</code>,{" "}
+            Toggle <code className="rounded bg-muted px-1.5 py-0.5 text-xs">flex-direction</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">justify-content</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">align-items</code>,{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">flex-wrap</code>, and{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">gap</code> inside a device frame.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">gap</code> inside a device
+            frame.
           </p>
         </header>
 

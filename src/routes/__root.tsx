@@ -7,14 +7,13 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import type { ReactNode } from "react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import appCss from "../styles.css?url";
-import { reportLovableError } from "../lib/lovable-error-reporting";
 
 function NotFoundComponent() {
   return (
@@ -41,9 +40,6 @@ function NotFoundComponent() {
 function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
   console.error(error);
   const router = useRouter();
-  useEffect(() => {
-    reportLovableError(error, { boundary: "tanstack_root_error_component" });
-  }, [error]);
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
@@ -83,12 +79,9 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { name: "viewport", content: "width=device-width, initial-scale=1" },
       { title: "CSS Showcase" },
       { name: "description", content: "Live CSS demos with the code for each example." },
-      { name: "author", content: "Lovable" },
       { property: "og:title", content: "CSS Showcase" },
       { property: "og:description", content: "Live CSS demos with the code for each example." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
     ],
     links: [
       {
@@ -137,13 +130,13 @@ function RootComponent() {
           {/* Sidebar hides on mobile via shadcn's built-in md: breakpoint */}
           <AppSidebar />
           <div className="flex min-w-0 flex-1 flex-col">
-            <header className="hidden h-12 items-center gap-2 border-b bg-background/60 px-3 backdrop-blur md:flex">
+            <header className="hidden h-20 items-center gap-2 bg-background/60 px-3 backdrop-blur md:flex">
               <SidebarTrigger />
-              <span className="text-xs text-muted-foreground">CSS Showcase · Live demos</span>
               <div className="ml-auto">
                 <ThemeToggle />
               </div>
             </header>
+            <hr className="hidden border-t border-border md:block" />
             <div className="fixed right-3 top-3 z-50 md:hidden">
               <ThemeToggle />
             </div>

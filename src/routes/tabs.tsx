@@ -203,15 +203,13 @@ const TABS: TabDef[] = [
 function TabsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "underline",
-    ipad: "underline",
-    mobile: "scroll",
+      desktop: "underline",
+      ipad: "underline",
+      mobile: "scroll",
     }),
   );
   const firstEnabled = TABS.find((t) => !t.disabled)?.id ?? TABS[0].id;
@@ -477,10 +475,18 @@ function TabsDemo() {
             <ul className="grid grid-cols-2 gap-x-3 gap-y-1.5 text-xs text-foreground">
               <li>• Container queries</li>
               <li>• Overflow-x scroll + snap</li>
-              <li>• Roving <code>tabindex</code></li>
-              <li>• Skips <code>aria-disabled</code> tabs</li>
-              <li>• Truncation via <code>min-width:0</code></li>
-              <li>• <code>aria-orientation</code> keys</li>
+              <li>
+                • Roving <code>tabindex</code>
+              </li>
+              <li>
+                • Skips <code>aria-disabled</code> tabs
+              </li>
+              <li>
+                • Truncation via <code>min-width:0</code>
+              </li>
+              <li>
+                • <code>aria-orientation</code> keys
+              </li>
             </ul>
           </div>
         </section>
@@ -664,11 +670,7 @@ function TabContent({ tab }: { tab: TabDef }) {
           <h3 className="truncate text-xs font-bold">Analytics & Realtime Metrics</h3>
           <div className="flex h-24 items-end gap-1">
             {[40, 65, 30, 80, 55, 90, 70].map((h, i) => (
-              <div
-                key={i}
-                className="flex-1 rounded-t bg-primary/70"
-                style={{ height: `${h}%` }}
-              />
+              <div key={i} className="flex-1 rounded-t bg-primary/70" style={{ height: `${h}%` }} />
             ))}
           </div>
         </div>
@@ -710,13 +712,7 @@ function TabContent({ tab }: { tab: TabDef }) {
   }
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },

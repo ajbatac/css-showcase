@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Check, ChevronDown, User, Settings, LogOut, CreditCard, Layers, BarChart, Users, Puzzle } from "lucide-react";
+import {
+  Check,
+  ChevronDown,
+  User,
+  Settings,
+  LogOut,
+  CreditCard,
+  Layers,
+  BarChart,
+  Users,
+  Puzzle,
+} from "lucide-react";
 import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/dropdowns")({
@@ -156,15 +167,13 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 function DropdownsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "compact",
-    ipad: "popover",
-    mobile: "sheet",
+      desktop: "compact",
+      ipad: "popover",
+      mobile: "sheet",
     }),
   );
 
@@ -182,10 +191,10 @@ function DropdownsDemo() {
             One trigger. Many menu patterns.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a design pattern for that device —
-            compact menu or mega menu on desktop, popover or dialog picker on
-            iPad, bottom sheet or inline list on mobile — driven by{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code>.
+            Pick a device, then pick a design pattern for that device — compact menu or mega menu on
+            desktop, popover or dialog picker on iPad, bottom sheet or inline list on mobile —
+            driven by <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code>
+            .
           </p>
         </header>
 
@@ -253,9 +262,7 @@ function DropdownsDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -263,9 +270,7 @@ function DropdownsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -427,7 +432,10 @@ function DropdownApp({ pattern }: { pattern: Pattern }) {
                     </div>
                     <ul className="space-y-0.5">
                       {col.items.map((it) => (
-                        <li key={it.id} className="flex items-center gap-1 rounded px-1 py-0.5 text-[7px] font-medium text-foreground hover:bg-muted">
+                        <li
+                          key={it.id}
+                          className="flex items-center gap-1 rounded px-1 py-0.5 text-[7px] font-medium text-foreground hover:bg-muted"
+                        >
                           <it.icon className="h-2 w-2 shrink-0" />
                           <span className="truncate">{it.label}</span>
                         </li>

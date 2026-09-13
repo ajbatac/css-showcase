@@ -161,8 +161,8 @@ function Index() {
         </section>
 
         <p className="mt-6 text-center text-xs text-muted-foreground">
-          The skeleton layout responds to the <em>frame's</em> width via container queries — not
-          the browser window.
+          The skeleton layout responds to the <em>frame's</em> width via container queries — not the
+          browser window.
         </p>
       </div>
     </main>

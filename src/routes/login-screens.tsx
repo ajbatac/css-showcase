@@ -33,10 +33,7 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "mobile", label: "Mobile", hint: "9:19.5" },
 ];
 
-const PATTERNS: Record<
-  Device,
-  { id: Pattern; label: string; desc: string }[]
-> = {
+const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
     { id: "centered", label: "Centered card", desc: "Card on a soft canvas" },
     { id: "split", label: "Half / half", desc: "Hero beside the form" },
@@ -111,15 +108,13 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 function LoginScreens() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "split",
-    ipad: "centered",
-    mobile: "centered",
+      desktop: "split",
+      ipad: "centered",
+      mobile: "centered",
     }),
   );
 
@@ -137,9 +132,8 @@ function LoginScreens() {
             One login. Many patterns per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a design pattern for that device — desktop
-            offers centered, half/half, and hero overlay; mobile offers
-            full-bleed and hero + sheet.
+            Pick a device, then pick a design pattern for that device — desktop offers centered,
+            half/half, and hero overlay; mobile offers full-bleed and hero + sheet.
           </p>
         </header>
 
@@ -207,9 +201,7 @@ function LoginScreens() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -217,9 +209,7 @@ function LoginScreens() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -241,9 +231,7 @@ function LoginScreens() {
                 login-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -273,13 +261,7 @@ function LoginScreens() {
   );
 }
 
-function DeviceFrame({
-  device,
-  pattern,
-}: {
-  device: Device;
-  pattern: Pattern;
-}) {
+function DeviceFrame({ device, pattern }: { device: Device; pattern: Pattern }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -340,9 +322,7 @@ function Hero({ compact = false }: { compact?: boolean }) {
 function FormBody({ dense = false }: { dense?: boolean }) {
   return (
     <div
-      className={`flex min-h-0 flex-col justify-center ${
-        dense ? "gap-1.5 p-2.5" : "gap-2 p-3"
-      }`}
+      className={`flex min-h-0 flex-col justify-center ${dense ? "gap-1.5 p-2.5" : "gap-2 p-3"}`}
     >
       <div className="space-y-1">
         <div className="h-2.5 w-2/3 rounded bg-foreground/80" />
@@ -416,8 +396,7 @@ function LoginApp({ pattern }: { pattern: Pattern }) {
           <div
             className="w-full max-w-[70cqw] rounded-xl border border-border/40 shadow-2xl backdrop-blur-md"
             style={{
-              backgroundColor:
-                "color-mix(in oklab, var(--card) 82%, transparent)",
+              backgroundColor: "color-mix(in oklab, var(--card) 82%, transparent)",
             }}
           >
             <FormBody dense />

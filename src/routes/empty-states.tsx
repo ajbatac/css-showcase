@@ -26,12 +26,7 @@ export const Route = createFileRoute("/empty-states")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "centered-hero"
-  | "illustrated-card"
-  | "no-results"
-  | "offline"
-  | "inline-compact";
+type Pattern = "centered-hero" | "illustrated-card" | "no-results" | "offline" | "inline-compact";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },

@@ -36,7 +36,14 @@ export function PatternProgress({
     return (
       <div className={`inline-flex flex-col items-center gap-2 ${className}`} {...aria}>
         <svg width={size} height={size} className={indeterminate ? "animate-spin" : undefined}>
-          <circle cx={size / 2} cy={size / 2} r={r} fill="none" stroke="var(--muted)" strokeWidth={stroke} />
+          <circle
+            cx={size / 2}
+            cy={size / 2}
+            r={r}
+            fill="none"
+            stroke="var(--muted)"
+            strokeWidth={stroke}
+          />
           <circle
             cx={size / 2}
             cy={size / 2}

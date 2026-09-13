@@ -108,15 +108,13 @@ const FREQUENCIES = [
 function RadiosDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "segmented",
-    ipad: "cards",
-    mobile: "list",
+      desktop: "segmented",
+      ipad: "cards",
+      mobile: "list",
     }),
   );
   const [plan, setPlan] = useState<string>("pro");
@@ -136,9 +134,9 @@ function RadiosDemo() {
             One choice. Many patterns per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a design pattern for that device — desktop offers a
-            segmented control, cards grid, and classic list; mobile offers stacked list rows
-            and stacked large cards.
+            Pick a device, then pick a design pattern for that device — desktop offers a segmented
+            control, cards grid, and classic list; mobile offers stacked list rows and stacked large
+            cards.
           </p>
         </header>
 
@@ -248,9 +246,7 @@ function RadiosDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -375,9 +371,7 @@ function PlanPicker({
               <div className="flex items-start justify-between gap-2">
                 <div className="min-w-0">
                   <div className="truncate text-[10px] font-semibold">{p.label}</div>
-                  <div className="truncate text-[9px] text-muted-foreground">
-                    {p.description}
-                  </div>
+                  <div className="truncate text-[9px] text-muted-foreground">{p.description}</div>
                 </div>
                 <span
                   className={`flex h-4 w-4 shrink-0 items-center justify-center rounded-full border transition-colors ${
@@ -439,9 +433,7 @@ function PlanPicker({
                   {p.price}
                 </span>
               </span>
-              <span className="truncate text-[9px] text-muted-foreground">
-                {p.description}
-              </span>
+              <span className="truncate text-[9px] text-muted-foreground">{p.description}</span>
             </span>
           </label>
         );
@@ -450,13 +442,7 @@ function PlanPicker({
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },

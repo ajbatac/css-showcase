@@ -259,9 +259,9 @@ function ButtonsDemo() {
             Buttons that reshape.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            One button system that becomes an inline action row on desktop, a
-            segmented toolbar on iPad, and full-width stacked or sticky bars on mobile —
-            with hover, active, loading, and disabled states.
+            One button system that becomes an inline action row on desktop, a segmented toolbar on
+            iPad, and full-width stacked or sticky bars on mobile — with hover, active, loading, and
+            disabled states.
           </p>
         </header>
 
@@ -333,9 +333,7 @@ function ButtonsDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -343,9 +341,7 @@ function ButtonsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -367,9 +363,7 @@ function ButtonsDemo() {
                 button-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -562,13 +556,7 @@ function ButtonsDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -589,9 +577,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

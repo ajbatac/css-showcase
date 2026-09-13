@@ -26,12 +26,7 @@ export const Route = createFileRoute("/search")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "inline-bar"
-  | "command-palette"
-  | "with-filters"
-  | "expanding"
-  | "full-screen";
+type Pattern = "inline-bar" | "command-palette" | "with-filters" | "expanding" | "full-screen";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -207,9 +202,8 @@ function SearchDemo() {
             Search that finds its shape.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            One search experience with live client-side filtering — an inline
-            bar, a command palette, filter chips, an expanding icon, and a
-            full-screen overlay for mobile.
+            One search experience with live client-side filtering — an inline bar, a command
+            palette, filter chips, an expanding icon, and a full-screen overlay for mobile.
           </p>
         </header>
 
@@ -228,7 +222,10 @@ function SearchDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div data-pattern={pattern} className="search-shell relative h-full w-full overflow-auto p-3">
+              <div
+                data-pattern={pattern}
+                className="search-shell relative h-full w-full overflow-auto p-3"
+              >
                 {pattern === "inline-bar" && (
                   <div>
                     <div className="search-field flex items-center gap-2 rounded-xl border border-border bg-background px-2.5 py-1.5">
@@ -256,7 +253,10 @@ function SearchDemo() {
                         <EmptyState />
                       ) : (
                         results.map((r) => (
-                          <div key={r.id} className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]">
+                          <div
+                            key={r.id}
+                            className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]"
+                          >
                             <span className="font-semibold">{r.title}</span>
                             <span className="ml-1 text-muted-foreground">· {r.group}</span>
                           </div>
@@ -294,7 +294,10 @@ function SearchDemo() {
                                 {group}
                               </p>
                               {groupItems.map((r) => (
-                                <div key={r.id} className="rounded-md px-1.5 py-1 text-[10px] hover:bg-accent">
+                                <div
+                                  key={r.id}
+                                  className="rounded-md px-1.5 py-1 text-[10px] hover:bg-accent"
+                                >
                                   {r.title}
                                 </div>
                               ))}
@@ -318,7 +321,11 @@ function SearchDemo() {
                         className="w-full min-w-0 bg-transparent text-[10px] outline-none"
                       />
                       {query && (
-                        <button type="button" aria-label="Clear search" onClick={() => setQuery("")}>
+                        <button
+                          type="button"
+                          aria-label="Clear search"
+                          onClick={() => setQuery("")}
+                        >
                           <X className="h-3 w-3 text-muted-foreground hover:text-foreground" />
                         </button>
                       )}
@@ -342,7 +349,10 @@ function SearchDemo() {
                         <EmptyState />
                       ) : (
                         results.map((r) => (
-                          <div key={r.id} className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]">
+                          <div
+                            key={r.id}
+                            className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]"
+                          >
                             {r.title}
                           </div>
                         ))
@@ -390,7 +400,10 @@ function SearchDemo() {
                           <EmptyState />
                         ) : (
                           results.map((r) => (
-                            <div key={r.id} className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]">
+                            <div
+                              key={r.id}
+                              className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]"
+                            >
                               {r.title}
                             </div>
                           ))
@@ -452,7 +465,10 @@ function SearchDemo() {
                           ) : (
                             <div className="grid gap-1">
                               {results.map((r) => (
-                                <div key={r.id} className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]">
+                                <div
+                                  key={r.id}
+                                  className="rounded-lg border border-border bg-background px-2.5 py-1.5 text-[10px]"
+                                >
                                   {r.title}
                                 </div>
                               ))}
@@ -516,14 +532,20 @@ function SearchDemo() {
                     aria-selected={active}
                     onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-accent"
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
                     }`}
                   >
                     <span className="min-w-0">
                       <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">{o.desc}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
                     </span>
-                    <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`} />
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`}
+                    />
                   </button>
                 );
               })}
@@ -532,7 +554,9 @@ function SearchDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">search-{pattern}.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                search-{pattern}.css
+              </span>
               <button
                 onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"

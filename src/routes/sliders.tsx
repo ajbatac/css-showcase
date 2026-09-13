@@ -119,15 +119,13 @@ input[type="range"] {
 function SlidersDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "labelled",
-    ipad: "labelled",
-    mobile: "labelled",
+      desktop: "labelled",
+      ipad: "labelled",
+      mobile: "labelled",
     }),
   );
   const [volume, setVolume] = useState<number>(65);
@@ -153,8 +151,8 @@ function SlidersDemo() {
             Sliders & range inputs.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Single-thumb sliders, dual-thumb ranges, vertical groups, and stepped
-            controls — pick a device, then pick a design pattern for that device.
+            Single-thumb sliders, dual-thumb ranges, vertical groups, and stepped controls — pick a
+            device, then pick a design pattern for that device.
           </p>
         </header>
 
@@ -173,7 +171,10 @@ function SlidersDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div className="slider-app h-full w-full overflow-auto p-3" style={{ ["--thumb-size" as string]: thumbSize }}>
+              <div
+                className="slider-app h-full w-full overflow-auto p-3"
+                style={{ ["--thumb-size" as string]: thumbSize }}
+              >
                 {pattern === "labelled" && (
                   <div data-pattern="labelled" className="slider-grid">
                     <div className="slider-card">
@@ -268,7 +269,10 @@ function SlidersDemo() {
                   <div className="slider-card h-full">
                     <div className="slider-vertical-group h-40">
                       {(["Bass", "Mid", "Treble"] as const).map((label, i) => (
-                        <div key={label} className="slider-vertical flex flex-col items-center gap-2">
+                        <div
+                          key={label}
+                          className="slider-vertical flex flex-col items-center gap-2"
+                        >
                           <span className="text-[9px] font-bold tabular-nums">{vertVals[i]}</span>
                           <input
                             type="range"
@@ -367,9 +371,7 @@ function SlidersDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -377,9 +379,7 @@ function SlidersDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -401,9 +401,7 @@ function SlidersDemo() {
                 sliders-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -551,13 +549,7 @@ function SlidersDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -578,9 +570,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

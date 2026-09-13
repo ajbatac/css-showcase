@@ -46,7 +46,11 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
   ],
   mobile: [
     { id: "back-link", label: "Back link", desc: "Single ‹ Parent link plus current title" },
-    { id: "scroll-trail", label: "Scroll trail", desc: "Horizontally scrollable trail with fade mask" },
+    {
+      id: "scroll-trail",
+      label: "Scroll trail",
+      desc: "Horizontally scrollable trail with fade mask",
+    },
   ],
 };
 
@@ -187,8 +191,8 @@ function BreadcrumbsDemo() {
             Breadcrumbs that never break.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Trail patterns from full chevron and slash separators to collapsed overflow trails,
-            plus mobile-friendly back-links and scrollable trails.
+            Trail patterns from full chevron and slash separators to collapsed overflow trails, plus
+            mobile-friendly back-links and scrollable trails.
           </p>
         </header>
 
@@ -258,9 +262,7 @@ function BreadcrumbsDemo() {
                       <ChevronLeft className="h-3 w-3" />
                       {TRAIL[TRAIL.length - 2]}
                     </a>
-                    <span className="crumb-current text-foreground">
-                      {TRAIL[TRAIL.length - 1]}
-                    </span>
+                    <span className="crumb-current text-foreground">{TRAIL[TRAIL.length - 1]}</span>
                   </nav>
                 )}
                 {pattern === "scroll-trail" && (

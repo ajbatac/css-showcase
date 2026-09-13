@@ -138,15 +138,13 @@ const FLAVORS = [
 function CheckboxesDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "checklist",
-    ipad: "checklist",
-    mobile: "checklist",
+      desktop: "checklist",
+      ipad: "checklist",
+      mobile: "checklist",
     }),
   );
   const [selected, setSelected] = useState<Set<string>>(new Set(["vanilla"]));
@@ -187,9 +185,8 @@ function CheckboxesDemo() {
             Checkboxes & multi-select.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            A single selection component that shows classic checkboxes, bulk
-            select, table rows, toggle switches, and chips — pick a device,
-            then pick a design pattern for that device.
+            A single selection component that shows classic checkboxes, bulk select, table rows,
+            toggle switches, and chips — pick a device, then pick a design pattern for that device.
           </p>
         </header>
 
@@ -271,9 +268,7 @@ function CheckboxesDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -281,9 +276,7 @@ function CheckboxesDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -305,9 +298,7 @@ function CheckboxesDemo() {
                 checkboxes-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -499,7 +490,11 @@ function SelectionApp({
             {FLAVORS.map((flavor) => {
               const isSelected = selected.has(flavor.id);
               return (
-                <tr key={flavor.id} className="cursor-pointer hover:bg-accent/40" onClick={() => onToggleFlavor(flavor.id)}>
+                <tr
+                  key={flavor.id}
+                  className="cursor-pointer hover:bg-accent/40"
+                  onClick={() => onToggleFlavor(flavor.id)}
+                >
                   <td>
                     <span
                       className={`checkbox-box flex h-4 w-4 items-center justify-center rounded border transition-colors ${
@@ -646,13 +641,7 @@ function SelectionApp({
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -673,9 +662,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

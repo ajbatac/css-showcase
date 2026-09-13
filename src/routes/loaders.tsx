@@ -49,7 +49,11 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "skeleton-grid", label: "Skeleton card grid", desc: "Responsive auto-fill placeholders" },
     { id: "spinner-row", label: "Spinner row", desc: "Circular, dots, and bar loaders" },
     { id: "progress-stack", label: "Progress stack", desc: "Multiple tracked sections" },
-    { id: "blurred-image", label: "Blurred image placeholders", desc: "Image cards with blur + shimmer" },
+    {
+      id: "blurred-image",
+      label: "Blurred image placeholders",
+      desc: "Image cards with blur + shimmer",
+    },
     { id: "table-rows", label: "Loading table rows", desc: "Data table skeleton" },
   ],
   ipad: [
@@ -351,8 +355,8 @@ function LoadersDemo() {
             Loading states, per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Skeleton grids on desktop, list placeholders on iPad, and shimmer feeds on
-            mobile — all built with CSS animations, container queries, and semantic tokens.
+            Skeleton grids on desktop, list placeholders on iPad, and shimmer feeds on mobile — all
+            built with CSS animations, container queries, and semantic tokens.
           </p>
         </header>
 
@@ -430,9 +434,7 @@ function LoadersDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -782,13 +784,7 @@ function LoaderStage({ pattern }: { pattern: Pattern }) {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -809,9 +805,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

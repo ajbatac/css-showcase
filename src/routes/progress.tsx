@@ -36,12 +36,24 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
-    { id: "linear-bars", label: "Linear bars", desc: "Labelled determinate bars + indeterminate stripe" },
+    {
+      id: "linear-bars",
+      label: "Linear bars",
+      desc: "Labelled determinate bars + indeterminate stripe",
+    },
     { id: "circular", label: "Circular", desc: "Conic-gradient rings with percentage" },
-    { id: "steps", label: "Step wizard", desc: "Multi-step progress with completed/current/upcoming" },
+    {
+      id: "steps",
+      label: "Step wizard",
+      desc: "Multi-step progress with completed/current/upcoming",
+    },
   ],
   ipad: [
-    { id: "linear-bars", label: "Linear bars", desc: "Labelled determinate bars + indeterminate stripe" },
+    {
+      id: "linear-bars",
+      label: "Linear bars",
+      desc: "Labelled determinate bars + indeterminate stripe",
+    },
     { id: "circular", label: "Circular", desc: "Conic-gradient rings with percentage" },
   ],
   mobile: [
@@ -170,11 +182,36 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 };
 
 const FEATURES_BY_PATTERN: Record<Pattern, string[]> = {
-  "linear-bars": ["CSS transitions on width", "keyframes indeterminate slide", "color-mix track tint", "Semantic tokens"],
-  circular: ["conic-gradient rings", "CSS custom property --pct", "::after mask circle", "Transition on background"],
-  steps: ["Flexbox step layout", "data-state attribute styling", "Border + background swap", "Semantic tokens"],
-  "thin-top": ["position: sticky bar", "Nested span width transition", "color-mix background tint", "z-index layering"],
-  "ring-badges": ["conic-gradient badges", "CSS custom property --pct", "Compact list layout", "::after mask circle"],
+  "linear-bars": [
+    "CSS transitions on width",
+    "keyframes indeterminate slide",
+    "color-mix track tint",
+    "Semantic tokens",
+  ],
+  circular: [
+    "conic-gradient rings",
+    "CSS custom property --pct",
+    "::after mask circle",
+    "Transition on background",
+  ],
+  steps: [
+    "Flexbox step layout",
+    "data-state attribute styling",
+    "Border + background swap",
+    "Semantic tokens",
+  ],
+  "thin-top": [
+    "position: sticky bar",
+    "Nested span width transition",
+    "color-mix background tint",
+    "z-index layering",
+  ],
+  "ring-badges": [
+    "conic-gradient badges",
+    "CSS custom property --pct",
+    "Compact list layout",
+    "::after mask circle",
+  ],
 };
 
 function useTicker(active: boolean, max = 100, step = 3, intervalMs = 350) {
@@ -222,10 +259,9 @@ function ProgressDemo() {
             Progress that keeps moving.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Animated linear bars, conic-gradient rings, and step wizards — driven by React state
-            and{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">setInterval</code>, styled
-            with semantic tokens.
+            Animated linear bars, conic-gradient rings, and step wizards — driven by React state and{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">setInterval</code>, styled with
+            semantic tokens.
           </p>
         </header>
 

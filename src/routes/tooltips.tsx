@@ -42,7 +42,11 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
-    { id: "hover-arrow", label: "Hover arrow tooltip", desc: "Dark tooltip with CSS arrow above trigger" },
+    {
+      id: "hover-arrow",
+      label: "Hover arrow tooltip",
+      desc: "Dark tooltip with CSS arrow above trigger",
+    },
     { id: "rich-card", label: "Rich hover card", desc: "Wider card with title, body, and link" },
     { id: "inline-help", label: "Inline help icons", desc: "Question-mark tooltips inside a form" },
   ],
@@ -51,8 +55,16 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "inline-help", label: "Inline help icons", desc: "Question-mark tooltips inside a form" },
   ],
   mobile: [
-    { id: "long-press-sheet", label: "Long-press sheet", desc: "Tap info icon opens a bottom sheet" },
-    { id: "helper-text", label: "Persistent helper text", desc: "Inline helper text instead of tooltips" },
+    {
+      id: "long-press-sheet",
+      label: "Long-press sheet",
+      desc: "Tap info icon opens a bottom sheet",
+    },
+    {
+      id: "helper-text",
+      label: "Persistent helper text",
+      desc: "Inline helper text instead of tooltips",
+    },
   ],
 };
 
@@ -214,8 +226,8 @@ function TooltipsDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             Hover and focus-triggered hints, keyboard accessible with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">aria-describedby</code>,
-            plus touch-friendly tap bubbles and bottom sheets for smaller screens.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">aria-describedby</code>, plus
+            touch-friendly tap bubbles and bottom sheets for smaller screens.
           </p>
         </header>
 
@@ -334,7 +346,11 @@ function TooltipsDemo() {
                         <Info className="h-3.5 w-3.5" />
                       </button>
                       {bubbleOpen && (
-                        <span role="tooltip" id="tap-bubble-1" className="tap-bubble text-foreground">
+                        <span
+                          role="tooltip"
+                          id="tap-bubble-1"
+                          className="tap-bubble text-foreground"
+                        >
                           Synced 2 minutes ago
                         </span>
                       )}
@@ -363,7 +379,9 @@ function TooltipsDemo() {
                       <>
                         <div className="info-sheet-backdrop" onClick={() => setSheetOpen(false)} />
                         <div role="dialog" aria-label="Storage limit info" className="info-sheet">
-                          <p className="mb-1 text-xs font-semibold text-foreground">Storage limit</p>
+                          <p className="mb-1 text-xs font-semibold text-foreground">
+                            Storage limit
+                          </p>
                           <p className="mb-3 text-[10px] text-muted-foreground">
                             Free plans include 5GB. Upgrade any time to increase this limit.
                           </p>

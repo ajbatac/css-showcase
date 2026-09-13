@@ -191,7 +191,13 @@ function TablesDemo() {
     }
   };
 
-  const SortTh = ({ k, children }: { k: "name" | "stock" | "price"; children: React.ReactNode }) => (
+  const SortTh = ({
+    k,
+    children,
+  }: {
+    k: "name" | "stock" | "price";
+    children: React.ReactNode;
+  }) => (
     <th
       onClick={() => toggleSort(k)}
       className="cursor-pointer select-none whitespace-nowrap px-2 py-1.5 text-left font-semibold"
@@ -210,12 +216,10 @@ function TablesDemo() {
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Tables that scale.
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Tables that scale.</h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Data table layouts with clickable column sorting — sticky headers, dense rows,
-            grouped subtotals, horizontal scroll, and stacked mobile cards.
+            Data table layouts with clickable column sorting — sticky headers, dense rows, grouped
+            subtotals, horizontal scroll, and stacked mobile cards.
           </p>
         </header>
 
@@ -307,7 +311,11 @@ function TablesDemo() {
                         <td className="px-2 py-1 pl-4">Subtotal</td>
                         <td className="px-2 py-1 numeric" />
                         <td className="px-2 py-1 numeric">
-                          ${sorted.slice(0, 3).reduce((s, r) => s + r.price, 0).toFixed(2)}
+                          $
+                          {sorted
+                            .slice(0, 3)
+                            .reduce((s, r) => s + r.price, 0)
+                            .toFixed(2)}
                         </td>
                       </tr>
                       <tr className="group-header">
@@ -326,7 +334,11 @@ function TablesDemo() {
                         <td className="px-2 py-1 pl-4">Subtotal</td>
                         <td className="px-2 py-1 numeric" />
                         <td className="px-2 py-1 numeric">
-                          ${sorted.slice(3).reduce((s, r) => s + r.price, 0).toFixed(2)}
+                          $
+                          {sorted
+                            .slice(3)
+                            .reduce((s, r) => s + r.price, 0)
+                            .toFixed(2)}
                         </td>
                       </tr>
                     </tbody>
@@ -387,7 +399,9 @@ function TablesDemo() {
                       <div key={r.id} className="row flex items-center justify-between">
                         <div>
                           <p className="title text-foreground">{r.name}</p>
-                          <p className="meta">SKU {r.sku} · {r.stock} in stock</p>
+                          <p className="meta">
+                            SKU {r.sku} · {r.stock} in stock
+                          </p>
                         </div>
                         <span className="text-foreground">${r.price.toFixed(2)}</span>
                       </div>

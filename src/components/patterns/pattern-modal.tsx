@@ -39,7 +39,11 @@ export function PatternModal({
   const sheet = "w-full rounded-t-3xl";
   const dialog = "w-full max-w-md rounded-3xl";
   const shape =
-    variant === "sheet" ? sheet : variant === "dialog" ? dialog : `${sheet} sm:${"max-w-md"} sm:rounded-3xl`;
+    variant === "sheet"
+      ? sheet
+      : variant === "dialog"
+        ? dialog
+        : `${sheet} sm:${"max-w-md"} sm:rounded-3xl`;
   const align =
     variant === "sheet"
       ? "items-end"
@@ -49,7 +53,12 @@ export function PatternModal({
 
   return (
     <div className={`fixed inset-0 z-50 flex ${align} bg-foreground/40 p-0 sm:p-6`}>
-      <button type="button" aria-label="Close dialog" onClick={onClose} className="absolute inset-0" />
+      <button
+        type="button"
+        aria-label="Close dialog"
+        onClick={onClose}
+        className="absolute inset-0"
+      />
       <div
         ref={panelRef}
         role="dialog"
@@ -63,7 +72,11 @@ export function PatternModal({
         </h2>
         {description && <p className="mt-1 text-sm text-muted-foreground">{description}</p>}
         {children && <div className="mt-4 text-sm text-foreground">{children}</div>}
-        {footer && <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">{footer}</div>}
+        {footer && (
+          <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+            {footer}
+          </div>
+        )}
       </div>
     </div>
   );

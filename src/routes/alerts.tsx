@@ -1,12 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import {
-  AlertTriangle,
-  CheckCircle2,
-  Info,
-  X,
-  XCircle,
-} from "lucide-react";
+import { AlertTriangle, CheckCircle2, Info, X, XCircle } from "lucide-react";
 import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/alerts")({
@@ -32,12 +26,7 @@ export const Route = createFileRoute("/alerts")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "inline-cards"
-  | "top-banner"
-  | "field-alert"
-  | "stacked-compact"
-  | "sticky-bottom";
+type Pattern = "inline-cards" | "top-banner" | "field-alert" | "stacked-compact" | "sticky-bottom";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -195,8 +184,8 @@ function AlertsDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             Dismissible alert cards, sticky banners, and field-level alerts built with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">color-mix</code> tone tints
-            and semantic tokens.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">color-mix</code> tone tints and
+            semantic tokens.
           </p>
         </header>
 

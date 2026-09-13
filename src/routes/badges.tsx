@@ -26,12 +26,7 @@ export const Route = createFileRoute("/badges")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "status-pills"
-  | "count-badges"
-  | "filter-chips"
-  | "inline-tags"
-  | "list-trailing";
+type Pattern = "status-pills" | "count-badges" | "filter-chips" | "inline-tags" | "list-trailing";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -163,9 +158,7 @@ function BadgesDemo() {
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Badges that speak.
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Badges that speak.</h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             Status, count, and filter patterns — semantic pills, superscript count badges,
             toggleable filter chips, and wrapping tag clouds.
@@ -193,16 +186,37 @@ function BadgesDemo() {
               >
                 {pattern === "status-pills" && (
                   <div className="grid gap-2">
-                    <span className="badge-pill text-emerald-700 dark:text-emerald-300" data-tone="success" style={{ background: "color-mix(in oklch, oklch(0.7 0.15 150) 18%, transparent)" }}>
+                    <span
+                      className="badge-pill text-emerald-700 dark:text-emerald-300"
+                      data-tone="success"
+                      style={{
+                        background: "color-mix(in oklch, oklch(0.7 0.15 150) 18%, transparent)",
+                      }}
+                    >
                       <span className="dot" /> Active
                     </span>
-                    <span className="badge-pill text-amber-700 dark:text-amber-300" style={{ background: "color-mix(in oklch, oklch(0.8 0.15 85) 20%, transparent)" }}>
+                    <span
+                      className="badge-pill text-amber-700 dark:text-amber-300"
+                      style={{
+                        background: "color-mix(in oklch, oklch(0.8 0.15 85) 20%, transparent)",
+                      }}
+                    >
                       <span className="dot" /> Pending
                     </span>
-                    <span className="badge-pill text-red-700 dark:text-red-300" style={{ background: "color-mix(in oklch, oklch(0.65 0.2 25) 18%, transparent)" }}>
+                    <span
+                      className="badge-pill text-red-700 dark:text-red-300"
+                      style={{
+                        background: "color-mix(in oklch, oklch(0.65 0.2 25) 18%, transparent)",
+                      }}
+                    >
                       <span className="dot" /> Failed
                     </span>
-                    <span className="badge-pill" style={{ background: "color-mix(in oklch, var(--foreground) 10%, transparent)" }}>
+                    <span
+                      className="badge-pill"
+                      style={{
+                        background: "color-mix(in oklch, var(--foreground) 10%, transparent)",
+                      }}
+                    >
                       Archived
                     </span>
                   </div>

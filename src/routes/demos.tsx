@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CATEGORY_ORDER, DEMOS } from "@/components/app-sidebar";
+import { CATEGORY_ORDER, DEMOS } from "@/lib/demos";
 
 export const Route = createFileRoute("/demos")({
   head: () => ({
@@ -24,7 +24,8 @@ export const Route = createFileRoute("/demos")({
 });
 
 const DESCRIPTIONS: Record<string, string> = {
-  "device-switcher": "Morph a skeleton app between desktop, iPad and mobile with container queries.",
+  "device-switcher":
+    "Morph a skeleton app between desktop, iPad and mobile with container queries.",
   "login-screens": "Centered, half/half and hero-overlay sign-in layouts per device.",
   toasts: "Success, error, warning and info notifications anchored per device.",
   modals: "Confirm, cancel and dismiss flows as sheets or centered dialogs.",

@@ -45,8 +45,16 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "compact", label: "Compact", desc: '"Page X of Y" + arrows + per-page select' },
   ],
   mobile: [
-    { id: "prev-next", label: "Prev / Next", desc: "Large full-width prev/next with page indicator" },
-    { id: "infinite", label: "Infinite scroll", desc: 'Auto "Loading more…" sentinel with Load more' },
+    {
+      id: "prev-next",
+      label: "Prev / Next",
+      desc: "Large full-width prev/next with page indicator",
+    },
+    {
+      id: "infinite",
+      label: "Infinite scroll",
+      desc: 'Auto "Loading more…" sentinel with Load more',
+    },
   ],
 };
 
@@ -406,8 +414,7 @@ function PaginationMiniPage({ pattern }: { pattern: Pattern }) {
     return () => clearTimeout(t);
   }, [pattern, loadedCount, perPage]);
 
-  const rows = (count: number) =>
-    Array.from({ length: count }, (_, i) => `Item ${i + 1}`);
+  const rows = (count: number) => Array.from({ length: count }, (_, i) => `Item ${i + 1}`);
 
   return (
     <div className="pagination-demo flex h-full w-full flex-col overflow-hidden text-[9px] text-muted-foreground">
@@ -416,14 +423,20 @@ function PaginationMiniPage({ pattern }: { pattern: Pattern }) {
         <ul className="space-y-1">
           {pattern === "load-more" || pattern === "infinite"
             ? rows(pattern === "load-more" ? loadedCount : loadedCount).map((label) => (
-                <li key={label} className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground">
+                <li
+                  key={label}
+                  className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground"
+                >
                   {label}
                 </li>
               ))
             : rows(Math.min(perPage, TOTAL_ITEMS - (page - 1) * perPage)).map((_, i) => {
                 const n = (page - 1) * perPage + i + 1;
                 return (
-                  <li key={n} className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground">
+                  <li
+                    key={n}
+                    className="rounded-lg border border-border bg-card px-2 py-1.5 text-foreground"
+                  >
                     Item {n}
                   </li>
                 );
@@ -552,7 +565,6 @@ function PaginationMiniPage({ pattern }: { pattern: Pattern }) {
     </div>
   );
 }
-
 
 function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {

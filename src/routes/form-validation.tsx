@@ -146,7 +146,12 @@ function passwordScore(v: string) {
   return PASSWORD_RULES.filter((r) => r.test(v)).length;
 }
 
-const STRENGTH_COLORS = ["hsl(var(--destructive))", "hsl(var(--destructive))", "#eab308", "hsl(var(--primary))"];
+const STRENGTH_COLORS = [
+  "hsl(var(--destructive))",
+  "hsl(var(--destructive))",
+  "#eab308",
+  "hsl(var(--primary))",
+];
 
 function FormValidationDemo() {
   const initial = useDemoSearch();
@@ -225,9 +230,9 @@ function FormValidationDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             A sign-up form validated with a shared{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">zod</code> schema —
-            inline errors, an error summary, a live password strength meter,
-            and a mobile step-by-step flow.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">zod</code> schema — inline
+            errors, an error summary, a live password strength meter, and a mobile step-by-step
+            flow.
           </p>
         </header>
 
@@ -251,7 +256,9 @@ function FormValidationDemo() {
                   <div className="flex h-full flex-col items-center justify-center gap-2 text-center">
                     <CheckCircle2 className="h-6 w-6 text-primary" />
                     <p className="text-[11px] font-semibold">You're all set!</p>
-                    <p className="text-[9px] text-muted-foreground">Your account details look great.</p>
+                    <p className="text-[9px] text-muted-foreground">
+                      Your account details look great.
+                    </p>
                     <button
                       type="button"
                       onClick={resetForm}
@@ -305,7 +312,8 @@ function FormValidationDemo() {
                     {pattern === "summary" && submitted && Object.keys(errors).length > 0 && (
                       <div className="error-summary p-2.5" role="alert">
                         <p className="mb-1 flex items-center gap-1 text-[10px] font-semibold text-destructive">
-                          <AlertCircle className="h-3 w-3" /> Please fix {Object.keys(errors).length} error(s)
+                          <AlertCircle className="h-3 w-3" /> Please fix{" "}
+                          {Object.keys(errors).length} error(s)
                         </p>
                         <ul className="grid gap-0.5 pl-4 text-[9px] text-destructive">
                           {(Object.keys(errors) as Field[]).map((f) => (
@@ -346,7 +354,9 @@ function FormValidationDemo() {
                       <div className="rounded-lg border border-border p-2">
                         <div
                           className="strength-meter"
-                          style={{ ["--strength-color" as string]: STRENGTH_COLORS[Math.max(0, score - 1)] }}
+                          style={{
+                            ["--strength-color" as string]: STRENGTH_COLORS[Math.max(0, score - 1)],
+                          }}
                         >
                           {[0, 1, 2, 3].map((i) => (
                             <span key={i} data-active={i < score} className="strength-bar" />
@@ -364,7 +374,9 @@ function FormValidationDemo() {
                               >
                                 <span
                                   className={`flex h-3 w-3 items-center justify-center rounded-full border ${
-                                    passed ? "border-primary bg-primary text-primary-foreground" : "border-border"
+                                    passed
+                                      ? "border-primary bg-primary text-primary-foreground"
+                                      : "border-border"
                                   }`}
                                 >
                                   {passed && <Check className="h-2 w-2" />}
@@ -441,14 +453,20 @@ function FormValidationDemo() {
                       resetForm();
                     }}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-accent"
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
                     }`}
                   >
                     <span className="min-w-0">
                       <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">{o.desc}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
                     </span>
-                    <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`} />
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`}
+                    />
                   </button>
                 );
               })}
@@ -457,7 +475,9 @@ function FormValidationDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">form-validation-{pattern}.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                form-validation-{pattern}.css
+              </span>
               <button
                 onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
@@ -572,7 +592,10 @@ function FieldInput({
 
   return (
     <div className="field grid gap-1" data-invalid={!!error}>
-      <label htmlFor={id} className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground">
+      <label
+        htmlFor={id}
+        className="text-[9px] font-semibold uppercase tracking-wider text-muted-foreground"
+      >
         {label}
       </label>
       <input

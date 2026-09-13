@@ -24,23 +24,13 @@ export function seedPatterns<D extends string, P extends string>(
 ): Record<D, P> {
   const device = initial.device as D | undefined;
   const pattern = initial.pattern as P | undefined;
-  if (
-    device &&
-    pattern &&
-    patternsByDevice[device]?.some((option) => option.id === pattern)
-  ) {
+  if (device && pattern && patternsByDevice[device]?.some((option) => option.id === pattern)) {
     return { ...defaults, [device]: pattern } as Record<D, P>;
   }
   return defaults;
 }
 
-export function CopyLinkButton({
-  device,
-  pattern,
-}: {
-  device: string;
-  pattern: string;
-}) {
+export function CopyLinkButton({ device, pattern }: { device: string; pattern: string }) {
   const [copied, setCopied] = useState(false);
 
   const copy = async () => {
@@ -65,11 +55,7 @@ export function CopyLinkButton({
       aria-label={`Copy link to the ${device} ${pattern} pattern`}
       className="inline-flex shrink-0 items-center gap-1 rounded-lg border border-border bg-card px-2 py-1 text-[10px] font-semibold text-muted-foreground transition hover:bg-accent hover:text-foreground"
     >
-      {copied ? (
-        <Check className="h-3 w-3 text-primary" />
-      ) : (
-        <Link2 className="h-3 w-3" />
-      )}
+      {copied ? <Check className="h-3 w-3 text-primary" /> : <Link2 className="h-3 w-3" />}
       {copied ? "Copied!" : "Copy link"}
     </button>
   );

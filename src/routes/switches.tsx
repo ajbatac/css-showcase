@@ -26,12 +26,7 @@ export const Route = createFileRoute("/switches")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "settings-rows"
-  | "compact-grid"
-  | "card-toggles"
-  | "list"
-  | "inline-chips";
+type Pattern = "settings-rows" | "compact-grid" | "card-toggles" | "list" | "inline-chips";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -41,12 +36,20 @@ const DEVICES: { id: Device; label: string; hint: string }[] = [
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
-    { id: "settings-rows", label: "Settings rows", desc: "Label + description, switch on the right" },
+    {
+      id: "settings-rows",
+      label: "Settings rows",
+      desc: "Label + description, switch on the right",
+    },
     { id: "compact-grid", label: "Compact grid", desc: "Two-column switch grid" },
     { id: "card-toggles", label: "Card toggles", desc: "Selectable cards with a switch" },
   ],
   ipad: [
-    { id: "settings-rows", label: "Settings rows", desc: "Label + description, switch on the right" },
+    {
+      id: "settings-rows",
+      label: "Settings rows",
+      desc: "Label + description, switch on the right",
+    },
     { id: "compact-grid", label: "Compact grid", desc: "Two-column switch grid" },
   ],
   mobile: [
@@ -243,9 +246,8 @@ function SwitchesDemo() {
             Switches that adapt.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            A single toggle switch component reshaped into settings rows, a
-            compact grid, selectable cards, a grouped list, and chip toggles —
-            with disabled and pending states animated via{" "}
+            A single toggle switch component reshaped into settings rows, a compact grid, selectable
+            cards, a grouped list, and chip toggles — with disabled and pending states animated via{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">transform</code>.
           </p>
         </header>
@@ -321,7 +323,10 @@ function SwitchesDemo() {
                   return (
                     <div key={s.id} className="switch-row">
                       <span className="min-w-0">
-                        <label htmlFor={`sw-${s.id}`} className="block truncate text-[11px] font-semibold">
+                        <label
+                          htmlFor={`sw-${s.id}`}
+                          className="block truncate text-[11px] font-semibold"
+                        >
                           {s.label}
                         </label>
                         <span className="block truncate text-[9px] text-muted-foreground">
@@ -392,14 +397,20 @@ function SwitchesDemo() {
                     aria-selected={active}
                     onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active ? "border-primary bg-primary/10" : "border-border bg-card hover:bg-accent"
+                      active
+                        ? "border-primary bg-primary/10"
+                        : "border-border bg-card hover:bg-accent"
                     }`}
                   >
                     <span className="min-w-0">
                       <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">{o.desc}</span>
+                      <span className="block truncate text-[10px] text-muted-foreground">
+                        {o.desc}
+                      </span>
                     </span>
-                    <span className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`} />
+                    <span
+                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`}
+                    />
                   </button>
                 );
               })}
@@ -408,7 +419,9 @@ function SwitchesDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">switches-{pattern}.css</span>
+              <span className="text-xs font-semibold text-muted-foreground">
+                switches-{pattern}.css
+              </span>
               <button
                 onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"

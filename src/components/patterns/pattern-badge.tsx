@@ -16,7 +16,10 @@ const TONES: Record<Tone, { pill: string; dot: string }> = {
   neutral: { pill: "border-border bg-muted text-muted-foreground", dot: "bg-muted-foreground" },
   success: { pill: "border-chart-2/40 bg-chart-2/15 text-foreground", dot: "bg-chart-2" },
   warning: { pill: "border-chart-4/40 bg-chart-4/15 text-foreground", dot: "bg-chart-4" },
-  danger: { pill: "border-destructive/40 bg-destructive/15 text-foreground", dot: "bg-destructive" },
+  danger: {
+    pill: "border-destructive/40 bg-destructive/15 text-foreground",
+    dot: "bg-destructive",
+  },
   info: { pill: "border-primary/40 bg-primary/15 text-foreground", dot: "bg-primary" },
 };
 

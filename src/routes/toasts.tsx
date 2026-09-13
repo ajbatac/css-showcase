@@ -198,15 +198,13 @@ const VARIANTS: {
 function ToastsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "top-right",
-    ipad: "bottom-center",
-    mobile: "bottom-full",
+      desktop: "top-right",
+      ipad: "bottom-center",
+      mobile: "bottom-full",
     }),
   );
   const [visible, setVisible] = useState<Record<Variant, boolean>>({
@@ -231,9 +229,9 @@ function ToastsDemo() {
             Four toasts. Many placements per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a placement pattern for that device — desktop offers
-            top-right, bottom-right, and centered banner; mobile offers a full-width snackbar
-            and a top inline banner.
+            Pick a device, then pick a placement pattern for that device — desktop offers top-right,
+            bottom-right, and centered banner; mobile offers a full-width snackbar and a top inline
+            banner.
           </p>
         </header>
 
@@ -301,9 +299,7 @@ function ToastsDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -311,9 +307,7 @@ function ToastsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -422,13 +416,7 @@ function DeviceFrame({
   );
 }
 
-function ToastApp({
-  pattern,
-  visible,
-}: {
-  pattern: Pattern;
-  visible: Record<Variant, boolean>;
-}) {
+function ToastApp({ pattern, visible }: { pattern: Pattern; visible: Record<Variant, boolean> }) {
   const items = VARIANTS.filter((v) => visible[v.id]);
   const isBanner = pattern === "banner" || pattern === "top-banner";
   const bannerItem = items[0];
@@ -475,9 +463,7 @@ function ToastApp({
               <div className="truncate text-[8px] font-semibold leading-tight">
                 {bannerItem.title}
               </div>
-              <div className="truncate text-[7px] leading-tight opacity-70">
-                {bannerItem.body}
-              </div>
+              <div className="truncate text-[7px] leading-tight opacity-70">{bannerItem.body}</div>
             </div>
           </div>
         )

@@ -81,7 +81,8 @@ function ComponentsPage() {
       id: "input",
       name: "PatternInput",
       file: "src/components/patterns/pattern-input.tsx",
-      description: "Labelled field with hint text, error state, leading icon and wired-up a11y ids.",
+      description:
+        "Labelled field with hint text, error state, leading icon and wired-up a11y ids.",
       source: inputSource,
       preview: (
         <div className="grid gap-4 sm:grid-cols-2">
@@ -152,7 +153,11 @@ function ComponentsPage() {
             Your layout is live for everyone on the team.
           </PatternAlert>
           {alertOpen ? (
-            <PatternAlert tone="warning" title="Trial ends soon" onDismiss={() => setAlertOpen(false)}>
+            <PatternAlert
+              tone="warning"
+              title="Trial ends soon"
+              onDismiss={() => setAlertOpen(false)}
+            >
               Add a payment method to keep your projects.
             </PatternAlert>
           ) : (
@@ -240,8 +245,8 @@ function ComponentsPage() {
           </h1>
           <p className="mt-3 max-w-2xl text-sm text-muted-foreground sm:text-base">
             Each piece is a single self-contained file with no dependencies beyond React and
-            Tailwind, styled with semantic tokens so it inherits your light and dark themes. Copy the
-            full source and drop it into your project.
+            Tailwind, styled with semantic tokens so it inherits your light and dark themes. Copy
+            the full source and drop it into your project.
           </p>
         </header>
 

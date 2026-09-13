@@ -148,15 +148,11 @@ function InputsDemo() {
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Inputs that adapt.
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Inputs that adapt.</h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             One field component that floats its label with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              :placeholder-shown
-            </code>{" "}
-            on desktop and grows into large touch targets on mobile.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">:placeholder-shown</code> on
+            desktop and grows into large touch targets on mobile.
           </p>
         </header>
 
@@ -175,10 +171,7 @@ function InputsDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div
-                data-pattern={pattern}
-                className="input-demo h-full w-full overflow-auto p-3"
-              >
+              <div data-pattern={pattern} className="input-demo h-full w-full overflow-auto p-3">
                 <div className="field" data-pattern={pattern}>
                   {pattern === "floating" ? (
                     <>
@@ -216,13 +209,25 @@ function InputsDemo() {
                 <div className="field mt-3" data-pattern={pattern}>
                   {pattern === "floating" ? (
                     <>
-                      <input id="pw" placeholder=" " type="password" defaultValue="a" data-invalid="true" />
+                      <input
+                        id="pw"
+                        placeholder=" "
+                        type="password"
+                        defaultValue="a"
+                        data-invalid="true"
+                      />
                       <label htmlFor="pw">Password</label>
                     </>
                   ) : (
                     <>
                       <label htmlFor="pw">Password</label>
-                      <input id="pw" placeholder="••••••" type="password" defaultValue="a" data-invalid="true" />
+                      <input
+                        id="pw"
+                        placeholder="••••••"
+                        type="password"
+                        defaultValue="a"
+                        data-invalid="true"
+                      />
                     </>
                   )}
                   <span className="invalid-msg">
@@ -280,9 +285,7 @@ function InputsDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -290,9 +293,7 @@ function InputsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -314,9 +315,7 @@ function InputsDemo() {
                 input-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -507,13 +506,7 @@ function InputsDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -534,9 +527,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

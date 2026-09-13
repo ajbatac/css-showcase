@@ -1,6 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { Menu, X, Search, Bell, ChevronDown, MoreHorizontal, Home, Compass, Bookmark, User } from "lucide-react";
+import {
+  Menu,
+  X,
+  Search,
+  Bell,
+  ChevronDown,
+  MoreHorizontal,
+  Home,
+  Compass,
+  Bookmark,
+  User,
+} from "lucide-react";
 import { CopyLinkButton, seedPatterns, useDemoSearch } from "@/lib/demo-permalink";
 
 export const Route = createFileRoute("/navigation")({
@@ -41,7 +52,11 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "split", label: "Centered logo split", desc: "Links flank a centered logo" },
   ],
   ipad: [
-    { id: "topbar-overflow", label: "Top bar + overflow", desc: "A few links, rest collapse into More" },
+    {
+      id: "topbar-overflow",
+      label: "Top bar + overflow",
+      desc: "A few links, rest collapse into More",
+    },
     { id: "rail", label: "Left rail", desc: "Vertical sidebar navigation" },
   ],
   mobile: [
@@ -125,15 +140,13 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 function NavigationDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "topbar",
-    ipad: "rail",
-    mobile: "drawer",
+      desktop: "topbar",
+      ipad: "rail",
+      mobile: "drawer",
     }),
   );
 
@@ -151,11 +164,10 @@ function NavigationDemo() {
             One nav. Many shapes per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a design pattern for that device — top
-            bar, left rail, or centered split on desktop; drawer or bottom
-            tabs on mobile — all using{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code>{" "}
-            — no JS breakpoint listeners.
+            Pick a device, then pick a design pattern for that device — top bar, left rail, or
+            centered split on desktop; drawer or bottom tabs on mobile — all using{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code> — no JS
+            breakpoint listeners.
           </p>
         </header>
 
@@ -223,9 +235,7 @@ function NavigationDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -233,9 +243,7 @@ function NavigationDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -253,9 +261,7 @@ function NavigationDemo() {
 
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
-              <span className="text-xs font-semibold text-muted-foreground">
-                nav-{pattern}.css
-              </span>
+              <span className="text-xs font-semibold text-muted-foreground">nav-{pattern}.css</span>
               <button
                 onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
@@ -371,7 +377,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
         <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-1 border-b bg-background px-2 py-1.5">
           <nav className="flex min-w-0 items-center justify-end gap-1.5">
             {left.map((l) => (
-              <a key={l} className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground">
+              <a
+                key={l}
+                className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground"
+              >
                 {l}
               </a>
             ))}
@@ -379,7 +388,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
           <Logo />
           <nav className="flex min-w-0 items-center justify-start gap-1.5">
             {right.map((l) => (
-              <a key={l} className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground">
+              <a
+                key={l}
+                className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground"
+              >
                 {l}
               </a>
             ))}
@@ -400,7 +412,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
             <Logo />
             <nav className="flex min-w-0 items-center gap-1.5">
               {visible.map((l) => (
-                <a key={l} className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground">
+                <a
+                  key={l}
+                  className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground"
+                >
                   {l}
                 </a>
               ))}
@@ -419,7 +434,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
           <div className="absolute right-1 top-6 z-10 rounded border bg-card p-1 shadow-lg">
             <ul className="space-y-0.5">
               {rest.map((l) => (
-                <li key={l} className="truncate rounded px-1.5 py-0.5 text-[7px] font-medium text-foreground hover:bg-muted">
+                <li
+                  key={l}
+                  className="truncate rounded px-1.5 py-0.5 text-[7px] font-medium text-foreground hover:bg-muted"
+                >
                   {l}
                 </li>
               ))}
@@ -491,7 +509,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
           </div>
           <ul className="space-y-0.5">
             {LINKS.map((l) => (
-              <li key={l} className="truncate rounded px-1 py-0.5 text-[8px] font-medium text-foreground hover:bg-muted">
+              <li
+                key={l}
+                className="truncate rounded px-1 py-0.5 text-[8px] font-medium text-foreground hover:bg-muted"
+              >
                 {l}
               </li>
             ))}
@@ -519,7 +540,10 @@ function NavApp({ pattern }: { pattern: Pattern }) {
         <Logo />
         <nav className="nav-links flex min-w-0 items-center gap-1.5">
           {LINKS.map((l) => (
-            <a key={l} className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground">
+            <a
+              key={l}
+              className="truncate text-[7px] font-medium text-foreground/80 hover:text-foreground"
+            >
               {l}
             </a>
           ))}

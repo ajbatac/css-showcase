@@ -2,7 +2,6 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { toast } from "sonner";
 
-
 const PRESET_IDS = [
   "12-col",
   "holy-grail",
@@ -59,13 +58,7 @@ export const Route = createFileRoute("/grid")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Preset =
-  | "12-col"
-  | "holy-grail"
-  | "auto-fit"
-  | "auto-fill"
-  | "dense"
-  | "asymmetric";
+type Preset = "12-col" | "holy-grail" | "auto-fit" | "auto-fill" | "dense" | "asymmetric";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -127,9 +120,7 @@ function GridDemo() {
     }
   };
 
-
   const cssCode = buildCss(preset, gap, minTrack);
-
 
   return (
     <main className="min-h-screen bg-background text-foreground">
@@ -144,8 +135,7 @@ function GridDemo() {
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             Swap between{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">grid-template-columns</code>,{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">grid-template-areas</code>,
-            and{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">grid-template-areas</code>, and{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">auto-fit / auto-fill</code>{" "}
             inside a device frame.
           </p>
@@ -186,7 +176,6 @@ function GridDemo() {
               </button>
             </div>
           </div>
-
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
@@ -429,15 +418,7 @@ function DeviceFrame({ device, children }: { device: Device; children: React.Rea
   );
 }
 
-function GridApp({
-  preset,
-  gap,
-  minTrack,
-}: {
-  preset: Preset;
-  gap: number;
-  minTrack: number;
-}) {
+function GridApp({ preset, gap, minTrack }: { preset: Preset; gap: number; minTrack: number }) {
   return (
     <div className="grid h-full w-full gap-1.5 overflow-hidden rounded-lg bg-muted/40 p-1.5">
       <div className="flex items-center gap-1.5 rounded-md bg-card px-2 py-1.5">
@@ -453,15 +434,7 @@ function GridApp({
   );
 }
 
-function GridStage({
-  preset,
-  gap,
-  minTrack,
-}: {
-  preset: Preset;
-  gap: number;
-  minTrack: number;
-}) {
+function GridStage({ preset, gap, minTrack }: { preset: Preset; gap: number; minTrack: number }) {
   const t = {
     a: "bg-primary/80 text-primary-foreground",
     b: "bg-chart-2/80 text-white",

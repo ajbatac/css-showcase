@@ -26,12 +26,7 @@ export const Route = createFileRoute("/lists")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "two-column"
-  | "media-rows"
-  | "grouped-sections"
-  | "avatar-rows"
-  | "swipe-actions";
+type Pattern = "two-column" | "media-rows" | "grouped-sections" | "avatar-rows" | "swipe-actions";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -166,12 +161,10 @@ function ListsDemo() {
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Lists that flow.
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Lists that flow.</h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Feed and list layouts — two-column master/detail, media rows, grouped sticky
-            sections, avatar rows, and swipe-to-reveal actions.
+            Feed and list layouts — two-column master/detail, media rows, grouped sticky sections,
+            avatar rows, and swipe-to-reveal actions.
           </p>
         </header>
 
@@ -212,10 +205,12 @@ function ListsDemo() {
                     </div>
                     <div className="p-3">
                       <p className="mb-1 text-foreground font-semibold">{activeItem.title}</p>
-                      <p className="mb-2">{activeItem.meta} · by {activeItem.author}</p>
+                      <p className="mb-2">
+                        {activeItem.meta} · by {activeItem.author}
+                      </p>
                       <p>
-                        Preview content for the selected item appears here, giving quick
-                        context without navigating away from the list.
+                        Preview content for the selected item appears here, giving quick context
+                        without navigating away from the list.
                       </p>
                     </div>
                   </div>
@@ -272,9 +267,7 @@ function ListsDemo() {
                       <div key={it.id} className="row" data-open={openSwipeId === it.id}>
                         <div className="content w-full items-center gap-2 bg-card px-1 py-2">
                           <button
-                            onClick={() =>
-                              setOpenSwipeId(openSwipeId === it.id ? null : it.id)
-                            }
+                            onClick={() => setOpenSwipeId(openSwipeId === it.id ? null : it.id)}
                             className="shrink-0"
                           >
                             <GripVertical className="h-3 w-3" />

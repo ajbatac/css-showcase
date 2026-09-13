@@ -46,7 +46,11 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
   ],
   mobile: [
     { id: "bottom-sheet", label: "Bottom sheet", desc: "Drag handle, snap-height sheet" },
-    { id: "full-screen", label: "Full-screen sheet", desc: "Slide-up modal page with close header" },
+    {
+      id: "full-screen",
+      label: "Full-screen sheet",
+      desc: "Slide-up modal page with close header",
+    },
   ],
 };
 
@@ -175,10 +179,9 @@ function DrawersDemo() {
             Drawers that slide in with intent.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Animated panels, navigation drawers, docked inspectors, and touch-friendly bottom
-            sheets — built with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">transform</code> transitions
-            and a dismissible backdrop.
+            Animated panels, navigation drawers, docked inspectors, and touch-friendly bottom sheets
+            — built with <code className="rounded bg-muted px-1.5 py-0.5 text-xs">transform</code>{" "}
+            transitions and a dismissible backdrop.
           </p>
         </header>
 
@@ -259,7 +262,10 @@ function DrawersDemo() {
                     <div role="dialog" aria-label="Navigation" className="drawer-left p-3">
                       <p className="mb-2 text-xs font-semibold text-foreground">Menu</p>
                       {["Inbox", "Drafts", "Sent", "Trash"].map((t) => (
-                        <div key={t} className="mb-1 rounded-md px-2 py-1.5 text-foreground hover:bg-accent">
+                        <div
+                          key={t}
+                          className="mb-1 rounded-md px-2 py-1.5 text-foreground hover:bg-accent"
+                        >
                           {t}
                         </div>
                       ))}
@@ -299,9 +305,15 @@ function DrawersDemo() {
                       </div>
                       <p className="mb-2 text-xs font-semibold text-foreground">Message options</p>
                       <div className="space-y-1">
-                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">Reply</div>
-                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">Archive</div>
-                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">Delete</div>
+                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">
+                          Reply
+                        </div>
+                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">
+                          Archive
+                        </div>
+                        <div className="rounded-md px-2 py-1.5 text-foreground hover:bg-accent">
+                          Delete
+                        </div>
                       </div>
                     </div>
                   </>

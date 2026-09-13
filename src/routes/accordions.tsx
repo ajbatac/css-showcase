@@ -133,15 +133,13 @@ const SECTIONS = [
 function AccordionsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "panels",
-    ipad: "stacked",
-    mobile: "stacked",
+      desktop: "panels",
+      ipad: "stacked",
+      mobile: "stacked",
     }),
   );
   const [open, setOpen] = useState<Record<string, boolean>>({
@@ -180,11 +178,9 @@ function AccordionsDemo() {
             Accordions that stretch.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            A single accordion component that collapses into a stacked list on
-            mobile and expands into side-by-side panels on desktop — powered by{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              grid-template-rows
-            </code>{" "}
+            A single accordion component that collapses into a stacked list on mobile and expands
+            into side-by-side panels on desktop — powered by{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">grid-template-rows</code>{" "}
             transitions and container queries.
           </p>
         </header>
@@ -204,10 +200,7 @@ function AccordionsDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div
-                data-pattern={pattern}
-                className="accordion h-full w-full overflow-auto p-2"
-              >
+              <div data-pattern={pattern} className="accordion h-full w-full overflow-auto p-2">
                 {SECTIONS.map((section) => {
                   const isOpen = open[section.id];
                   return (
@@ -292,9 +285,7 @@ function AccordionsDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -302,9 +293,7 @@ function AccordionsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -326,9 +315,7 @@ function AccordionsDemo() {
                 accordion-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -433,13 +420,7 @@ function AccordionsDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -460,9 +441,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

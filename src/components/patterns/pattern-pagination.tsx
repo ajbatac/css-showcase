@@ -35,7 +35,13 @@ export function PatternPagination({
 
   return (
     <nav aria-label="Pagination" className={`flex items-center gap-1.5 ${className}`}>
-      <button type="button" aria-label="Previous page" disabled={page <= 1} onClick={() => go(page - 1)} className={navBtn}>
+      <button
+        type="button"
+        aria-label="Previous page"
+        disabled={page <= 1}
+        onClick={() => go(page - 1)}
+        className={navBtn}
+      >
         ‹
       </button>
 
@@ -68,7 +74,13 @@ export function PatternPagination({
         )
       )}
 
-      <button type="button" aria-label="Next page" disabled={page >= pageCount} onClick={() => go(page + 1)} className={navBtn}>
+      <button
+        type="button"
+        aria-label="Next page"
+        disabled={page >= pageCount}
+        onClick={() => go(page + 1)}
+        className={navBtn}
+      >
         ›
       </button>
     </nav>

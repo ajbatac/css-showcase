@@ -1,6 +1,7 @@
 import { Link, useRouterState } from "@tanstack/react-router";
-import { Activity, AlertTriangle, Bell, BadgeCheck, Box, CalendarDays, CheckSquare, ChevronDown, ChevronRight, CircleDot, Columns3, HelpCircle, Inbox, LayoutGrid, List, ListCollapse, ListFilter, Loader2, LogIn, Menu, MessageSquareWarning, Minus, MoreHorizontal, MousePointerClick, PanelLeft, PanelTop, Rows3, Search, SlidersHorizontal, Smartphone, SquarePen, Table, Tag, TextCursorInput, ToggleLeft, UploadCloud } from "lucide-react";
+import { Box, LayoutGrid } from "lucide-react";
 
+import { CATEGORY_ORDER, DEMOS } from "@/lib/demos";
 import {
   Sidebar,
   SidebarContent,
@@ -14,362 +15,6 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
 
-export type DemoCategory =
-  | "Layout"
-  | "Forms"
-  | "Navigation"
-  | "Feedback"
-  | "Overlays"
-  | "Data Display"
-  | "Utilities";
-
-export const CATEGORY_ORDER: DemoCategory[] = [
-  "Layout",
-  "Forms",
-  "Navigation",
-  "Feedback",
-  "Overlays",
-  "Data Display",
-  "Utilities",
-];
-
-export type Demo = {
-  slug: string;
-  name: string;
-  short: string;
-  path: string;
-  icon: React.ComponentType<{ className?: string }>;
-  status: "live" | "soon";
-  category: DemoCategory;
-};
-
-export const DEMOS: Demo[] = [
-  {
-    slug: "device-switcher",
-    name: "Device Switcher",
-    short: "Devices",
-    path: "/",
-    icon: Smartphone,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "login-screens",
-    name: "Login Screens",
-    short: "Login",
-    path: "/login-screens",
-    icon: LogIn,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "toasts",
-    name: "User Feedback · Toasts",
-    short: "Toasts",
-    path: "/toasts",
-    icon: Bell,
-    status: "live",
-    category: "Feedback",
-  },
-  {
-    slug: "modals",
-    name: "Modals",
-    short: "Modals",
-    path: "/modals",
-    icon: MessageSquareWarning,
-    status: "live",
-    category: "Overlays",
-  },
-  {
-    slug: "navigation",
-    name: "Navigation · Hamburger & Desktop",
-    short: "Navigation",
-    path: "/navigation",
-    icon: Menu,
-    status: "live",
-    category: "Navigation",
-  },
-  {
-    slug: "dropdowns",
-    name: "Dropdowns · Menu, Popover, Sheet",
-    short: "Dropdowns",
-    path: "/dropdowns",
-    icon: ChevronDown,
-    status: "live",
-    category: "Overlays",
-  },
-  {
-    slug: "flex",
-    name: "Flexbox Playground",
-    short: "Flex",
-    path: "/flex",
-    icon: Rows3,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "grid",
-    name: "CSS Grid Playground",
-    short: "Grid",
-    path: "/grid",
-    icon: LayoutGrid,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "accordions",
-    name: "Accordions",
-    short: "Accordions",
-    path: "/accordions",
-    icon: ListCollapse,
-    status: "live",
-    category: "Data Display",
-  },
-  {
-    slug: "checkboxes",
-    name: "Checkboxes & Multi-Select",
-    short: "Checkboxes",
-    path: "/checkboxes",
-    icon: CheckSquare,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "selects",
-    name: "Select Dropdowns & Multi-Select",
-    short: "Selects",
-    path: "/selects",
-    icon: ListFilter,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "radios",
-    name: "Radio Buttons",
-    short: "Radios",
-    path: "/radios",
-    icon: CircleDot,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "sliders",
-    name: "Sliders & Range Inputs",
-    short: "Sliders",
-    path: "/sliders",
-    icon: SlidersHorizontal,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "tabs",
-    name: "Tabs · Keyboard-Navigable",
-    short: "Tabs",
-    path: "/tabs",
-    icon: PanelTop,
-    status: "live",
-    category: "Navigation",
-  },
-  {
-    slug: "uploaders",
-    name: "File Uploaders",
-    short: "Uploaders",
-    path: "/uploaders",
-    icon: UploadCloud,
-    status: "live",
-    category: "Utilities",
-  },
-  {
-    slug: "loaders",
-    name: "Loaders",
-    short: "Loaders",
-    path: "/loaders",
-    icon: Loader2,
-    status: "live",
-    category: "Feedback",
-  },
-  {
-    slug: "datepicker",
-    name: "Date Pickers",
-    short: "Datepicker",
-    path: "/datepicker",
-    icon: CalendarDays,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "cards",
-    name: "Cards",
-    short: "Cards",
-    path: "/cards",
-    icon: Box,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "containers",
-    name: "Containers",
-    short: "Containers",
-    path: "/containers",
-    icon: Columns3,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "dividers",
-    name: "Dividers",
-    short: "Dividers",
-    path: "/dividers",
-    icon: Minus,
-    status: "live",
-    category: "Layout",
-  },
-  {
-    slug: "inputs",
-    name: "Text Inputs",
-    short: "Inputs",
-    path: "/inputs",
-    icon: TextCursorInput,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "textareas",
-    name: "Textareas",
-    short: "Textareas",
-    path: "/textareas",
-    icon: SquarePen,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "buttons",
-    name: "Buttons",
-    short: "Buttons",
-    path: "/buttons",
-    icon: MousePointerClick,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "switches",
-    name: "Switches & Toggles",
-    short: "Switches",
-    path: "/switches",
-    icon: ToggleLeft,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "search",
-    name: "Search Inputs",
-    short: "Search",
-    path: "/search",
-    icon: Search,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "form-validation",
-    name: "Form Validation",
-    short: "Validation",
-    path: "/form-validation",
-    icon: BadgeCheck,
-    status: "live",
-    category: "Forms",
-  },
-  {
-    slug: "breadcrumbs",
-    name: "Breadcrumbs",
-    short: "Breadcrumbs",
-    path: "/breadcrumbs",
-    icon: ChevronRight,
-    status: "live",
-    category: "Navigation",
-  },
-  {
-    slug: "pagination",
-    name: "Pagination",
-    short: "Pagination",
-    path: "/pagination",
-    icon: MoreHorizontal,
-    status: "live",
-    category: "Navigation",
-  },
-  {
-    slug: "alerts",
-    name: "Alerts",
-    short: "Alerts",
-    path: "/alerts",
-    icon: AlertTriangle,
-    status: "live",
-    category: "Feedback",
-  },
-  {
-    slug: "progress",
-    name: "Progress",
-    short: "Progress",
-    path: "/progress",
-    icon: Activity,
-    status: "live",
-    category: "Feedback",
-  },
-  {
-    slug: "tooltips",
-    name: "Tooltips",
-    short: "Tooltips",
-    path: "/tooltips",
-    icon: HelpCircle,
-    status: "live",
-    category: "Overlays",
-  },
-  {
-    slug: "drawers",
-    name: "Drawers",
-    short: "Drawers",
-    path: "/drawers",
-    icon: PanelLeft,
-    status: "live",
-    category: "Overlays",
-  },
-  {
-    slug: "tables",
-    name: "Tables",
-    short: "Tables",
-    path: "/tables",
-    icon: Table,
-    status: "live",
-    category: "Data Display",
-  },
-  {
-    slug: "lists",
-    name: "Lists",
-    short: "Lists",
-    path: "/lists",
-    icon: List,
-    status: "live",
-    category: "Data Display",
-  },
-  {
-    slug: "badges",
-    name: "Badges",
-    short: "Badges",
-    path: "/badges",
-    icon: Tag,
-    status: "live",
-    category: "Data Display",
-  },
-  {
-    slug: "empty-states",
-    name: "Empty States",
-    short: "Empty States",
-    path: "/empty-states",
-    icon: Inbox,
-    status: "live",
-    category: "Utilities",
-  },
-];
-
 export function AppSidebar() {
   const currentPath = useRouterState({
     select: (r) => r.location.pathname,
@@ -377,22 +22,23 @@ export function AppSidebar() {
 
   return (
     <Sidebar collapsible="icon">
-      <SidebarHeader className="border-b">
-        <div className="flex items-center gap-2 px-2 py-1.5">
+      <SidebarHeader className="gap-0 p-0">
+        <div className="flex h-20 items-center gap-4 px-3 group-data-[collapsible=icon]:px-2">
           <img
             src="/logo.png"
             alt="CSS Showcase"
-            className="h-9 w-9 shrink-0 rounded-lg object-cover"
+            className="h-16 w-16 shrink-0 rounded-xl object-cover group-data-[collapsible=icon]:h-8 group-data-[collapsible=icon]:w-8"
           />
-          <div className="flex min-w-0 flex-col group-data-[collapsible=icon]:hidden">
-            <span className="truncate text-sm font-semibold">CSS Showcase</span>
-            <span className="truncate text-[11px] text-muted-foreground">Live demos</span>
+          <div className="flex min-w-0 flex-col gap-1 group-data-[collapsible=icon]:hidden">
+            <span className="truncate text-base font-semibold leading-none">CSS Showcase</span>
+            <span className="truncate text-xs leading-none text-muted-foreground">Live demos</span>
           </div>
         </div>
+        <hr className="border-t border-sidebar-border" />
       </SidebarHeader>
 
       <SidebarContent>
-        <SidebarGroup>
+        <SidebarGroup className="mt-1">
           <SidebarGroupLabel>Library</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -432,7 +78,11 @@ export function AppSidebar() {
                     const active = currentPath === demo.path;
                     return (
                       <SidebarMenuItem key={demo.slug}>
-                        <SidebarMenuButton asChild isActive={active} tooltip={`${category} · ${demo.name}`}>
+                        <SidebarMenuButton
+                          asChild
+                          isActive={active}
+                          tooltip={`${category} · ${demo.name}`}
+                        >
                           <Link to={demo.path} className="flex items-center gap-2">
                             <demo.icon className="h-4 w-4 shrink-0" />
                             <span className="truncate">{demo.short}</span>

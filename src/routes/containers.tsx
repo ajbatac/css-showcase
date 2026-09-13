@@ -120,8 +120,8 @@ function ContainersDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             A single content wrapper that centers prose with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">max-inline-size</code>,
-            adds a sidebar with grid, and breaks out full-bleed bands — no wrapper divs needed.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">max-inline-size</code>, adds a
+            sidebar with grid, and breaks out full-bleed bands — no wrapper divs needed.
           </p>
         </header>
 

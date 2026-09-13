@@ -15,7 +15,12 @@ const SIDES: Record<string, string> = {
 };
 
 /** Tooltip that opens on hover, focus and tap, and closes on Escape. */
-export function PatternTooltip({ content, side = "top", children, className = "" }: PatternTooltipProps) {
+export function PatternTooltip({
+  content,
+  side = "top",
+  children,
+  className = "",
+}: PatternTooltipProps) {
   const [open, setOpen] = React.useState(false);
   const id = React.useId();
 
@@ -27,7 +32,7 @@ export function PatternTooltip({ content, side = "top", children, className = ""
       onFocus={() => setOpen(true)}
       onBlur={() => setOpen(false)}
       onKeyDown={(e) => e.key === "Escape" && setOpen(false)}
-studio-ignore
+      studio-ignore
     >
       <span aria-describedby={open ? id : undefined} onClick={() => setOpen((v) => !v)}>
         {children}

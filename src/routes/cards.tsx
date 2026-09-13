@@ -107,10 +107,30 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 };
 
 const ITEMS = [
-  { id: "alpha", title: "Alpha release", desc: "Ship the first public build with core flows covered.", meta: "2 min read" },
-  { id: "beta", title: "Beta feedback", desc: "Collect structured feedback from early adopters.", meta: "4 min read" },
-  { id: "gamma", title: "Gamma rollout", desc: "Gradually expand access across regions.", meta: "3 min read" },
-  { id: "delta", title: "Delta metrics", desc: "Track retention and activation cohorts.", meta: "5 min read" },
+  {
+    id: "alpha",
+    title: "Alpha release",
+    desc: "Ship the first public build with core flows covered.",
+    meta: "2 min read",
+  },
+  {
+    id: "beta",
+    title: "Beta feedback",
+    desc: "Collect structured feedback from early adopters.",
+    meta: "4 min read",
+  },
+  {
+    id: "gamma",
+    title: "Gamma rollout",
+    desc: "Gradually expand access across regions.",
+    meta: "3 min read",
+  },
+  {
+    id: "delta",
+    title: "Delta metrics",
+    desc: "Track retention and activation cohorts.",
+    meta: "5 min read",
+  },
 ];
 
 function CardsDemo() {
@@ -136,13 +156,11 @@ function CardsDemo() {
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
           </p>
-          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-            Cards that reflow.
-          </h1>
+          <h1 className="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">Cards that reflow.</h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             A single card list that becomes an{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">auto-fit</code> grid
-            on desktop, horizontal media cards on iPad, and a snap-scroll carousel on mobile.
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">auto-fit</code> grid on
+            desktop, horizontal media cards on iPad, and a snap-scroll carousel on mobile.
           </p>
         </header>
 

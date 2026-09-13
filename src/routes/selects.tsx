@@ -26,14 +26,7 @@ export const Route = createFileRoute("/selects")({
 });
 
 type Device = "desktop" | "ipad" | "mobile";
-type Pattern =
-  | "inline"
-  | "twopane"
-  | "combobox"
-  | "popover"
-  | "dialog"
-  | "sheet"
-  | "fullscreen";
+type Pattern = "inline" | "twopane" | "combobox" | "popover" | "dialog" | "sheet" | "fullscreen";
 
 const DEVICES: { id: Device; label: string; hint: string }[] = [
   { id: "desktop", label: "Desktop", hint: "16:10" },
@@ -172,15 +165,13 @@ const TAGS: Option[] = [
 function SelectsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "inline",
-    ipad: "popover",
-    mobile: "sheet",
+      desktop: "inline",
+      ipad: "popover",
+      mobile: "sheet",
     }),
   );
   const [role, setRole] = useState<string>("developer");
@@ -358,13 +349,7 @@ function SelectsDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -412,12 +397,8 @@ function SelectApp({
   setSearch: (s: string) => void;
 }) {
   const isOverlay = pattern === "dialog" || pattern === "fullscreen";
-  const filteredRoles = ROLES.filter((r) =>
-    r.label.toLowerCase().includes(search.toLowerCase())
-  );
-  const filteredTags = TAGS.filter((t) =>
-    t.label.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredRoles = ROLES.filter((r) => r.label.toLowerCase().includes(search.toLowerCase()));
+  const filteredTags = TAGS.filter((t) => t.label.toLowerCase().includes(search.toLowerCase()));
 
   const close = () => {
     setOpenPanel(null);
@@ -586,13 +567,7 @@ function SelectApp({
   );
 }
 
-function SearchInput({
-  search,
-  setSearch,
-}: {
-  search: string;
-  setSearch: (s: string) => void;
-}) {
+function SearchInput({ search, setSearch }: { search: string; setSearch: (s: string) => void }) {
   return (
     <div className="mb-1.5 flex items-center gap-1 rounded-md border bg-background px-1.5 py-1">
       <Search className="h-2.5 w-2.5 shrink-0 text-muted-foreground" />
@@ -638,13 +613,7 @@ function SimpleList({
   );
 }
 
-function PanelShell({
-  pattern,
-  children,
-}: {
-  pattern: Pattern;
-  children: React.ReactNode;
-}) {
+function PanelShell({ pattern, children }: { pattern: Pattern; children: React.ReactNode }) {
   if (pattern === "twopane") {
     return (
       <div className="select-panel select-panel--twopane absolute left-0 top-full z-30 mt-1 w-[220%] max-w-[24rem] overflow-hidden rounded-xl border bg-card shadow-lg">
@@ -714,9 +683,7 @@ function Combobox({
 }) {
   const [focused, setFocused] = useState(false);
   const [query, setQuery] = useState("");
-  const filtered = options.filter((o) =>
-    o.label.toLowerCase().includes(query.toLowerCase())
-  );
+  const filtered = options.filter((o) => o.label.toLowerCase().includes(query.toLowerCase()));
 
   return (
     <div className="select-control relative">

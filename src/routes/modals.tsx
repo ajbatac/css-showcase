@@ -184,15 +184,13 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 function ModalsDemo() {
   const initial = useDemoSearch();
   const [device, setDevice] = useState<Device>(
-    initial.device && initial.device in PATTERNS
-      ? (initial.device as Device)
-      : "mobile",
+    initial.device && initial.device in PATTERNS ? (initial.device as Device) : "mobile",
   );
   const [patterns, setPatterns] = useState<Record<Device, Pattern>>(() =>
     seedPatterns<Device, Pattern>(PATTERNS, initial, {
-    desktop: "drawer",
-    ipad: "dialog",
-    mobile: "sheet",
+      desktop: "drawer",
+      ipad: "dialog",
+      mobile: "sheet",
     }),
   );
   const [flow, setFlow] = useState<Flow>("confirm");
@@ -212,9 +210,8 @@ function ModalsDemo() {
             One modal. Many flows and patterns.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Pick a device, then pick a design pattern — dialog, drawer, and
-            full-screen on desktop, bottom sheet or full-screen on mobile —
-            each driven by{" "}
+            Pick a device, then pick a design pattern — dialog, drawer, and full-screen on desktop,
+            bottom sheet or full-screen on mobile — each driven by{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">container-type</code> and{" "}
             <code className="rounded bg-muted px-1.5 py-0.5 text-xs">data-flow</code>.
           </p>
@@ -301,9 +298,7 @@ function ModalsDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -334,7 +329,9 @@ function ModalsDemo() {
                       setOpen(true);
                     }}
                     className={`flex min-h-10 items-center justify-center gap-1.5 rounded-lg border px-2.5 py-2 text-xs font-medium transition ${
-                      on ? `${f.ring} ${f.tone}` : "border-border bg-card text-muted-foreground hover:bg-accent"
+                      on
+                        ? `${f.ring} ${f.tone}`
+                        : "border-border bg-card text-muted-foreground hover:bg-accent"
                     }`}
                   >
                     <f.icon className="h-3.5 w-3.5" />

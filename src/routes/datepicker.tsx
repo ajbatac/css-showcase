@@ -150,8 +150,7 @@ const MONTHS = [
 const TODAY = new Date(2026, 7, 22);
 
 const key = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
-const addDays = (d: Date, n: number) =>
-  new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
+const addDays = (d: Date, n: number) => new Date(d.getFullYear(), d.getMonth(), d.getDate() + n);
 const fmt = (d: Date | null) =>
   d ? `${MONTHS[d.getMonth()]!.slice(0, 3)} ${d.getDate()}, ${d.getFullYear()}` : "Select a date";
 
@@ -194,8 +193,8 @@ function DatePickerDemo() {
             One date picker. Many patterns per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            Desktop gets an anchored popover, a two-month range picker, and an inline
-            calendar; mobile switches to a bottom sheet or quick-chip shortcuts.
+            Desktop gets an anchored popover, a two-month range picker, and an inline calendar;
+            mobile switches to a bottom sheet or quick-chip shortcuts.
           </p>
         </header>
 
@@ -332,13 +331,9 @@ function PickerStage({ pattern }: { pattern: Pattern }) {
   const [end, setEnd] = useState<Date | null>(addDays(TODAY, 6));
   const [open, setOpen] = useState(pattern === "inline");
 
-  const nextMonth = useMemo(
-    () => new Date(month.getFullYear(), month.getMonth() + 1, 1),
-    [month],
-  );
+  const nextMonth = useMemo(() => new Date(month.getFullYear(), month.getMonth() + 1, 1), [month]);
 
-  const shift = (n: number) =>
-    setMonth((m) => new Date(m.getFullYear(), m.getMonth() + n, 1));
+  const shift = (n: number) => setMonth((m) => new Date(m.getFullYear(), m.getMonth() + n, 1));
 
   const pickRange = (d: Date) => {
     if (!start || (start && end)) {
@@ -356,10 +351,7 @@ function PickerStage({ pattern }: { pattern: Pattern }) {
   if (pattern === "inline") {
     return (
       <div className="h-full w-full overflow-auto p-3">
-        <div
-          className="cal-shell grid gap-3"
-          style={{ containerType: "inline-size" }}
-        >
+        <div className="cal-shell grid gap-3" style={{ containerType: "inline-size" }}>
           <div className="rounded-xl border bg-card p-2.5">
             <Calendar
               month={month}
@@ -374,8 +366,8 @@ function PickerStage({ pattern }: { pattern: Pattern }) {
             </p>
             <p className="mt-1 text-[11px] font-bold">{fmt(selected)}</p>
             <p className="mt-2 text-[9px] leading-relaxed text-muted-foreground">
-              The calendar is always visible — no popover, no sheet. On wide containers a
-              summary panel sits beside it.
+              The calendar is always visible — no popover, no sheet. On wide containers a summary
+              panel sits beside it.
             </p>
           </div>
         </div>
@@ -397,10 +389,7 @@ function PickerStage({ pattern }: { pattern: Pattern }) {
           <span className="text-[10px] text-muted-foreground">→</span>
           <FieldBox label="End" value={end ? fmt(end) : "Pick end"} />
         </div>
-        <div
-          className="range-months grid gap-2"
-          style={{ containerType: "inline-size" }}
-        >
+        <div className="range-months grid gap-2" style={{ containerType: "inline-size" }}>
           {[month, nextMonth].map((m, i) => (
             <div key={i} className="rounded-xl border bg-card p-2">
               <Calendar
@@ -637,10 +626,7 @@ function Calendar({
 
       <div className="grid grid-cols-7 gap-px text-center">
         {WEEKDAYS.map((w, i) => (
-          <span
-            key={i}
-            className="py-0.5 text-[8px] font-bold uppercase text-muted-foreground"
-          >
+          <span key={i} className="py-0.5 text-[8px] font-bold uppercase text-muted-foreground">
             {w}
           </span>
         ))}
@@ -678,13 +664,7 @@ function Calendar({
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },

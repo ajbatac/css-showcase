@@ -200,15 +200,12 @@ function UploadersDemo() {
     let progress = 0;
     const timer = window.setInterval(() => {
       progress = Math.min(100, progress + 20);
-      setFiles((prev) =>
-        prev.map((f) => (f.id === id ? { ...f, progress } : f)),
-      );
+      setFiles((prev) => prev.map((f) => (f.id === id ? { ...f, progress } : f)));
       if (progress >= 100) window.clearInterval(timer);
     }, 350);
   };
 
-  const removeFile = (id: string) =>
-    setFiles((prev) => prev.filter((f) => f.id !== id));
+  const removeFile = (id: string) => setFiles((prev) => prev.filter((f) => f.id !== id));
 
   const showDropzone = pattern === "dropzone" || pattern === "split";
 
@@ -223,10 +220,10 @@ function UploadersDemo() {
             File uploaders, per device.
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
-            A drag-and-drop hero on desktop, a split picker on iPad, and a
-            thumb-friendly attach sheet on mobile — reshaped with{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">@container</code>{" "}
-            queries and <code className="rounded bg-muted px-1.5 py-0.5 text-xs">auto-fill</code> grids.
+            A drag-and-drop hero on desktop, a split picker on iPad, and a thumb-friendly attach
+            sheet on mobile — reshaped with{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">@container</code> queries and{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">auto-fill</code> grids.
           </p>
         </header>
 
@@ -245,10 +242,7 @@ function UploadersDemo() {
 
           <div className="relative bg-[linear-gradient(180deg,var(--muted)_0%,var(--background)_100%)] px-4 py-8">
             <DeviceFrame device={device}>
-              <div
-                data-pattern={pattern}
-                className="uploader h-full w-full overflow-auto p-2"
-              >
+              <div data-pattern={pattern} className="uploader h-full w-full overflow-auto p-2">
                 {showDropzone && (
                   <div
                     className="dropzone p-3 text-center"
@@ -265,9 +259,7 @@ function UploadersDemo() {
                     }}
                   >
                     <UploadCloud className="mx-auto h-6 w-6 text-primary" />
-                    <p className="mt-1.5 text-[10px] font-semibold">
-                      Drag files here
-                    </p>
+                    <p className="mt-1.5 text-[10px] font-semibold">Drag files here</p>
                     <p className="text-[9px] text-muted-foreground">
                       PNG, JPG or PDF · up to 10 MB
                     </p>
@@ -319,10 +311,7 @@ function UploadersDemo() {
                     const done = file.progress >= 100;
                     const compact = pattern === "gallery" || pattern === "tiles";
                     return (
-                      <div
-                        key={file.id}
-                        className="file-row rounded-lg border bg-card p-1.5"
-                      >
+                      <div key={file.id} className="file-row rounded-lg border bg-card p-1.5">
                         {compact ? (
                           <>
                             <Icon className="h-5 w-5 text-muted-foreground" />
@@ -439,9 +428,7 @@ function UploadersDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -594,13 +581,7 @@ function UploadersDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -621,9 +602,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }

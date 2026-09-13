@@ -163,19 +163,29 @@ function TextareasDemo() {
       return (
         <div className="editor">
           <div className="editor-toolbar">
-            <button type="button" className="toolbar-btn"><Bold className="h-3 w-3" /></button>
-            <button type="button" className="toolbar-btn"><Italic className="h-3 w-3" /></button>
-            <button type="button" className="toolbar-btn"><List className="h-3 w-3" /></button>
+            <button type="button" className="toolbar-btn">
+              <Bold className="h-3 w-3" />
+            </button>
+            <button type="button" className="toolbar-btn">
+              <Italic className="h-3 w-3" />
+            </button>
+            <button type="button" className="toolbar-btn">
+              <List className="h-3 w-3" />
+            </button>
           </div>
           <textarea {...shared} placeholder="Write something formatted..." />
         </div>
       );
     }
     if (pattern === "fixed") {
-      return <textarea {...shared} className="textarea-fixed" placeholder="Drag the corner to resize." />;
+      return (
+        <textarea {...shared} className="textarea-fixed" placeholder="Drag the corner to resize." />
+      );
     }
     if (pattern === "compact") {
-      return <textarea {...shared} className="textarea-compact" rows={3} placeholder="Quick note..." />;
+      return (
+        <textarea {...shared} className="textarea-compact" rows={3} placeholder="Quick note..." />
+      );
     }
     return (
       <div className="composer">
@@ -199,9 +209,7 @@ function TextareasDemo() {
           </h1>
           <p className="mt-3 text-sm text-muted-foreground sm:text-base">
             One composer that auto-grows with a{" "}
-            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">
-              grid replicated-value
-            </code>{" "}
+            <code className="rounded bg-muted px-1.5 py-0.5 text-xs">grid replicated-value</code>{" "}
             trick, gets a resize handle on desktop, and anchors to the bottom on mobile.
           </p>
         </header>
@@ -277,9 +285,7 @@ function TextareasDemo() {
                     key={o.id}
                     role="tab"
                     aria-selected={active}
-                    onClick={() =>
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }))
-                    }
+                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
                     className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
                       active
                         ? "border-primary bg-primary/10"
@@ -287,9 +293,7 @@ function TextareasDemo() {
                     }`}
                   >
                     <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">
-                        {o.label}
-                      </span>
+                      <span className="block truncate text-xs font-semibold">{o.label}</span>
                       <span className="block truncate text-[10px] text-muted-foreground">
                         {o.desc}
                       </span>
@@ -311,9 +315,7 @@ function TextareasDemo() {
                 textarea-{pattern}.css
               </span>
               <button
-                onClick={() =>
-                  navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])
-                }
+                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
                 className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
               >
                 Copy
@@ -487,13 +489,7 @@ function TextareasDemo() {
   );
 }
 
-function DeviceFrame({
-  device,
-  children,
-}: {
-  device: Device;
-  children: React.ReactNode;
-}) {
+function DeviceFrame({ device, children }: { device: Device; children: React.ReactNode }) {
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
@@ -514,9 +510,7 @@ function DeviceFrame({
       {device === "mobile" && (
         <div className="absolute left-1/2 top-1 z-10 h-1.5 w-12 -translate-x-1/2 rounded-full bg-foreground/70" />
       )}
-      <div className="h-full w-full overflow-hidden rounded-lg bg-card">
-        {children}
-      </div>
+      <div className="h-full w-full overflow-hidden rounded-lg bg-card">{children}</div>
     </div>
   );
 }
