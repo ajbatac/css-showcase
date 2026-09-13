@@ -14,6 +14,7 @@ import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SendToLLM } from "@/components/send-to-llm";
 import appCss from "../styles.css?url";
 
 function GitHubLink() {
@@ -148,12 +149,14 @@ function RootComponent() {
             <header className="hidden h-20 items-center gap-2 bg-background/60 px-3 backdrop-blur md:flex">
               <SidebarTrigger />
               <div className="ml-auto flex items-center gap-1.5">
+                <SendToLLM />
                 <ThemeToggle />
                 <GitHubLink />
               </div>
             </header>
             <hr className="hidden border-t border-border md:block" />
             <div className="fixed right-3 top-3 z-50 flex items-center gap-1.5 md:hidden">
+              <SendToLLM />
               <ThemeToggle />
               <GitHubLink />
             </div>
