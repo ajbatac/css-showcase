@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>CSS Showcase changelog</title>
+    <link>https://css.techhive.net/changelog</link>
+    <description>What's new in CSS Showcase. New features, fixes, and improvements, release by release.</description>
+    <language>en</language>
+    <lastBuildDate>Sun, 13 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <atom:link href="https://css.techhive.net/changelog/rss" rel="self" type="application/rss+xml" />
+    <item>
+      <title>v0.2</title>
+      <link>https://css.techhive.net/changelog</link>
+      <guid isPermaLink="false">css-showcase-v0.2</guid>
+      <pubDate>Sun, 13 Sep 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[<p><strong>September 13, 2026</strong></p><h3>New</h3><ul><li>A new name and look: the site is now CSS Showcase, with our own logo, matching icons, and rich previews when a page is shared.</li><li>A "Send to LLM" button that copies ready-made instructions, so an AI assistant can rebuild any demo inside your own project.</li><li>A playful not-found page built from pure CSS, complete with a spinning zero, floating CSS properties, and a free lesson in centering things.</li><li>Plain-language legal pages: Terms, Privacy, DMCA, Cookies, Disclaimer, and User Content, all linked in the footer.</li><li>This changelog page, plus an RSS feed you can subscribe to and follow along.</li><li>Quick access to our GitHub from the top corner, and a spot in the footer highlighting our other projects.</li></ul><h3>Fixed</h3><ul><li>Live reload now works properly: pages update instantly while being edited instead of needing a restart.</li><li>The line above the page content and the line under the sidebar header now sit at exactly the same height.</li><li>The command for previewing the finished site locally works again.</li><li>Removed the duplicate site name that used to appear twice at the top of the page.</li></ul><h3>Improved</h3><ul><li>A deep clean for open source: internal tooling was removed and automated quality checks now run on every change.</li><li>Better directions for search engines and social networks, including our official web address.</li><li>A plain-text guide so AI assistants can understand the site and its content.</li><li>One-command deployment on Cloudflare Pages.</li></ul>]]></description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,34 @@
+# CSS Showcase
+
+> Live CSS demos with the code for each example. 37 demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Mobile-first with light and dark themes.
+
+Official URL: https://css.techhive.net/
+
+## Browse
+
+- [Home and flagship device-switcher demo](https://css.techhive.net/): a skeleton app that reshapes between desktop, iPad, and mobile with container queries, aspect-ratio, and custom properties.
+- [All demos](https://css.techhive.net/demos): every demo grouped by category.
+- [Reusable components](https://css.techhive.net/components): the shared component gallery.
+
+## Updates
+
+- [Changelog](https://css.techhive.net/changelog): release history in plain language.
+- [RSS feed](https://css.techhive.net/changelog/rss): subscribe to release updates.
+
+## Source
+
+- [GitHub repository](https://github.com/ajbatac/css-showcase): open source. Clone it, run it locally, or send a pull request.
+
+## Legal
+
+- [Terms](https://css.techhive.net/terms)
+- [Privacy](https://css.techhive.net/privacy)
+- [DMCA](https://css.techhive.net/dmca)
+- [Cookies](https://css.techhive.net/cookies)
+- [Disclaimer](https://css.techhive.net/disclaimer)
+- [UGC](https://css.techhive.net/ugc-disclaimer)
+
+## Notes
+
+- The site sets no cookies and runs no trackers. The only stored preference is the light/dark theme choice in local storage.
+- Forms, logins, and uploads shown in demos are visual examples only; nothing is submitted anywhere.

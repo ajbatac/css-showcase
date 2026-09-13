@@ -115,7 +115,13 @@ export function AppSidebar() {
 
       <SidebarFooter className="border-t">
         <div className="px-2 py-1.5 text-[11px] text-muted-foreground group-data-[collapsible=icon]:hidden">
-          v0.1 · mobile-first
+          <Link
+            to="/changelog"
+            className="font-semibold text-foreground/80 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          >
+            v0.2
+          </Link>{" "}
+          · mobile-first
         </div>
       </SidebarFooter>
     </Sidebar>

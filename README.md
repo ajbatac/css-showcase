@@ -25,14 +25,15 @@
 
 ---
 
-A collection of live CSS demos. Every page pairs a working example with the CSS that drives it, so you can watch a pattern behave and read the code behind it without leaving the page. Mobile-first, dark mode included.
+CSS Showcase is a free, open-source library of live CSS demos. Every page pairs a working example with the CSS that drives it, so you can watch a pattern behave and read the code behind it without leaving the page.
 
-## What's inside
+## Highlights
 
-- **37 demos** across seven categories: layout, forms, navigation, feedback, overlays, data display, and utilities
-- **The device switcher** (home page): a skeleton app that reshapes itself between desktop, iPad, and mobile using container queries, `aspect-ratio`, and custom properties, with no JavaScript driving the layout
-- **Code beside every demo**: the example first, the CSS for the selected pattern right below it
-- **Light and dark themes** with a toggle, driven by CSS custom properties
+- **37 demos** across layout, forms, navigation, feedback, overlays, data display, and utilities
+- **The device switcher**: a skeleton app that reshapes itself between desktop, iPad, and mobile using pure CSS
+- **Send to LLM**: one click copies instructions so your AI assistant can rebuild any demo in your project
+- **Mobile-first**, with light and dark themes
+- **Open source**: clone it, run it, adapt it, contribute to it
 
 ## Quick start
 
@@ -43,66 +44,13 @@ bun install        # or: npm install
 bun run dev        # or: npm run dev
 ```
 
-The dev server URL is printed in the terminal.
+The dev server URL is printed in the terminal. For production builds and deployment options (Cloudflare Pages, Workers, or any Node host), see the scripts in `package.json`.
 
-For a production build and a running server:
+## Links
 
-```sh
-bun run build
-bun run preview
-```
-
-The build lands in `.output`. The server listens on port 3000 by default; set `PORT` to change it.
-
-## Scripts
-
-| Command             | What it does                        |
-| ------------------- | ----------------------------------- |
-| `npm run dev`       | Start the dev server with HMR       |
-| `npm run build`     | Production build into `.output`     |
-| `npm run build:dev` | Development-mode build              |
-| `npm run preview`   | Run the built server from `.output` |
-| `npm run lint`      | ESLint over the repo                |
-| `npm run format`    | Prettier over the repo              |
-
-## Project layout
-
-| Path                       | Contents                                                       |
-| -------------------------- | -------------------------------------------------------------- |
-| `src/routes/`              | One file per demo, mounted through TanStack file-based routing |
-| `src/components/patterns/` | The demo implementations the routes render                     |
-| `src/components/ui/`       | UI primitives built on Radix UI and Tailwind CSS               |
-| `src/lib/demos.ts`         | The demo registry: slugs, icons, paths, categories             |
-| `src/styles.css`           | Theme tokens for light and dark mode                           |
-
-## Adding a demo
-
-1. Register it in the `DEMOS` array in `src/lib/demos.ts` with a category, icon, and path.
-2. Create a route file in `src/routes/`, for example `toggles.tsx`.
-3. Build the demo in `src/components/patterns/` or inline in the route.
-4. Run `bun run dev` and check it in the sidebar.
-
-## Tech stack
-
-TanStack Start with server-side rendering, TanStack Router, React 19, Tailwind CSS v4, Radix UI primitives, Vite, and Nitro for the server build. TypeScript throughout.
-
-## Deploy
-
-**Cloudflare Pages** (recommended): connect the repository in the Cloudflare dashboard with these settings:
-
-- Production branch: `main`
-- Build command: `npm run build`
-- Build output directory: `dist`
-
-The build detects Cloudflare's `CF_PAGES` environment and produces a Pages artifact (`_worker.js` plus static assets) in `dist`.
-
-**Cloudflare Workers** as an alternative: `npm run deploy:cf` builds and deploys in one command after a one-time `npx wrangler login`.
-
-Any other Node host works with the standard build: `npm run build` produces a server in `.output` that `npm run preview` runs.
-
-## Contributing
-
-Issues and pull requests are welcome. Run `npm run lint` before opening a pull request.
+- **Live site:** https://css.techhive.net
+- **What's new:** [changelog](https://css.techhive.net/changelog) · [RSS feed](https://css.techhive.net/changelog/rss)
+- **Source:** https://github.com/ajbatac/css-showcase
 
 ---
 

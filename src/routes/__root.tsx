@@ -113,6 +113,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       links: [
         { rel: "canonical", href: canonical },
         {
+          rel: "alternate",
+          type: "application/rss+xml",
+          title: "CSS Showcase changelog",
+          href: `${SITE_URL}/changelog/rss`,
+        },
+        {
           rel: "stylesheet",
           href: appCss,
         },

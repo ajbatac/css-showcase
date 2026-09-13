@@ -32,6 +32,11 @@ export default defineConfig(({ command }) => ({
               process.env.NITRO_PRESET ??
               (process.env.CF_PAGES ? "cloudflare-pages" : "node-server"),
             cloudflare: { nodeCompat: true, deployConfig: true },
+            routeRules: {
+              "/changelog/rss": {
+                headers: { "content-type": "application/rss+xml; charset=utf-8" },
+              },
+            },
           }),
         ]
       : []),

@@ -46,6 +46,7 @@ import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as ComponentsRouteImport } from './routes/components'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
+import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CardsRouteImport } from './routes/cards'
 import { Route as ButtonsRouteImport } from './routes/buttons'
 import { Route as BreadcrumbsRouteImport } from './routes/breadcrumbs'
@@ -240,6 +241,11 @@ const CheckboxesRoute = CheckboxesRouteImport.update({
   path: '/checkboxes',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ChangelogRoute = ChangelogRouteImport.update({
+  id: '/changelog',
+  path: '/changelog',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const CardsRoute = CardsRouteImport.update({
   id: '/cards',
   path: '/cards',
@@ -290,6 +296,7 @@ export interface FileRoutesByFullPath {
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
+  '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
@@ -337,6 +344,7 @@ export interface FileRoutesByTo {
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
+  '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
@@ -385,6 +393,7 @@ export interface FileRoutesById {
   '/breadcrumbs': typeof BreadcrumbsRoute
   '/buttons': typeof ButtonsRoute
   '/cards': typeof CardsRoute
+  '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
@@ -434,6 +443,7 @@ export interface FileRouteTypes {
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
+    | '/changelog'
     | '/checkboxes'
     | '/components'
     | '/containers'
@@ -481,6 +491,7 @@ export interface FileRouteTypes {
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
+    | '/changelog'
     | '/checkboxes'
     | '/components'
     | '/containers'
@@ -528,6 +539,7 @@ export interface FileRouteTypes {
     | '/breadcrumbs'
     | '/buttons'
     | '/cards'
+    | '/changelog'
     | '/checkboxes'
     | '/components'
     | '/containers'
@@ -576,6 +588,7 @@ export interface RootRouteChildren {
   BreadcrumbsRoute: typeof BreadcrumbsRoute
   ButtonsRoute: typeof ButtonsRoute
   CardsRoute: typeof CardsRoute
+  ChangelogRoute: typeof ChangelogRoute
   CheckboxesRoute: typeof CheckboxesRoute
   ComponentsRoute: typeof ComponentsRoute
   ContainersRoute: typeof ContainersRoute
@@ -876,6 +889,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CheckboxesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/changelog': {
+      id: '/changelog'
+      path: '/changelog'
+      fullPath: '/changelog'
+      preLoaderRoute: typeof ChangelogRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/cards': {
       id: '/cards'
       path: '/cards'
@@ -944,6 +964,7 @@ const rootRouteChildren: RootRouteChildren = {
   BreadcrumbsRoute: BreadcrumbsRoute,
   ButtonsRoute: ButtonsRoute,
   CardsRoute: CardsRoute,
+  ChangelogRoute: ChangelogRoute,
   CheckboxesRoute: CheckboxesRoute,
   ComponentsRoute: ComponentsRoute,
   ContainersRoute: ContainersRoute,
