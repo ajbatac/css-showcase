@@ -2,6 +2,13 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (3)
+
+### Fixed
+
+- **Share card: empty snapshot band on demos with long copy** (reported on /selects and /checkboxes). The 1024px card is a fixed flex column; an uncapped 2-line h1 + 4-line subtitle + 3 chip rows squeezed the snapshot band to 25px, so the device clone scaled to a sliver. Fix: guaranteed band min-height (316px), subtitle truncated at 140 chars with an ellipsis, chips capped at 6, h1 steps down to 54px above 42 chars.
+- **Share card: on-page preview was cropped** — the fit-to-box transform used `scale(calc(100cqw / 1024))`, which is invalid CSS (scale() needs a number, not a length) and silently dropped the transform, clipping the 1024px card inside the 344px preview box. The scale is now computed in JS from a ResizeObserver.
+
 ## Unreleased — October 23, 2026 (2)
 
 ### Added

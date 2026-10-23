@@ -39,6 +39,12 @@ function ShareCard({
   slotRef: React.RefObject<HTMLDivElement | null>;
 }) {
   const urlPath = path === "/" ? "" : path;
+  // Content caps keep the snapshot band at a usable size even when a demo's
+  // copy is long (the card is a fixed 1024x1024 flex column — an uncapped
+  // 4-line subtitle plus 3 chip rows once squeezed the band to 25px).
+  const h1Size = h1.length > 42 ? 54 : 72;
+  const subText = sub.length > 140 ? `${sub.slice(0, 137).trimEnd()}…` : sub;
+  const chips = features.slice(0, 6);
   return (
     <div className="sc-card" role="presentation">
       <header className="sc-brandrow">
@@ -52,8 +58,10 @@ function ShareCard({
         <span className="sc-siteurl">css.techhive.net</span>
       </header>
 
-      <h1 className="sc-h1">{h1}</h1>
-      <p className="sc-sub">{sub}</p>
+      <h1 className="sc-h1" style={{ fontSize: h1Size }}>
+        {h1}
+      </h1>
+      <p className="sc-sub">{subText}</p>
 
       <div className="sc-band">
         <div className="sc-slot" ref={slotRef} />
@@ -61,7 +69,7 @@ function ShareCard({
 
       <p className="sc-featureslabel">CSS features used</p>
       <ul className="sc-chips">
-        {features.slice(0, 8).map((f) => (
+        {chips.map((f) => (
           <li key={f}>{f}</li>
         ))}
       </ul>
@@ -124,26 +132,25 @@ function ShareCard({
           color: ${INK_FAINT};
         }
         .sc-h1 {
-          font-size: 72px;
           line-height: 1.04;
           font-weight: 700;
           letter-spacing: -0.025em;
-          margin: 46px 0 0;
+          margin: 40px 0 0;
           max-width: 20ch;
         }
         .sc-sub {
-          font-size: 26px;
-          line-height: 1.45;
+          font-size: 25px;
+          line-height: 1.42;
           color: ${INK_SOFT};
-          margin: 20px 0 0;
-          max-width: 40ch;
+          margin: 18px 0 0;
+          max-width: 52ch;
         }
         .sc-band {
-          flex: 1;
-          min-height: 0;
+          flex: 1 1 0;
+          min-height: 316px;
           background: ${BAND};
-          margin: 44px -72px 0;
-          padding: 36px;
+          margin: 40px -72px 0;
+          padding: 32px;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -161,7 +168,7 @@ function ShareCard({
           justify-content: center;
         }
         .sc-featureslabel {
-          margin: 40px 0 0;
+          margin: 32px 0 0;
           font-size: 19px;
           font-weight: 600;
           text-transform: uppercase;
@@ -173,21 +180,21 @@ function ShareCard({
           display: flex;
           flex-wrap: wrap;
           gap: 12px;
-          margin: 20px 0 0;
+          margin: 18px 0 0;
           padding: 0;
         }
         .sc-chips li {
           font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-          font-size: 21px;
+          font-size: 20px;
           color: #dfe3e9;
           background: ${CHIP};
           border-radius: 999px;
-          padding: 10px 20px;
+          padding: 9px 19px;
           white-space: nowrap;
         }
         .sc-footer {
           margin-top: auto;
-          padding-top: 36px;
+          padding-top: 30px;
           display: flex;
           align-items: center;
           gap: 14px;
@@ -249,10 +256,24 @@ export function ShareCardSection() {
   const meta = demo ? DEMO_SHARE[demo.slug] : undefined;
 
   const previewSlot = useRef<HTMLDivElement>(null);
+  const previewBox = useRef<HTMLDivElement>(null);
   const captureSlot = useRef<HTMLDivElement>(null);
   const captureCard = useRef<HTMLDivElement>(null);
   const [device, setDevice] = useState("current");
   const [busy, setBusy] = useState<"download" | "copy" | null>(null);
+  const [previewScale, setPreviewScale] = useState(0);
+
+  // Fit-to-box scale for the on-page preview. Computed in JS (a number) —
+  // scale(calc(100cqw / 1024)) is invalid CSS and silently drops the transform.
+  useEffect(() => {
+    const box = previewBox.current;
+    if (!box) return;
+    const update = () => setPreviewScale(box.clientWidth / CARD_SIZE);
+    update();
+    const observer = new ResizeObserver(update);
+    observer.observe(box);
+    return () => observer.disconnect();
+  }, [demo]);
 
   // Keep the preview clone fresh: re-clone whenever the demo frame changes
   // (device switch, pattern switch, in-demo interactions — debounced).
@@ -359,14 +380,22 @@ export function ShareCardSection() {
           </p>
 
           <div className="mt-8 flex flex-col gap-8 sm:flex-row sm:items-start">
-            <div className="sc-preview" aria-hidden="true">
-              <ShareCard
-                h1={meta.h1}
-                sub={meta.sub}
-                features={meta.features}
-                path={demo.path}
-                slotRef={previewSlot}
-              />
+            <div className="sc-preview" aria-hidden="true" ref={previewBox}>
+              <div
+                className="sc-preview-scale"
+                style={{
+                  transform: `scale(${previewScale})`,
+                  opacity: previewScale > 0 ? 1 : 0,
+                }}
+              >
+                <ShareCard
+                  h1={meta.h1}
+                  sub={meta.sub}
+                  features={meta.features}
+                  path={demo.path}
+                  slotRef={previewSlot}
+                />
+              </div>
             </div>
 
             <div className="flex min-w-0 flex-1 flex-col items-start gap-3">
@@ -408,15 +437,15 @@ export function ShareCardSection() {
           .sc-preview {
             width: min(344px, 100%);
             aspect-ratio: 1;
-            container-type: inline-size;
             overflow: hidden;
             border-radius: 18px;
             flex-shrink: 0;
             box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
           }
-          .sc-preview .sc-card {
-            transform: scale(calc(100cqw / ${CARD_SIZE}));
+          .sc-preview-scale {
+            width: ${CARD_SIZE}px;
             transform-origin: 0 0;
+            transition: opacity 0.2s ease;
           }
           .sc-offscreen {
             position: fixed;
