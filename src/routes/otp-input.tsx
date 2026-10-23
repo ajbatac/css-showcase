@@ -200,7 +200,7 @@ function CodeCells({
   ));
 
   if (!clusterSize)
-    return <div className={cellClass.startsWith("otp-big") ? "otp-big" : "otp-row"}>{cells}</div>;
+    return <div className={cellClass.includes("big") ? "otp-big" : "otp-row"}>{cells}</div>;
 
   return (
     <div className="otp-grouped">
@@ -262,7 +262,7 @@ function OtpDemo() {
         <p className="text-xs font-semibold">Verification code</p>
         <CodeCells count={6} cellClass="otp-cell-big" idPrefix="otp-big" />
         <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <Delete className="h-3.5 w-3.5" /> 4rem-tall cells — thumb-friendly.
+          <Delete className="h-3.5 w-3.5" /> roomy cells — thumb-friendly.
         </p>
       </div>
     );
@@ -270,7 +270,7 @@ function OtpDemo() {
 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
+      <div className="mx-auto max-w-3xl px-5 pb-24 pt-16 md:pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo
@@ -344,7 +344,15 @@ function OtpDemo() {
       </div>
 
       <style>{`
-        .otp-row, .otp-big { display: flex; gap: 0.5rem; justify-content: center; }
+        .otp-row { display: flex; gap: 0.5rem; justify-content: center; }
+        .otp-big {
+          display: grid;
+          grid-template-columns: repeat(6, minmax(0, 1fr));
+          gap: 0.4rem;
+          max-inline-size: 22rem;
+          inline-size: 100%;
+          margin-inline: auto;
+        }
         .otp-row input,
         .otp-grouped input,
         .otp-big input {
@@ -375,12 +383,11 @@ function OtpDemo() {
           block-size: 2.4rem;
           background: var(--border);
         }
-        .otp-big { gap: 0.45rem; }
         .otp-big input {
-          inline-size: 2.6rem;
-          block-size: 4rem;
-          font-size: 1.5rem;
-          border-radius: 0.9rem;
+          inline-size: 100%;
+          block-size: 3rem;
+          font-size: 1.25rem;
+          border-radius: 0.7rem;
         }
         .otp-row input:focus-visible,
         .otp-grouped input:focus-visible,

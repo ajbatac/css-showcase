@@ -430,7 +430,7 @@ function NumbersDemo() {
 
   return (
     <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
-      <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
+      <div className="mx-auto max-w-3xl px-5 pb-24 pt-16 md:pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
             CSS Showcase · Live Demo

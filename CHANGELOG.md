@@ -2,6 +2,13 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (5)
+
+### Fixed
+
+- **Mobile pages: floating action cluster overlapped the page header.** The cluster grew to five buttons (sidebar + search added in v0.3) and sat on top of the eyebrow/h1 text on phones. All 48 pages now use `pt-16 md:pt-10` so content starts below the cluster; desktop is unchanged.
+- **OTP demo (mobile device): only 4 of 6 code cells fit** in the 220px frame — fixed-width cells overflowed. The big-cells layout is now a fluid 6-column grid, and the wrapper-class detection bug (`startsWith("otp-big")` vs the actual `otp-cell-big` class) that prevented the grid from applying is fixed.
+
 ## Unreleased — October 23, 2026 (4)
 
 ### Added
