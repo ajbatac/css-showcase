@@ -236,7 +236,7 @@ function DeviceFrame({ device, pattern }: { device: Device; pattern: Pattern }) 
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
-    mobile: { aspectRatio: "9 / 19.5", maxWidth: "220px", borderRadius: "2rem" },
+    mobile: { aspectRatio: "9 / 19.5", maxWidth: "260px", borderRadius: "2rem" },
   };
 
   return (

@@ -147,7 +147,7 @@ function DeviceFrame({ device }: { device: Device }) {
     },
     mobile: {
       aspectRatio: "9 / 19.5",
-      maxWidth: "220px",
+      maxWidth: "260px",
       borderRadius: "2rem",
     },
   };

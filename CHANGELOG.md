@@ -2,6 +2,12 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (6)
+
+### Changed
+
+- **Mobile device frame widened 220px → 260px across all 45 demos.** The 220px frame cramped dense content (six OTP cells were 22px wide with 20px digits); at 9:19.5 the extra width makes the frame taller too. Still responsive — `w-full` shrinks it below 260px on narrow viewports (verified at 320px). OTP big-cells proportionally restored to 3.5rem tall with 1.5rem digits.
+
 ## Unreleased — October 23, 2026 (5)
 
 ### Fixed

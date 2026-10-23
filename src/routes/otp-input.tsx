@@ -262,7 +262,7 @@ function OtpDemo() {
         <p className="text-xs font-semibold">Verification code</p>
         <CodeCells count={6} cellClass="otp-cell-big" idPrefix="otp-big" />
         <p className="flex items-center gap-1.5 text-[11px] text-muted-foreground">
-          <Delete className="h-3.5 w-3.5" /> roomy cells — thumb-friendly.
+          <Delete className="h-3.5 w-3.5" /> taller cells, bigger digits — thumb-friendly.
         </p>
       </div>
     );
@@ -385,9 +385,9 @@ function OtpDemo() {
         }
         .otp-big input {
           inline-size: 100%;
-          block-size: 3rem;
-          font-size: 1.25rem;
-          border-radius: 0.7rem;
+          block-size: 3.5rem;
+          font-size: 1.5rem;
+          border-radius: 0.8rem;
         }
         .otp-row input:focus-visible,
         .otp-grouped input:focus-visible,
@@ -423,7 +423,7 @@ function DeviceFrame({ device, children }: { device: Device; children: React.Rea
   const style: Record<Device, React.CSSProperties> = {
     desktop: { aspectRatio: "16 / 10", maxWidth: "100%", borderRadius: "0.75rem" },
     ipad: { aspectRatio: "4 / 3", maxWidth: "88%", borderRadius: "1.5rem" },
-    mobile: { aspectRatio: "9 / 19.5", maxWidth: "220px", borderRadius: "2rem" },
+    mobile: { aspectRatio: "9 / 19.5", maxWidth: "260px", borderRadius: "2rem" },
   };
 
   return (
