@@ -5,8 +5,15 @@
     <link>https://css.techhive.net/changelog</link>
     <description>What's new in CSS Showcase. New features, fixes, and improvements, release by release.</description>
     <language>en</language>
-    <lastBuildDate>Sun, 13 Sep 2026 00:00:00 GMT</lastBuildDate>
+    <lastBuildDate>Thu, 23 Oct 2026 00:00:00 GMT</lastBuildDate>
     <atom:link href="https://css.techhive.net/changelog/rss" rel="self" type="application/rss+xml" />
+    <item>
+      <title>v0.3</title>
+      <link>https://css.techhive.net/changelog</link>
+      <guid isPermaLink="false">css-showcase-v0.3</guid>
+      <pubDate>Thu, 23 Oct 2026 00:00:00 GMT</pubDate>
+      <description><![CDATA[<p><strong>October 23, 2026</strong></p><h3>New</h3><ul><li>A warmer color identity: the whole site now wears the Manila Sunrise palette — ivory light mode, deep olive-black dark mode, and terracotta accents throughout.</li><li>Eight new form demos: number steppers, color pickers, autocomplete comboboxes, fieldsets, meters, live output fields, time pickers, and one-time-code inputs — the native HTML controls, styled properly.</li><li>A shareable image for every demo: download or copy a 1:1 snapshot with the live preview, title, and CSS features for social posts and docs.</li><li>Search everything with a ⌘K command palette, and demo links that remember the exact device and pattern you picked.</li></ul><h3>Fixed</h3><ul><li>Mobile visitors can now open the navigation menu — the menu button used to be missing on small screens.</li><li>Dark mode now applies before the first paint (no more light flash) and follows your system setting until you pick a theme.</li><li>Copy buttons confirm with a toast instead of failing quietly.</li><li>Every demo switcher is fully keyboard-operable with arrow keys.</li><li>On phones, the floating button cluster no longer covers page headers, and dense demo content like verification codes and time fields now fits inside the phone frame.</li><li>The site now sends standard security headers on every page.</li></ul><h3>Improved</h3><ul><li>The library grows to 44 demos.</li><li>A large internal cleanup removed around two thousand lines of duplicated code.</li><li>Developer documentation was refreshed so contributors can get started faster.</li></ul>]]></description>
+    </item>
     <item>
       <title>v0.2</title>
       <link>https://css.techhive.net/changelog</link>

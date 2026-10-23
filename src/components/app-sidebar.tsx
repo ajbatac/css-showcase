@@ -125,7 +125,7 @@ export function AppSidebar() {
             to="/changelog"
             className="font-semibold text-foreground/80 underline-offset-4 transition-colors hover:text-foreground hover:underline"
           >
-            v0.2
+            v0.3
           </Link>{" "}
           · mobile-first
         </div>

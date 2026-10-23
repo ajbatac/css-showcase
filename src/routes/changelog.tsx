@@ -23,11 +23,29 @@ export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
 });
 
-const NEW_ITEMS = [
+const V3_NEW_ITEMS = [
   "A warmer color identity: the whole site now wears the Manila Sunrise palette — ivory light mode, deep olive-black dark mode, and terracotta accents throughout.",
   "Eight new form demos: number steppers, color pickers, autocomplete comboboxes, fieldsets, meters, live output fields, time pickers, and one-time-code inputs — the native HTML controls, styled properly.",
   "A shareable image for every demo: download or copy a 1:1 snapshot with the live preview, title, and CSS features for social posts and docs.",
   "Search everything with a ⌘K command palette, and demo links that remember the exact device and pattern you picked.",
+];
+
+const V3_FIXED_ITEMS = [
+  "Mobile visitors can now open the navigation menu — the menu button used to be missing on small screens.",
+  "Dark mode now applies before the first paint (no more light flash) and follows your system setting until you pick a theme.",
+  "Copy buttons confirm with a toast instead of failing quietly.",
+  "Every demo switcher is fully keyboard-operable with arrow keys.",
+  "On phones, the floating button cluster no longer covers page headers, and dense demo content like verification codes and time fields now fits inside the phone frame.",
+  "The site now sends standard security headers on every page.",
+];
+
+const V3_IMPROVED_ITEMS = [
+  "The library grows to 44 demos.",
+  "A large internal cleanup removed around two thousand lines of duplicated code.",
+  "Developer documentation was refreshed so contributors can get started faster.",
+];
+
+const NEW_ITEMS = [
   "A new name and look: the site is now CSS Showcase, with our own logo, matching icons, and rich previews when a page is shared.",
   'A "Send to LLM" button that copies ready-made instructions, so an AI assistant can rebuild any demo inside your own project.',
   "A playful not-found page built from pure CSS, complete with a spinning zero, floating CSS properties, and a free lesson in centering things.",
@@ -50,24 +68,34 @@ const IMPROVED_ITEMS = [
   "One-command deployment on Cloudflare Pages.",
 ];
 
-const SECTIONS = [
+type SectionLabel = "New" | "Fixed" | "Improved";
+
+const SECTION_ICONS: Record<SectionLabel, { icon: typeof PlusCircle; className: string }> = {
+  New: { icon: PlusCircle, className: "text-primary" },
+  Fixed: { icon: Wrench, className: "text-emerald-600 dark:text-emerald-400" },
+  Improved: { icon: Zap, className: "text-amber-600 dark:text-amber-400" },
+};
+
+const RELEASES = [
   {
-    label: "New",
-    icon: PlusCircle,
-    className: "text-primary",
-    items: NEW_ITEMS,
+    version: "v0.3",
+    date: "October 23, 2026",
+    dateTime: "2026-10-23",
+    sections: [
+      { label: "New" as SectionLabel, items: V3_NEW_ITEMS },
+      { label: "Fixed" as SectionLabel, items: V3_FIXED_ITEMS },
+      { label: "Improved" as SectionLabel, items: V3_IMPROVED_ITEMS },
+    ],
   },
   {
-    label: "Fixed",
-    icon: Wrench,
-    className: "text-emerald-600 dark:text-emerald-400",
-    items: FIXED_ITEMS,
-  },
-  {
-    label: "Improved",
-    icon: Zap,
-    className: "text-amber-600 dark:text-amber-400",
-    items: IMPROVED_ITEMS,
+    version: "v0.2",
+    date: "September 13, 2026",
+    dateTime: "2026-09-13",
+    sections: [
+      { label: "New" as SectionLabel, items: NEW_ITEMS },
+      { label: "Fixed" as SectionLabel, items: FIXED_ITEMS },
+      { label: "Improved" as SectionLabel, items: IMPROVED_ITEMS },
+    ],
   },
 ];
 
@@ -92,41 +120,49 @@ function ChangelogPage() {
         </header>
 
         <div className="max-w-2xl space-y-6">
-          <article className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8">
-            <div className="flex flex-wrap items-center gap-3">
-              <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
-                v0.2
-              </span>
-              <time className="text-xs text-muted-foreground" dateTime="2026-09-13">
-                September 13, 2026
-              </time>
-            </div>
+          {RELEASES.map((release) => (
+            <article
+              key={release.version}
+              className="rounded-2xl border bg-card p-6 shadow-sm sm:p-8"
+            >
+              <div className="flex flex-wrap items-center gap-3">
+                <span className="rounded-full bg-primary px-3 py-1 text-xs font-bold text-primary-foreground">
+                  {release.version}
+                </span>
+                <time className="text-xs text-muted-foreground" dateTime={release.dateTime}>
+                  {release.date}
+                </time>
+              </div>
 
-            <div className="mt-6 space-y-8">
-              {SECTIONS.map((section) => (
-                <section key={section.label}>
-                  <h2 className="flex items-center gap-2 text-base font-semibold">
-                    <section.icon className={`h-4 w-4 ${section.className}`} aria-hidden="true" />
-                    {section.label}
-                  </h2>
-                  <ul className="mt-3 space-y-2.5">
-                    {section.items.map((item) => (
-                      <li
-                        key={item}
-                        className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
-                      >
-                        <span
-                          className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/60"
-                          aria-hidden="true"
-                        />
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                </section>
-              ))}
-            </div>
-          </article>
+              <div className="mt-6 space-y-8">
+                {release.sections.map((section) => {
+                  const { icon: Icon, className } = SECTION_ICONS[section.label];
+                  return (
+                    <section key={section.label}>
+                      <h2 className="flex items-center gap-2 text-base font-semibold">
+                        <Icon className={`h-4 w-4 ${className}`} aria-hidden="true" />
+                        {section.label}
+                      </h2>
+                      <ul className="mt-3 space-y-2.5">
+                        {section.items.map((item) => (
+                          <li
+                            key={item}
+                            className="flex gap-2.5 text-sm leading-relaxed text-muted-foreground"
+                          >
+                            <span
+                              className="mt-2 h-1 w-1 shrink-0 rounded-full bg-muted-foreground/60"
+                              aria-hidden="true"
+                            />
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  );
+                })}
+              </div>
+            </article>
+          ))}
         </div>
 
         <div className="mt-8">
