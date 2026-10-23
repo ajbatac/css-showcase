@@ -2,6 +2,21 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (4)
+
+### Added
+
+- **Eight new form demos** (36 → 44), all in the Forms category, closing the gaps found in the form-element audit:
+  - `/numbers` — Number Inputs & Steppers: stepper rows, currency/unit affixes, restyled native spin buttons, touch steppers, cart quantity rows (`appearance: textfield`, `::-webkit-inner-spin-button`).
+  - `/color-pickers` — Color Pickers: swatch grid with `aria-pressed`, native `input[type=color]` reskinned via `::-webkit-color-swatch(-wrapper)` + `::-moz-color-swatch`, live hex readout, checkerboard preview card.
+  - `/combobox` — Combobox & Autocomplete: native `datalist` (with the "popup is UA-drawn" teaching note) and a custom filtered listbox with `role=listbox/option`, `aria-expanded/controls`, `<mark>` match highlighting.
+  - `/fieldsets` — Fieldsets & Legends: classic floating legend, radio group fieldset (legend as accessible name) with `:has(input:checked)` cards, `fieldset:disabled` one-attribute group disabling, stacked mobile sections.
+  - `/meters` — Meters & Gauges: native `<meter>` with low/high/optimum range coloring, `::-webkit-meter-*` score gauge + `::-moz-meter-bar`, segmented data-attribute gauge, storage rows.
+  - `/outputs` — Output & Live Results: `<output for=…>` with live invoice totals, km→mi converter, slider readout, tip calculator; `key`-retriggered pop animation + `aria-live`.
+  - `/time-pickers` — Time Pickers: restyled `input[type=time]` with `::-webkit-calendar-picker-indicator` (dark-mode `filter: invert`), `step=900` minute snapping, midnight-safe duration readout, from/to touch row.
+  - `/otp-input` — OTP & Verification Codes: hand-rolled six-cell code input (auto-advance, backspace navigation, arrow keys, paste distribution, `autocomplete="one-time-code"`, `inputMode=numeric`, `data-filled` cells, reduced-motion-gated pop) — no dependency.
+- Registry (`demos.ts`: DEMOS + DEMO_DESCRIPTIONS + 8 lucide icons), share metadata (`demo-share.ts`), sitemap.xml (+8 URLs), llms.txt and README counts (44).
+
 ## Unreleased — October 23, 2026 (3)
 
 ### Fixed

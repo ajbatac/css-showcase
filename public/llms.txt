@@ -1,6 +1,6 @@
 # CSS Showcase
 
-> Live CSS demos with the code for each example. 36 demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Mobile-first with light and dark themes.
+> Live CSS demos with the code for each example. 44 demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Mobile-first with light and dark themes.
 
 Official URL: https://css.techhive.net/
 

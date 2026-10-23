@@ -24,6 +24,9 @@ export const Route = createFileRoute("/changelog")({
 });
 
 const NEW_ITEMS = [
+  "Eight new form demos: number steppers, color pickers, autocomplete comboboxes, fieldsets, meters, live output fields, time pickers, and one-time-code inputs — the native HTML controls, styled properly.",
+  "A shareable image for every demo: download or copy a 1:1 snapshot with the live preview, title, and CSS features for social posts and docs.",
+  "Search everything with a ⌘K command palette, and demo links that remember the exact device and pattern you picked.",
   "A new name and look: the site is now CSS Showcase, with our own logo, matching icons, and rich previews when a page is shared.",
   'A "Send to LLM" button that copies ready-made instructions, so an AI assistant can rebuild any demo inside your own project.',
   "A playful not-found page built from pure CSS, complete with a spinning zero, floating CSS properties, and a free lesson in centering things.",

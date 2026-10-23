@@ -13,6 +13,7 @@ import { Route as UploadersRouteImport } from './routes/uploaders'
 import { Route as UgcDisclaimerRouteImport } from './routes/ugc-disclaimer'
 import { Route as TooltipsRouteImport } from './routes/tooltips'
 import { Route as ToastsRouteImport } from './routes/toasts'
+import { Route as TimePickersRouteImport } from './routes/time-pickers'
 import { Route as TextareasRouteImport } from './routes/textareas'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TabsRouteImport } from './routes/tabs'
@@ -25,8 +26,12 @@ import { Route as RadiosRouteImport } from './routes/radios'
 import { Route as ProgressRouteImport } from './routes/progress'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PaginationRouteImport } from './routes/pagination'
+import { Route as OutputsRouteImport } from './routes/outputs'
+import { Route as OtpInputRouteImport } from './routes/otp-input'
+import { Route as NumbersRouteImport } from './routes/numbers'
 import { Route as NavigationRouteImport } from './routes/navigation'
 import { Route as ModalsRouteImport } from './routes/modals'
+import { Route as MetersRouteImport } from './routes/meters'
 import { Route as LoginScreensRouteImport } from './routes/login-screens'
 import { Route as LoadersRouteImport } from './routes/loaders'
 import { Route as ListsRouteImport } from './routes/lists'
@@ -34,6 +39,7 @@ import { Route as InputsRouteImport } from './routes/inputs'
 import { Route as GridRouteImport } from './routes/grid'
 import { Route as FormValidationRouteImport } from './routes/form-validation'
 import { Route as FlexRouteImport } from './routes/flex'
+import { Route as FieldsetsRouteImport } from './routes/fieldsets'
 import { Route as EmptyStatesRouteImport } from './routes/empty-states'
 import { Route as DropdownsRouteImport } from './routes/dropdowns'
 import { Route as DrawersRouteImport } from './routes/drawers'
@@ -45,6 +51,8 @@ import { Route as DatepickerRouteImport } from './routes/datepicker'
 import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as ContainersRouteImport } from './routes/containers'
 import { Route as ComponentsRouteImport } from './routes/components'
+import { Route as ComboboxRouteImport } from './routes/combobox'
+import { Route as ColorPickersRouteImport } from './routes/color-pickers'
 import { Route as CheckboxesRouteImport } from './routes/checkboxes'
 import { Route as ChangelogRouteImport } from './routes/changelog'
 import { Route as CardsRouteImport } from './routes/cards'
@@ -74,6 +82,11 @@ const TooltipsRoute = TooltipsRouteImport.update({
 const ToastsRoute = ToastsRouteImport.update({
   id: '/toasts',
   path: '/toasts',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TimePickersRoute = TimePickersRouteImport.update({
+  id: '/time-pickers',
+  path: '/time-pickers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TextareasRoute = TextareasRouteImport.update({
@@ -136,6 +149,21 @@ const PaginationRoute = PaginationRouteImport.update({
   path: '/pagination',
   getParentRoute: () => rootRouteImport,
 } as any)
+const OutputsRoute = OutputsRouteImport.update({
+  id: '/outputs',
+  path: '/outputs',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const OtpInputRoute = OtpInputRouteImport.update({
+  id: '/otp-input',
+  path: '/otp-input',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const NumbersRoute = NumbersRouteImport.update({
+  id: '/numbers',
+  path: '/numbers',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const NavigationRoute = NavigationRouteImport.update({
   id: '/navigation',
   path: '/navigation',
@@ -144,6 +172,11 @@ const NavigationRoute = NavigationRouteImport.update({
 const ModalsRoute = ModalsRouteImport.update({
   id: '/modals',
   path: '/modals',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MetersRoute = MetersRouteImport.update({
+  id: '/meters',
+  path: '/meters',
   getParentRoute: () => rootRouteImport,
 } as any)
 const LoginScreensRoute = LoginScreensRouteImport.update({
@@ -179,6 +212,11 @@ const FormValidationRoute = FormValidationRouteImport.update({
 const FlexRoute = FlexRouteImport.update({
   id: '/flex',
   path: '/flex',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const FieldsetsRoute = FieldsetsRouteImport.update({
+  id: '/fieldsets',
+  path: '/fieldsets',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmptyStatesRoute = EmptyStatesRouteImport.update({
@@ -234,6 +272,16 @@ const ContainersRoute = ContainersRouteImport.update({
 const ComponentsRoute = ComponentsRouteImport.update({
   id: '/components',
   path: '/components',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ComboboxRoute = ComboboxRouteImport.update({
+  id: '/combobox',
+  path: '/combobox',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ColorPickersRoute = ColorPickersRouteImport.update({
+  id: '/color-pickers',
+  path: '/color-pickers',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CheckboxesRoute = CheckboxesRouteImport.update({
@@ -298,6 +346,8 @@ export interface FileRoutesByFullPath {
   '/cards': typeof CardsRoute
   '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/color-pickers': typeof ColorPickersRoute
+  '/combobox': typeof ComboboxRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/cookies': typeof CookiesRoute
@@ -309,6 +359,7 @@ export interface FileRoutesByFullPath {
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
+  '/fieldsets': typeof FieldsetsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -316,8 +367,12 @@ export interface FileRoutesByFullPath {
   '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
+  '/meters': typeof MetersRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/numbers': typeof NumbersRoute
+  '/otp-input': typeof OtpInputRoute
+  '/outputs': typeof OutputsRoute
   '/pagination': typeof PaginationRoute
   '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
@@ -330,6 +385,7 @@ export interface FileRoutesByFullPath {
   '/tabs': typeof TabsRoute
   '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
+  '/time-pickers': typeof TimePickersRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
   '/ugc-disclaimer': typeof UgcDisclaimerRoute
@@ -346,6 +402,8 @@ export interface FileRoutesByTo {
   '/cards': typeof CardsRoute
   '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/color-pickers': typeof ColorPickersRoute
+  '/combobox': typeof ComboboxRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/cookies': typeof CookiesRoute
@@ -357,6 +415,7 @@ export interface FileRoutesByTo {
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
+  '/fieldsets': typeof FieldsetsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -364,8 +423,12 @@ export interface FileRoutesByTo {
   '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
+  '/meters': typeof MetersRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/numbers': typeof NumbersRoute
+  '/otp-input': typeof OtpInputRoute
+  '/outputs': typeof OutputsRoute
   '/pagination': typeof PaginationRoute
   '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
@@ -378,6 +441,7 @@ export interface FileRoutesByTo {
   '/tabs': typeof TabsRoute
   '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
+  '/time-pickers': typeof TimePickersRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
   '/ugc-disclaimer': typeof UgcDisclaimerRoute
@@ -395,6 +459,8 @@ export interface FileRoutesById {
   '/cards': typeof CardsRoute
   '/changelog': typeof ChangelogRoute
   '/checkboxes': typeof CheckboxesRoute
+  '/color-pickers': typeof ColorPickersRoute
+  '/combobox': typeof ComboboxRoute
   '/components': typeof ComponentsRoute
   '/containers': typeof ContainersRoute
   '/cookies': typeof CookiesRoute
@@ -406,6 +472,7 @@ export interface FileRoutesById {
   '/drawers': typeof DrawersRoute
   '/dropdowns': typeof DropdownsRoute
   '/empty-states': typeof EmptyStatesRoute
+  '/fieldsets': typeof FieldsetsRoute
   '/flex': typeof FlexRoute
   '/form-validation': typeof FormValidationRoute
   '/grid': typeof GridRoute
@@ -413,8 +480,12 @@ export interface FileRoutesById {
   '/lists': typeof ListsRoute
   '/loaders': typeof LoadersRoute
   '/login-screens': typeof LoginScreensRoute
+  '/meters': typeof MetersRoute
   '/modals': typeof ModalsRoute
   '/navigation': typeof NavigationRoute
+  '/numbers': typeof NumbersRoute
+  '/otp-input': typeof OtpInputRoute
+  '/outputs': typeof OutputsRoute
   '/pagination': typeof PaginationRoute
   '/privacy': typeof PrivacyRoute
   '/progress': typeof ProgressRoute
@@ -427,6 +498,7 @@ export interface FileRoutesById {
   '/tabs': typeof TabsRoute
   '/terms': typeof TermsRoute
   '/textareas': typeof TextareasRoute
+  '/time-pickers': typeof TimePickersRoute
   '/toasts': typeof ToastsRoute
   '/tooltips': typeof TooltipsRoute
   '/ugc-disclaimer': typeof UgcDisclaimerRoute
@@ -445,6 +517,8 @@ export interface FileRouteTypes {
     | '/cards'
     | '/changelog'
     | '/checkboxes'
+    | '/color-pickers'
+    | '/combobox'
     | '/components'
     | '/containers'
     | '/cookies'
@@ -456,6 +530,7 @@ export interface FileRouteTypes {
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
+    | '/fieldsets'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -463,8 +538,12 @@ export interface FileRouteTypes {
     | '/lists'
     | '/loaders'
     | '/login-screens'
+    | '/meters'
     | '/modals'
     | '/navigation'
+    | '/numbers'
+    | '/otp-input'
+    | '/outputs'
     | '/pagination'
     | '/privacy'
     | '/progress'
@@ -477,6 +556,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/terms'
     | '/textareas'
+    | '/time-pickers'
     | '/toasts'
     | '/tooltips'
     | '/ugc-disclaimer'
@@ -493,6 +573,8 @@ export interface FileRouteTypes {
     | '/cards'
     | '/changelog'
     | '/checkboxes'
+    | '/color-pickers'
+    | '/combobox'
     | '/components'
     | '/containers'
     | '/cookies'
@@ -504,6 +586,7 @@ export interface FileRouteTypes {
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
+    | '/fieldsets'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -511,8 +594,12 @@ export interface FileRouteTypes {
     | '/lists'
     | '/loaders'
     | '/login-screens'
+    | '/meters'
     | '/modals'
     | '/navigation'
+    | '/numbers'
+    | '/otp-input'
+    | '/outputs'
     | '/pagination'
     | '/privacy'
     | '/progress'
@@ -525,6 +612,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/terms'
     | '/textareas'
+    | '/time-pickers'
     | '/toasts'
     | '/tooltips'
     | '/ugc-disclaimer'
@@ -541,6 +629,8 @@ export interface FileRouteTypes {
     | '/cards'
     | '/changelog'
     | '/checkboxes'
+    | '/color-pickers'
+    | '/combobox'
     | '/components'
     | '/containers'
     | '/cookies'
@@ -552,6 +642,7 @@ export interface FileRouteTypes {
     | '/drawers'
     | '/dropdowns'
     | '/empty-states'
+    | '/fieldsets'
     | '/flex'
     | '/form-validation'
     | '/grid'
@@ -559,8 +650,12 @@ export interface FileRouteTypes {
     | '/lists'
     | '/loaders'
     | '/login-screens'
+    | '/meters'
     | '/modals'
     | '/navigation'
+    | '/numbers'
+    | '/otp-input'
+    | '/outputs'
     | '/pagination'
     | '/privacy'
     | '/progress'
@@ -573,6 +668,7 @@ export interface FileRouteTypes {
     | '/tabs'
     | '/terms'
     | '/textareas'
+    | '/time-pickers'
     | '/toasts'
     | '/tooltips'
     | '/ugc-disclaimer'
@@ -590,6 +686,8 @@ export interface RootRouteChildren {
   CardsRoute: typeof CardsRoute
   ChangelogRoute: typeof ChangelogRoute
   CheckboxesRoute: typeof CheckboxesRoute
+  ColorPickersRoute: typeof ColorPickersRoute
+  ComboboxRoute: typeof ComboboxRoute
   ComponentsRoute: typeof ComponentsRoute
   ContainersRoute: typeof ContainersRoute
   CookiesRoute: typeof CookiesRoute
@@ -601,6 +699,7 @@ export interface RootRouteChildren {
   DrawersRoute: typeof DrawersRoute
   DropdownsRoute: typeof DropdownsRoute
   EmptyStatesRoute: typeof EmptyStatesRoute
+  FieldsetsRoute: typeof FieldsetsRoute
   FlexRoute: typeof FlexRoute
   FormValidationRoute: typeof FormValidationRoute
   GridRoute: typeof GridRoute
@@ -608,8 +707,12 @@ export interface RootRouteChildren {
   ListsRoute: typeof ListsRoute
   LoadersRoute: typeof LoadersRoute
   LoginScreensRoute: typeof LoginScreensRoute
+  MetersRoute: typeof MetersRoute
   ModalsRoute: typeof ModalsRoute
   NavigationRoute: typeof NavigationRoute
+  NumbersRoute: typeof NumbersRoute
+  OtpInputRoute: typeof OtpInputRoute
+  OutputsRoute: typeof OutputsRoute
   PaginationRoute: typeof PaginationRoute
   PrivacyRoute: typeof PrivacyRoute
   ProgressRoute: typeof ProgressRoute
@@ -622,6 +725,7 @@ export interface RootRouteChildren {
   TabsRoute: typeof TabsRoute
   TermsRoute: typeof TermsRoute
   TextareasRoute: typeof TextareasRoute
+  TimePickersRoute: typeof TimePickersRoute
   ToastsRoute: typeof ToastsRoute
   TooltipsRoute: typeof TooltipsRoute
   UgcDisclaimerRoute: typeof UgcDisclaimerRoute
@@ -656,6 +760,13 @@ declare module '@tanstack/react-router' {
       path: '/toasts'
       fullPath: '/toasts'
       preLoaderRoute: typeof ToastsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/time-pickers': {
+      id: '/time-pickers'
+      path: '/time-pickers'
+      fullPath: '/time-pickers'
+      preLoaderRoute: typeof TimePickersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/textareas': {
@@ -742,6 +853,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PaginationRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/outputs': {
+      id: '/outputs'
+      path: '/outputs'
+      fullPath: '/outputs'
+      preLoaderRoute: typeof OutputsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/otp-input': {
+      id: '/otp-input'
+      path: '/otp-input'
+      fullPath: '/otp-input'
+      preLoaderRoute: typeof OtpInputRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/numbers': {
+      id: '/numbers'
+      path: '/numbers'
+      fullPath: '/numbers'
+      preLoaderRoute: typeof NumbersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/navigation': {
       id: '/navigation'
       path: '/navigation'
@@ -754,6 +886,13 @@ declare module '@tanstack/react-router' {
       path: '/modals'
       fullPath: '/modals'
       preLoaderRoute: typeof ModalsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/meters': {
+      id: '/meters'
+      path: '/meters'
+      fullPath: '/meters'
+      preLoaderRoute: typeof MetersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/login-screens': {
@@ -803,6 +942,13 @@ declare module '@tanstack/react-router' {
       path: '/flex'
       fullPath: '/flex'
       preLoaderRoute: typeof FlexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/fieldsets': {
+      id: '/fieldsets'
+      path: '/fieldsets'
+      fullPath: '/fieldsets'
+      preLoaderRoute: typeof FieldsetsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/empty-states': {
@@ -880,6 +1026,20 @@ declare module '@tanstack/react-router' {
       path: '/components'
       fullPath: '/components'
       preLoaderRoute: typeof ComponentsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/combobox': {
+      id: '/combobox'
+      path: '/combobox'
+      fullPath: '/combobox'
+      preLoaderRoute: typeof ComboboxRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/color-pickers': {
+      id: '/color-pickers'
+      path: '/color-pickers'
+      fullPath: '/color-pickers'
+      preLoaderRoute: typeof ColorPickersRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/checkboxes': {
@@ -966,6 +1126,8 @@ const rootRouteChildren: RootRouteChildren = {
   CardsRoute: CardsRoute,
   ChangelogRoute: ChangelogRoute,
   CheckboxesRoute: CheckboxesRoute,
+  ColorPickersRoute: ColorPickersRoute,
+  ComboboxRoute: ComboboxRoute,
   ComponentsRoute: ComponentsRoute,
   ContainersRoute: ContainersRoute,
   CookiesRoute: CookiesRoute,
@@ -977,6 +1139,7 @@ const rootRouteChildren: RootRouteChildren = {
   DrawersRoute: DrawersRoute,
   DropdownsRoute: DropdownsRoute,
   EmptyStatesRoute: EmptyStatesRoute,
+  FieldsetsRoute: FieldsetsRoute,
   FlexRoute: FlexRoute,
   FormValidationRoute: FormValidationRoute,
   GridRoute: GridRoute,
@@ -984,8 +1147,12 @@ const rootRouteChildren: RootRouteChildren = {
   ListsRoute: ListsRoute,
   LoadersRoute: LoadersRoute,
   LoginScreensRoute: LoginScreensRoute,
+  MetersRoute: MetersRoute,
   ModalsRoute: ModalsRoute,
   NavigationRoute: NavigationRoute,
+  NumbersRoute: NumbersRoute,
+  OtpInputRoute: OtpInputRoute,
+  OutputsRoute: OutputsRoute,
   PaginationRoute: PaginationRoute,
   PrivacyRoute: PrivacyRoute,
   ProgressRoute: ProgressRoute,
@@ -998,6 +1165,7 @@ const rootRouteChildren: RootRouteChildren = {
   TabsRoute: TabsRoute,
   TermsRoute: TermsRoute,
   TextareasRoute: TextareasRoute,
+  TimePickersRoute: TimePickersRoute,
   ToastsRoute: ToastsRoute,
   TooltipsRoute: TooltipsRoute,
   UgcDisclaimerRoute: UgcDisclaimerRoute,
