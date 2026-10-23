@@ -1,5 +1,9 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useDemoUrlSync } from "@/lib/demo-state";
 import { useState } from "react";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/flex")({
   head: () => ({
@@ -35,12 +39,6 @@ type Justify =
 type Align = "stretch" | "flex-start" | "center" | "flex-end";
 type Wrap = "nowrap" | "wrap";
 
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
-
 const DIRECTIONS: Direction[] = ["row", "row-reverse", "column", "column-reverse"];
 const JUSTIFIES: Justify[] = [
   "flex-start",
@@ -62,6 +60,7 @@ const ITEMS = [
 
 function FlexDemo() {
   const [device, setDevice] = useState<Device>("mobile");
+  useDemoUrlSync(device);
   const [direction, setDirection] = useState<Direction>("row");
   const [justify, setJustify] = useState<Justify>("flex-start");
   const [align, setAlign] = useState<Align>("stretch");
@@ -85,7 +84,7 @@ function FlexDemo() {
 }`;
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -131,37 +130,7 @@ function FlexDemo() {
           </div>
 
           {/* Device toggles */}
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           {/* Property controls */}
           <div className="space-y-4 border-t p-4">
@@ -233,12 +202,7 @@ function FlexDemo() {
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
               <span className="text-xs font-semibold text-muted-foreground">styles.css</span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(cssCode)}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => cssCode} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{cssCode}</code>

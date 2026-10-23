@@ -29,9 +29,9 @@ CSS Showcase is a free, open-source library of live CSS demos. Every page pairs 
 
 ## Highlights
 
-- **37 demos** across layout, forms, navigation, feedback, overlays, data display, and utilities
+- **36 demos** across layout, forms, navigation, feedback, overlays, data display, and utilities
 - **The device switcher**: a skeleton app that reshapes itself between desktop, iPad, and mobile using pure CSS
-- **Send to LLM**: one click copies instructions so your AI assistant can rebuild any demo in your project
+- **Search everything with ⌘K**, or **Send to LLM**: one click copies instructions so your AI assistant can rebuild any demo in your project
 - **Mobile-first**, with light and dark themes
 - **Open source**: clone it, run it, adapt it, contribute to it
 

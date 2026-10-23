@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState, type KeyboardEvent } from "react";
 import { Activity, BarChart3, Lock, Settings2, ShieldAlert, Users } from "lucide-react";
 import { CopyLinkButton } from "@/lib/demo-permalink";
-import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
+import { seedPatterns, useDemoSearch, useDemoUrlSync } from "@/lib/demo-state";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/tabs")({
   head: () => ({
@@ -29,12 +32,6 @@ export const Route = createFileRoute("/tabs")({
 type Device = "desktop" | "ipad" | "mobile";
 type Pattern = "underline" | "pills" | "rail" | "scroll" | "bottombar";
 
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
-
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
     { id: "underline", label: "Underline bar", desc: "Equal-width tabs, animated underline" },
@@ -59,7 +56,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   display: flex;
   gap: 0.25rem;
   overflow-x: auto;
-  border-bottom: 1px solid hsl(var(--border));
+  border-bottom: 1px solid var(--border);
 }
 .tablist[data-pattern="underline"] .tab {
   min-width: 0;
@@ -67,8 +64,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   border-bottom: 2px solid transparent;
 }
 .tablist[data-pattern="underline"] .tab[aria-selected="true"] {
-  border-color: hsl(var(--primary));
-  color: hsl(var(--primary));
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 @container (min-width: 420px) {
@@ -81,7 +78,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   padding: 0.25rem;
   margin: 0.5rem;
   border-radius: 999px;
-  background: hsl(var(--muted));
+  background: var(--muted);
   overflow-x: auto;
 }
 .tablist[data-pattern="pills"] .tab {
@@ -90,8 +87,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   max-width: 10rem;
 }
 .tablist[data-pattern="pills"] .tab[aria-selected="true"] {
-  background: hsl(var(--card));
-  color: hsl(var(--primary));
+  background: var(--card);
+  color: var(--primary);
   box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
 }
 
@@ -109,7 +106,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   flex-direction: column;
   gap: 0.125rem;
   overflow-y: auto;
-  border-right: 1px solid hsl(var(--border));
+  border-right: 1px solid var(--border);
   padding: 0.5rem;
 }
 .tablist[data-pattern="rail"] .tab {
@@ -118,9 +115,9 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   border-left: 2px solid transparent;
 }
 .tablist[data-pattern="rail"] .tab[aria-selected="true"] {
-  border-left-color: hsl(var(--primary));
-  background: hsl(var(--primary) / 0.1);
-  color: hsl(var(--primary));
+  border-left-color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  color: var(--primary);
 }`,
   scroll: `/* Mobile scroll-snap strip */
 .tablist[data-pattern="scroll"] {
@@ -129,7 +126,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   overflow-x: auto;
   scroll-snap-type: x mandatory;
   scrollbar-width: thin;
-  border-bottom: 1px solid hsl(var(--border));
+  border-bottom: 1px solid var(--border);
 }
 .tablist[data-pattern="scroll"] .tab {
   scroll-snap-align: start;
@@ -154,9 +151,9 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   display: grid;
   grid-auto-flow: column;
   grid-auto-columns: 1fr;
-  border-top: 1px solid hsl(var(--border));
+  border-top: 1px solid var(--border);
   padding-bottom: env(safe-area-inset-bottom);
-  background: hsl(var(--card));
+  background: var(--card);
 }
 .tablist[data-pattern="bottombar"] .tab {
   flex-direction: column;
@@ -165,7 +162,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   font-size: 9px;
 }
 .tablist[data-pattern="bottombar"] .tab[aria-selected="true"] {
-  color: hsl(var(--primary));
+  color: var(--primary);
 }`,
 };
 
@@ -218,6 +215,7 @@ function TabsDemo() {
   const tabRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
   const pattern = patterns[device];
+  useDemoUrlSync(device, pattern);
   const options = PATTERNS[device];
   const iconOnly = pattern === "bottombar";
   const visibleTabs = pattern === "bottombar" ? TABS.slice(0, 5) : TABS;
@@ -274,7 +272,7 @@ function TabsDemo() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -378,37 +376,7 @@ function TabsDemo() {
             </p>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const isActive = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    isActive
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      isActive ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="border-t bg-muted/20 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
@@ -417,39 +385,11 @@ function TabsDemo() {
               </p>
               <CopyLinkButton device={device} pattern={pattern} />
             </div>
-            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
-              {options.map((o) => {
-                const isActive = pattern === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    role="tab"
-                    aria-selected={isActive}
-                    onClick={() => {
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }));
-                      setActive(firstEnabled);
-                    }}
-                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      isActive
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-card hover:bg-accent"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">
-                        {o.desc}
-                      </span>
-                    </span>
-                    <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
-                        isActive ? "bg-primary" : "bg-border"
-                      }`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <PatternList
+              options={options}
+              value={pattern}
+              onChange={(p) => setPatterns((prev) => ({ ...prev, [device]: p }))}
+            />
           </div>
 
           <div className="border-t">
@@ -457,12 +397,7 @@ function TabsDemo() {
               <span className="text-xs font-semibold text-muted-foreground">
                 tabs-{pattern}.css
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => CSS_BY_PATTERN[pattern]} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{CSS_BY_PATTERN[pattern]}</code>
@@ -511,7 +446,7 @@ function TabsDemo() {
         .tablist { scrollbar-width: thin; }
         .tablist::-webkit-scrollbar { height: 4px; width: 4px; }
         .tablist::-webkit-scrollbar-thumb {
-          background: hsl(var(--muted-foreground) / 0.3);
+          background: color-mix(in srgb, var(--muted-foreground) 30%, transparent);
           border-radius: 999px;
         }
 
@@ -521,8 +456,8 @@ function TabsDemo() {
           gap: 0.25rem;
           overflow-x: auto;
           padding-inline: 0.5rem;
-          border-bottom: 1px solid hsl(var(--border));
-          background: hsl(var(--card) / 0.6);
+          border-bottom: 1px solid var(--border);
+          background: color-mix(in srgb, var(--card) 60%, transparent);
         }
         .tablist[data-pattern="underline"] .tab {
           flex: 0 0 auto;
@@ -530,8 +465,8 @@ function TabsDemo() {
           border-bottom: 2px solid transparent;
         }
         .tablist[data-pattern="underline"] .tab[aria-selected="true"] {
-          border-bottom-color: hsl(var(--primary));
-          color: hsl(var(--primary));
+          border-bottom-color: var(--primary);
+          color: var(--primary);
         }
         @container (min-width: 420px) {
           .tablist[data-pattern="underline"] .tab { flex: 1 1 0; }
@@ -544,7 +479,7 @@ function TabsDemo() {
           padding: 0.25rem;
           margin: 0.5rem;
           border-radius: 999px;
-          background: hsl(var(--muted));
+          background: var(--muted);
           overflow-x: auto;
           justify-content: center;
         }
@@ -554,8 +489,8 @@ function TabsDemo() {
           border-radius: 999px;
         }
         .tablist[data-pattern="pills"] .tab[aria-selected="true"] {
-          background: hsl(var(--card));
-          color: hsl(var(--primary));
+          background: var(--card);
+          color: var(--primary);
           box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
         }
         @container (min-width: 680px) {
@@ -574,8 +509,8 @@ function TabsDemo() {
           gap: 0.125rem;
           overflow-y: auto;
           padding: 0.5rem;
-          border-right: 1px solid hsl(var(--border));
-          background: hsl(var(--card) / 0.6);
+          border-right: 1px solid var(--border);
+          background: color-mix(in srgb, var(--card) 60%, transparent);
         }
         .tablist[data-pattern="rail"] .tab {
           justify-content: flex-start;
@@ -584,9 +519,9 @@ function TabsDemo() {
           text-align: left;
         }
         .tablist[data-pattern="rail"] .tab[aria-selected="true"] {
-          border-left-color: hsl(var(--primary));
-          background: hsl(var(--primary) / 0.1);
-          color: hsl(var(--primary));
+          border-left-color: var(--primary);
+          background: color-mix(in srgb, var(--primary) 10%, transparent);
+          color: var(--primary);
         }
 
         /* mobile scroll strip */
@@ -596,8 +531,8 @@ function TabsDemo() {
           overflow-x: auto;
           scroll-snap-type: x mandatory;
           padding-inline: 0.5rem;
-          border-bottom: 1px solid hsl(var(--border));
-          background: hsl(var(--card) / 0.6);
+          border-bottom: 1px solid var(--border);
+          background: color-mix(in srgb, var(--card) 60%, transparent);
         }
         .tablist[data-pattern="scroll"] .tab {
           scroll-snap-align: start;
@@ -606,8 +541,8 @@ function TabsDemo() {
           border-bottom: 2px solid transparent;
         }
         .tablist[data-pattern="scroll"] .tab[aria-selected="true"] {
-          border-bottom-color: hsl(var(--primary));
-          color: hsl(var(--primary));
+          border-bottom-color: var(--primary);
+          color: var(--primary);
         }
 
         /* mobile bottom bar */
@@ -619,8 +554,8 @@ function TabsDemo() {
           display: grid;
           grid-auto-flow: column;
           grid-auto-columns: 1fr;
-          border-top: 1px solid hsl(var(--border));
-          background: hsl(var(--card));
+          border-top: 1px solid var(--border);
+          background: var(--card);
         }
         .tablist[data-pattern="bottombar"] .tab {
           flex-direction: column;
@@ -630,7 +565,7 @@ function TabsDemo() {
           font-size: 9px;
         }
         .tablist[data-pattern="bottombar"] .tab[aria-selected="true"] {
-          color: hsl(var(--primary));
+          color: var(--primary);
         }
       `}</style>
     </main>

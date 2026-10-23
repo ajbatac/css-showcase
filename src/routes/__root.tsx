@@ -7,17 +7,51 @@ import {
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
-import { Github } from "lucide-react";
+import { useEffect, useState, type ReactNode } from "react";
+import { Github, Search } from "lucide-react";
 
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { Toaster } from "@/components/ui/sonner";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { SendToLLM } from "@/components/send-to-llm";
+import { SearchPalette } from "@/components/search-palette";
+import { ShareCardSection } from "@/components/share-card";
 import { NotFoundPage } from "@/components/not-found";
 import { SITE_URL } from "@/lib/seo";
 import appCss from "../styles.css?url";
+
+/**
+ * Applies the stored/system theme before first paint so dark-mode users never
+ * see a light flash. Must stay inline in <head>; keep in sync with ThemeToggle.
+ */
+const THEME_INIT_SCRIPT = `(function(){try{var e=localStorage.getItem("theme");var d=e==="dark"||(e===null&&window.matchMedia("(prefers-color-scheme: dark)").matches);var c=document.documentElement.classList;d?c.add("dark"):c.remove("dark")}catch(e){}})();`;
+
+function SearchButton({ onClick, compact = false }: { onClick: () => void; compact?: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label="Search demos"
+      aria-keyshortcuts="Control+k Meta+k"
+      className={`inline-flex items-center gap-2 border border-border bg-background/80 font-medium text-muted-foreground shadow-sm backdrop-blur transition-colors hover:bg-accent hover:text-foreground ${
+        compact
+          ? "h-9 w-9 justify-center rounded-full"
+          : "h-9 rounded-full px-3 text-xs justify-center"
+      }`}
+    >
+      <Search className="h-4 w-4" />
+      {!compact && (
+        <span className="hidden sm:inline">
+          Search
+          <kbd className="ml-2 rounded border border-border bg-muted px-1.5 py-0.5 text-[10px] font-semibold">
+            ⌘K
+          </kbd>
+        </span>
+      )}
+    </button>
+  );
+}
 
 function GitHubLink() {
   return (
@@ -69,18 +103,12 @@ function ErrorComponent({ error, reset }: { error: Error; reset: () => void }) {
 }
 
 export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()({
-  loader: async () => {
-    let pathname = "";
-    if (import.meta.env.SSR) {
-      try {
-        const { getRequest } = await import("@tanstack/react-start/server");
-        const req = getRequest();
-        if (req) pathname = new URL(req.url).pathname;
-      } catch {
-        pathname = "";
-      }
-    }
-    return { pathname };
+  loader: async ({ location }) => {
+    // Canonical path straight from the router location — during SSR this is
+    // derived from the request URL, and it needs no server-only import
+    // (importing "@tanstack/react-start/server" here trips vite's
+    // import-protection in dev and breaks client hydration).
+    return { pathname: location.pathname };
   },
   head: ({ loaderData }) => {
     const canonical = `${SITE_URL}${loaderData?.pathname ?? ""}`;
@@ -145,6 +173,7 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
         <HeadContent />
       </head>
       <body>
@@ -157,9 +186,16 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const [searchOpen, setSearchOpen] = useState(false);
 
   return (
     <QueryClientProvider client={queryClient}>
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] rounded-lg bg-primary px-4 py-2 text-sm font-semibold text-primary-foreground shadow-md"
+      >
+        Skip to content
+      </a>
       <SidebarProvider defaultOpen>
         <div className="flex min-h-screen w-full">
           {/* Sidebar hides on mobile via shadcn's built-in md: breakpoint */}
@@ -168,6 +204,7 @@ function RootComponent() {
             <header className="hidden h-20 items-center gap-2 bg-background/60 px-3 backdrop-blur md:flex">
               <SidebarTrigger />
               <div className="ml-auto flex items-center gap-1.5">
+                <SearchButton onClick={() => setSearchOpen(true)} />
                 <SendToLLM />
                 <ThemeToggle />
                 <GitHubLink />
@@ -175,12 +212,15 @@ function RootComponent() {
             </header>
             <hr className="hidden border-t border-border md:block" />
             <div className="fixed right-3 top-3 z-50 flex items-center gap-1.5 md:hidden">
+              <SidebarTrigger className="h-9 w-9 rounded-full border border-border bg-background/80 shadow-sm backdrop-blur" />
+              <SearchButton onClick={() => setSearchOpen(true)} compact />
               <SendToLLM />
               <ThemeToggle />
               <GitHubLink />
             </div>
             {/* Required: nested routes render here. Removing <Outlet /> breaks all child routes. */}
             <Outlet />
+            <ShareCardSection />
             <footer className="mt-auto">
               <hr className="border-t border-border" />
               <div className="mx-auto max-w-3xl px-5 py-4 md:max-w-5xl xl:max-w-6xl">
@@ -250,6 +290,7 @@ function RootComponent() {
         </div>
       </SidebarProvider>
       <Toaster position="top-center" />
+      <SearchPalette open={searchOpen} onOpenChange={setSearchOpen} />
     </QueryClientProvider>
   );
 }

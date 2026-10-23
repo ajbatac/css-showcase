@@ -4,7 +4,7 @@ export const LEGAL_UPDATED = "September 13, 2026";
 
 export function LegalPage({ title, children }: { title: string; children: ReactNode }) {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <h1 className="text-3xl font-bold tracking-tight">{title}</h1>

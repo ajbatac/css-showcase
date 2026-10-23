@@ -19,6 +19,9 @@ type GridSearch = {
   min?: number;
 };
 
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
+
 export const Route = createFileRoute("/grid")({
   validateSearch: (search: Record<string, unknown>): GridSearch => {
     const device = DEVICE_IDS.includes(search.device as never)
@@ -59,12 +62,6 @@ export const Route = createFileRoute("/grid")({
 
 type Device = "desktop" | "ipad" | "mobile";
 type Preset = "12-col" | "holy-grail" | "auto-fit" | "auto-fill" | "dense" | "asymmetric";
-
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
 
 const PRESETS: { id: Preset; label: string; blurb: string }[] = [
   { id: "12-col", label: "12-column", blurb: "Classic fixed track grid" },
@@ -123,7 +120,7 @@ function GridDemo() {
   const cssCode = buildCss(preset, gap, minTrack);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -183,37 +180,7 @@ function GridDemo() {
             </DeviceFrame>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="space-y-4 border-t p-4">
             <div>
@@ -283,12 +250,7 @@ function GridDemo() {
           <div className="border-t">
             <div className="flex items-center justify-between border-b bg-muted/40 px-4 py-2">
               <span className="text-xs font-semibold text-muted-foreground">styles.css</span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(cssCode)}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => cssCode} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{cssCode}</code>

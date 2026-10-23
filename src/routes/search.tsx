@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
 import { Search as SearchIcon, X, CornerDownLeft, Clock } from "lucide-react";
 import { CopyLinkButton } from "@/lib/demo-permalink";
-import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
+import { seedPatterns, useDemoSearch, useDemoUrlSync } from "@/lib/demo-state";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/search")({
   head: () => ({
@@ -28,12 +31,6 @@ export const Route = createFileRoute("/search")({
 
 type Device = "desktop" | "ipad" | "mobile";
 type Pattern = "inline-bar" | "command-palette" | "with-filters" | "expanding" | "full-screen";
-
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
@@ -73,13 +70,13 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .command-palette {
   width: min(90%, 420px);
   border-radius: 1rem;
-  box-shadow: 0 20px 60px hsl(var(--foreground) / 0.15);
+  box-shadow: 0 20px 60px color-mix(in srgb, var(--foreground) 15%, transparent);
 }
 
 .command-kbd {
   font-family: ui-monospace, monospace;
   border-radius: 0.375rem;
-  border: 1px solid hsl(var(--border));
+  border: 1px solid var(--border);
 }`,
   "with-filters": `/* Search with filter chips */
 .search-shell[data-pattern="with-filters"] .filter-row {
@@ -90,16 +87,16 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 }
 
 .filter-chip[data-active="true"] {
-  background: hsl(var(--primary));
-  color: hsl(var(--primary-foreground));
-  border-color: hsl(var(--primary));
+  background: var(--primary);
+  color: var(--primary-foreground);
+  border-color: var(--primary);
 }`,
   expanding: `/* Icon expands into a full-width field */
 .expand-search {
   display: flex;
   align-items: center;
   border-radius: 999px;
-  border: 1px solid hsl(var(--border));
+  border: 1px solid var(--border);
   overflow: hidden;
   transition: width 0.3s ease;
 }
@@ -126,7 +123,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   inset: 0;
   display: grid;
   grid-template-rows: auto 1fr;
-  background: hsl(var(--card));
+  background: var(--card);
   animation: search-fade-in 0.2s ease;
 }
 
@@ -189,11 +186,12 @@ function SearchDemo() {
   const recent = ["quarterly report", "dark mode", "priya"];
 
   const pattern = patterns[device];
+  useDemoUrlSync(device, pattern);
   const options = PATTERNS[device];
   const results = useFilteredItems(query, activeFilter);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -484,37 +482,7 @@ function SearchDemo() {
             </DeviceFrame>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="border-t bg-muted/20 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
@@ -523,34 +491,11 @@ function SearchDemo() {
               </p>
               <CopyLinkButton device={device} pattern={pattern} />
             </div>
-            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
-              {options.map((o) => {
-                const active = pattern === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
-                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-card hover:bg-accent"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">
-                        {o.desc}
-                      </span>
-                    </span>
-                    <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <PatternList
+              options={options}
+              value={pattern}
+              onChange={(p) => setPatterns((prev) => ({ ...prev, [device]: p }))}
+            />
           </div>
 
           <div className="border-t">
@@ -558,12 +503,7 @@ function SearchDemo() {
               <span className="text-xs font-semibold text-muted-foreground">
                 search-{pattern}.css
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => CSS_BY_PATTERN[pattern]} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{CSS_BY_PATTERN[pattern]}</code>
@@ -606,7 +546,7 @@ function SearchDemo() {
         .command-palette {
           width: min(92%, 420px);
           border-radius: 1rem;
-          box-shadow: 0 20px 60px hsl(var(--foreground) / 0.15);
+          box-shadow: 0 20px 60px color-mix(in srgb, var(--foreground) 15%, transparent);
         }
 
         .command-kbd {
@@ -626,16 +566,16 @@ function SearchDemo() {
         }
 
         .filter-chip[data-active="true"] {
-          background: hsl(var(--primary));
-          color: hsl(var(--primary-foreground));
-          border-color: hsl(var(--primary));
+          background: var(--primary);
+          color: var(--primary-foreground);
+          border-color: var(--primary);
         }
 
         .expand-search {
           display: flex;
           align-items: center;
           border-radius: 999px;
-          border: 1px solid hsl(var(--border));
+          border: 1px solid var(--border);
           overflow: hidden;
           transition: width 0.3s ease;
         }
@@ -653,7 +593,7 @@ function SearchDemo() {
           inset: 0;
           display: grid;
           grid-template-rows: auto 1fr;
-          background: hsl(var(--card));
+          background: var(--card);
           animation: search-fade-in 0.2s ease;
         }
 

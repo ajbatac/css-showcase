@@ -69,7 +69,7 @@ const SECTIONS = [
 
 function ChangelogPage() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-10 flex flex-wrap items-end justify-between gap-4">
           <div>

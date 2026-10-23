@@ -11,7 +11,10 @@ import {
   AlignRight,
 } from "lucide-react";
 import { CopyLinkButton } from "@/lib/demo-permalink";
-import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
+import { seedPatterns, useDemoSearch, useDemoUrlSync } from "@/lib/demo-state";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/buttons")({
   head: () => ({
@@ -37,12 +40,6 @@ export const Route = createFileRoute("/buttons")({
 
 type Device = "desktop" | "ipad" | "mobile";
 type Pattern = "row" | "split" | "toolbar" | "stacked-full" | "sticky-bar";
-
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
@@ -93,19 +90,19 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .split-btn .btn-caret {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-  border-left: 1px solid hsl(var(--primary-foreground) / 0.3);
+  border-left: 1px solid color-mix(in srgb, var(--primary-foreground) 30%, transparent);
 }`,
   toolbar: `/* Segmented toolbar */
 .segmented {
   display: inline-flex;
-  border: 1px solid hsl(var(--border));
+  border: 1px solid var(--border);
   border-radius: 0.6rem;
   overflow: clip;
 }
 
 .segmented .btn {
   border-radius: 0;
-  border-right: 1px solid hsl(var(--border));
+  border-right: 1px solid var(--border);
 }
 
 .segmented .btn:last-child {
@@ -113,7 +110,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 }
 
 .segmented .btn[aria-pressed="true"] {
-  background: hsl(var(--accent));
+  background: var(--accent);
 }`,
   "stacked-full": `/* Full-width stacked */
 .btn-stack {
@@ -133,8 +130,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   grid-auto-flow: column;
   gap: 0.5rem;
   padding: 0.6rem;
-  border-top: 1px solid hsl(var(--border));
-  background: hsl(var(--card) / 0.95);
+  border-top: 1px solid var(--border);
+  background: color-mix(in srgb, var(--card) 95%, transparent);
   backdrop-filter: blur(6px);
 }`,
 };
@@ -155,6 +152,7 @@ function ButtonsDemo() {
   const [aligned, setAligned] = useState<"left" | "center" | "right">("left");
 
   const pattern = patterns[device];
+  useDemoUrlSync(device, pattern);
   const options = PATTERNS[device];
 
   const runLoading = () => {
@@ -250,7 +248,7 @@ function ButtonsDemo() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -287,37 +285,7 @@ function ButtonsDemo() {
             </DeviceFrame>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="border-t bg-muted/20 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
@@ -326,36 +294,11 @@ function ButtonsDemo() {
               </p>
               <CopyLinkButton device={device} pattern={pattern} />
             </div>
-            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
-              {options.map((o) => {
-                const active = pattern === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
-                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-card hover:bg-accent"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">
-                        {o.desc}
-                      </span>
-                    </span>
-                    <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
-                        active ? "bg-primary" : "bg-border"
-                      }`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <PatternList
+              options={options}
+              value={pattern}
+              onChange={(p) => setPatterns((prev) => ({ ...prev, [device]: p }))}
+            />
           </div>
 
           <div className="border-t">
@@ -363,12 +306,7 @@ function ButtonsDemo() {
               <span className="text-xs font-semibold text-muted-foreground">
                 button-{pattern}.css
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => CSS_BY_PATTERN[pattern]} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{CSS_BY_PATTERN[pattern]}</code>
@@ -422,40 +360,40 @@ function ButtonsDemo() {
         }
 
         .btn-primary {
-          background: hsl(var(--primary));
-          color: hsl(var(--primary-foreground));
+          background: var(--primary);
+          color: var(--primary-foreground);
         }
 
         .btn-primary:hover:not(:disabled) {
-          background: hsl(var(--primary) / 0.9);
+          background: color-mix(in srgb, var(--primary) 90%, transparent);
         }
 
         .btn-secondary {
-          background: hsl(var(--secondary));
-          color: hsl(var(--secondary-foreground));
-          border-color: hsl(var(--border));
+          background: var(--secondary);
+          color: var(--secondary-foreground);
+          border-color: var(--border);
         }
 
         .btn-secondary:hover:not(:disabled) {
-          background: hsl(var(--accent));
+          background: var(--accent);
         }
 
         .btn-ghost {
           background: transparent;
-          color: hsl(var(--foreground));
+          color: var(--foreground);
         }
 
         .btn-ghost:hover:not(:disabled) {
-          background: hsl(var(--accent));
+          background: var(--accent);
         }
 
         .btn-destructive {
-          background: hsl(var(--destructive));
-          color: hsl(var(--destructive-foreground));
+          background: var(--destructive);
+          color: var(--destructive-foreground);
         }
 
         .btn-destructive:hover:not(:disabled) {
-          background: hsl(var(--destructive) / 0.9);
+          background: color-mix(in srgb, var(--destructive) 90%, transparent);
         }
 
         .btn-row {
@@ -471,13 +409,13 @@ function ButtonsDemo() {
           align-items: center;
           justify-content: center;
           border-radius: 0.55rem;
-          background: hsl(var(--secondary));
-          color: hsl(var(--secondary-foreground));
+          background: var(--secondary);
+          color: var(--secondary-foreground);
           transition: background-color 0.2s ease, transform 0.1s ease;
         }
 
         .btn-icon:hover {
-          background: hsl(var(--accent));
+          background: var(--accent);
         }
 
         .btn-icon:active {
@@ -485,7 +423,7 @@ function ButtonsDemo() {
         }
 
         .btn-icon-destructive {
-          color: hsl(var(--destructive));
+          color: var(--destructive);
         }
 
         .split-btn {
@@ -500,21 +438,21 @@ function ButtonsDemo() {
         .split-btn .btn-caret {
           border-top-left-radius: 0;
           border-bottom-left-radius: 0;
-          border-left: 1px solid hsl(var(--primary-foreground) / 0.3);
+          border-left: 1px solid color-mix(in srgb, var(--primary-foreground) 30%, transparent);
         }
 
         .segmented {
           display: inline-flex;
-          border: 1px solid hsl(var(--border));
+          border: 1px solid var(--border);
           border-radius: 0.6rem;
           overflow: clip;
         }
 
         .segmented .btn {
           border-radius: 0;
-          border-right: 1px solid hsl(var(--border));
-          background: hsl(var(--card));
-          color: hsl(var(--foreground));
+          border-right: 1px solid var(--border);
+          background: var(--card);
+          color: var(--foreground);
         }
 
         .segmented .btn:last-child {
@@ -522,7 +460,7 @@ function ButtonsDemo() {
         }
 
         .segmented .btn[aria-pressed="true"] {
-          background: hsl(var(--accent));
+          background: var(--accent);
         }
 
         .btn-stack {
@@ -543,8 +481,8 @@ function ButtonsDemo() {
           grid-auto-flow: column;
           gap: 0.5rem;
           padding: 0.5rem;
-          border-top: 1px solid hsl(var(--border));
-          background: hsl(var(--card) / 0.95);
+          border-top: 1px solid var(--border);
+          background: color-mix(in srgb, var(--card) 95%, transparent);
           backdrop-filter: blur(6px);
           border-radius: 0.75rem;
         }

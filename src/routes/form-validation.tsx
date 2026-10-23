@@ -3,7 +3,10 @@ import { useMemo, useState } from "react";
 import { z } from "zod";
 import { AlertCircle, Check, CheckCircle2, ChevronLeft, ChevronRight } from "lucide-react";
 import { CopyLinkButton } from "@/lib/demo-permalink";
-import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
+import { seedPatterns, useDemoSearch, useDemoUrlSync } from "@/lib/demo-state";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/form-validation")({
   head: () => ({
@@ -31,12 +34,6 @@ type Device = "desktop" | "ipad" | "mobile";
 type Pattern = "inline-errors" | "summary" | "live-strength" | "step-by-step";
 type Field = "name" | "email" | "password";
 
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
-
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
     { id: "inline-errors", label: "Inline errors", desc: "Errors shown under each field" },
@@ -56,20 +53,20 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
 const CSS_BY_PATTERN: Record<Pattern, string> = {
   "inline-errors": `/* Inline field errors */
 .field[data-invalid="true"] input {
-  border-color: hsl(var(--destructive));
+  border-color: var(--destructive);
 }
 
 .field-error {
   display: flex;
   align-items: center;
   gap: 0.25rem;
-  color: hsl(var(--destructive));
+  color: var(--destructive);
   font-size: 0.7rem;
 }`,
   summary: `/* Error summary block */
 .error-summary {
-  border: 1px solid hsl(var(--destructive) / 0.4);
-  background: hsl(var(--destructive) / 0.08);
+  border: 1px solid color-mix(in srgb, var(--destructive) 40%, transparent);
+  background: color-mix(in srgb, var(--destructive) 8%, transparent);
   border-radius: 0.75rem;
 }
 
@@ -87,12 +84,12 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .strength-bar {
   height: 4px;
   border-radius: 999px;
-  background: hsl(var(--border));
+  background: var(--border);
   transition: background-color 0.2s ease;
 }
 
 .strength-bar[data-active="true"] {
-  background: var(--strength-color, hsl(var(--primary)));
+  background: var(--strength-color, var(--primary));
 }`,
   "step-by-step": `/* One field per step */
 .step-wizard {
@@ -106,7 +103,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 }
 
 .step-dot[data-active="true"] {
-  background: hsl(var(--primary));
+  background: var(--primary);
   width: 1.25rem;
 }`,
 };
@@ -147,12 +144,7 @@ function passwordScore(v: string) {
   return PASSWORD_RULES.filter((r) => r.test(v)).length;
 }
 
-const STRENGTH_COLORS = [
-  "hsl(var(--destructive))",
-  "hsl(var(--destructive))",
-  "#eab308",
-  "hsl(var(--primary))",
-];
+const STRENGTH_COLORS = ["var(--destructive)", "var(--destructive)", "#eab308", "var(--primary)"];
 
 function FormValidationDemo() {
   const initial = useDemoSearch();
@@ -173,6 +165,7 @@ function FormValidationDemo() {
   const [step, setStep] = useState(0);
 
   const pattern = patterns[device];
+  useDemoUrlSync(device, pattern);
   const options = PATTERNS[device];
   const errors = useMemo(() => fieldErrors(values), [values]);
   const visibleErrors = (field: Field) => (touched[field] || submitted) && errors[field];
@@ -220,7 +213,7 @@ function FormValidationDemo() {
   const score = passwordScore(values.password);
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -402,37 +395,7 @@ function FormValidationDemo() {
             </DeviceFrame>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="border-t bg-muted/20 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
@@ -441,37 +404,11 @@ function FormValidationDemo() {
               </p>
               <CopyLinkButton device={device} pattern={pattern} />
             </div>
-            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
-              {options.map((o) => {
-                const active = pattern === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => {
-                      setPatterns((prev) => ({ ...prev, [device]: o.id }));
-                      resetForm();
-                    }}
-                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-card hover:bg-accent"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">
-                        {o.desc}
-                      </span>
-                    </span>
-                    <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${active ? "bg-primary" : "bg-border"}`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <PatternList
+              options={options}
+              value={pattern}
+              onChange={(p) => setPatterns((prev) => ({ ...prev, [device]: p }))}
+            />
           </div>
 
           <div className="border-t">
@@ -479,12 +416,7 @@ function FormValidationDemo() {
               <span className="text-xs font-semibold text-muted-foreground">
                 form-validation-{pattern}.css
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => CSS_BY_PATTERN[pattern]} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{CSS_BY_PATTERN[pattern]}</code>
@@ -516,13 +448,13 @@ function FormValidationDemo() {
           display: flex;
           align-items: center;
           gap: 0.25rem;
-          color: hsl(var(--destructive));
+          color: var(--destructive);
           font-size: 0.65rem;
         }
 
         .error-summary {
-          border: 1px solid hsl(var(--destructive) / 0.4);
-          background: hsl(var(--destructive) / 0.08);
+          border: 1px solid color-mix(in srgb, var(--destructive) 40%, transparent);
+          background: color-mix(in srgb, var(--destructive) 8%, transparent);
           border-radius: 0.75rem;
         }
 
@@ -535,12 +467,12 @@ function FormValidationDemo() {
         .strength-bar {
           height: 4px;
           border-radius: 999px;
-          background: hsl(var(--border));
+          background: var(--border);
           transition: background-color 0.2s ease;
         }
 
         .strength-bar[data-active="true"] {
-          background: var(--strength-color, hsl(var(--primary)));
+          background: var(--strength-color, var(--primary));
         }
 
         .step-wizard {
@@ -558,7 +490,7 @@ function FormValidationDemo() {
         }
 
         .step-dot[data-active="true"] {
-          background: hsl(var(--primary));
+          background: var(--primary);
           width: 1.25rem;
         }
 

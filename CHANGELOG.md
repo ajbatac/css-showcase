@@ -2,6 +2,44 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (2)
+
+### Added
+
+- **Per-demo 2048×2048 share cards.** Every demo page now has a "Share this demo as a 1:1 image" section (mounted in `__root.tsx` after `<Outlet />`, demo pages only) with a live scaled preview, Download PNG, and Copy image. The card composes brand row (logo + wordmark + css.techhive.net), the demo h1 + subtitle, a **live clone of the page's DeviceFrame** (follows the device/pattern selected on the page — desktop, iPad, or mobile), the "CSS features used" chips, and a footer with the canonical URL. Implementation: `src/components/share-card.tsx` + `src/lib/demo-share.ts` (per-demo copy extracted from route JSX, 36 entries).
+  - **Dependency: `html2canvas-pro`** (not vanilla `html2canvas` — verified: vanilla throws `unsupported color function "oklch"` on this design system; the `-pro` fork handles oklch and color-mix). Capture renders the offscreen 1024px card at scale 2.
+  - Capture gotchas handled: html2canvas collapses whitespace in flex-row text nodes (multi-word labels render as word-per-span with flex gap); the capture source must stay rendered (offscreen fixed, not display:none); snapshot clone re-renders fresh at capture time so the PNG always matches the live device/pattern.
+
+### Fixed
+
+- **Pre-existing: `hsl(var(--token))` computed to transparent** on 12 routes (~200 declarations in demo `<style>` blocks: buttons, inputs, textareas, sliders, checkboxes, switches, accordions, tabs, search, dividers, uploaders, form-validation). The tokens are oklch, so `hsl(oklch(...))` is invalid CSS — every such fill/border/text color has been silently transparent since the oklch migration. Replaced with direct `var(--x)` references and `color-mix(in srgb, var(--x) N%, transparent)` for alpha variants.
+
+## Unreleased — October 23, 2026
+
+Full audit pass (a11y/UX/SEO/security/code-health), P0+P1 fixes and the ⌘K palette. Net −2,200 lines via deduplication.
+
+### Fixed
+
+- **Mobile navigation was unreachable.** `SidebarTrigger` only rendered inside the `hidden md:flex` desktop header, so below 768px there was no way to open the nav sheet (only Cmd/Ctrl+B, impossible on touch); the sheet's close button was also CSS-hidden (`[&>button]:hidden`). Added a trigger to the fixed mobile cluster and un-hid the close button.
+- **`vite dev` was hard-broken**: `[import-protection] Import denied in client environment` for the SSR-guarded `@tanstack/react-start/server` dynamic import in `__root.tsx` killed client hydration (full-screen vite overlay, zero interactivity; ~8k error lines per dev session; production unaffected). Root cause: import-protection denies the specifier anywhere in the client graph — `import.meta.env.SSR` guards and `.server.ts` modules do NOT save you (verified both). Fix: the root loader reads `location.pathname` (router-core; server-derived during SSR) — no server import at all. Canonical/og:url unchanged.
+- **Theme flash + preference freeze**: dark class was applied post-hydration (FOUC on every load for dark users) and the toggle wrote localStorage on first mount, freezing the system preference forever. Now a blocking inline script (`THEME_INIT_SCRIPT` in `__root.tsx`) applies the theme pre-paint; `ThemeToggle` persists only on explicit clicks.
+- **36 silent copy buttons**: CSS-panel copies used bare `navigator.clipboard?.writeText(...)` — no catch, no feedback, unhandled rejections. All replaced with the shared `CopyButton` (toast + Copied! state + failure toast).
+- **69 fake tablists**: every demo's device/pattern switchers declared `role="tab"` without arrow keys/aria-controls/tabpanel. Replaced by shared `DeviceTabs`/`PatternList` (`src/components/patterns/pattern-switcher.tsx`) with radiogroup semantics (roving tabindex, arrows, Home/End). `sliders.tsx` rating radiogroup got arrow keys; its sliders got associated labels/aria-labels.
+- **Cookies/llms.txt/README accuracy**: cookies page claimed "does not set cookies" while `ui/sidebar.tsx` sets `sidebar_state`; README/llms.txt said "37 demos" (registry has 36; Send-to-LLM prompt made dynamic). Copy now discloses the functional cookie.
+
+### Added
+
+- **⌘K / Ctrl+K / `/` command palette** (`src/components/search-palette.tsx`, cmdk): searches all demos by name/category/description with a strict ranked filter (cmdk's default fuzzy matched "tooltip"→"Dividers"), shows 5 recent demos (localStorage), and Browse links. Triggers in the desktop header and mobile cluster; open state in `__root.tsx`.
+- **Live URL state**: `useDemoUrlSync(device, pattern)` in `src/lib/demo-state.ts` writes `?device=&pattern=` on every selection change (replace), so refresh/back/forward preserve demo state. Wired into 33 pattern routes + index/flex (grid already had its own).
+- **Security headers** via nitro `routeRules "/**"` (applies to all three presets, verified live on the node build): CSP (`default-src 'self'`, inline script/style allowed for the theme script + demo `<style>` blocks, `frame-ancestors 'none'`), X-Frame-Options DENY, nosniff, Referrer-Policy, Permissions-Policy. `form-action 'self'` — loosen before adding a CodePen POST export.
+- **Skip-to-content link** (first focusable element in the root) + `id="main-content"` on every route's `<main>` + `<nav aria-label="Demo library">` landmark wrapping the sidebar groups.
+
+### Changed
+
+- Demo routes now import `DeviceTabs`/`PatternList`/`CopyButton` instead of carrying copy-pasted switcher/copy markup (36 routes, −2.7k lines). `DEMO_DESCRIPTIONS` moved from `routes/demos.tsx` to `lib/demos.ts` (powers `/demos` + palette).
+- `theme-toggle.tsx` rewritten (reads painted class, persists on click only).
+- AGENTS.md updated for the new anatomy + the import-protection gotcha.
+
 ## v0.2 — September 13, 2026
 
 ### Brand

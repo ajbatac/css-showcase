@@ -32,7 +32,7 @@ If you cannot fetch the URL, ask me to paste the contents of the source file ins
 function buildSitePrompt(origin: string): string {
   return `You are helping me adopt CSS Showcase, an open-source library of live CSS demos (${REPO}), into my own project.
 
-The project is a TanStack Start app (React 19, Tailwind CSS v4, Radix UI primitives, Vite, Nitro) with 37 CSS demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Live copy: ${origin}
+The project is a TanStack Start app (React 19, Tailwind CSS v4, Radix UI primitives, Vite, Nitro) with ${DEMOS.length} CSS demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Live copy: ${origin}
 
 Instructions:
 1. Clone the repository: git clone ${REPO}.git

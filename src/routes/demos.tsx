@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { CATEGORY_ORDER, DEMOS } from "@/lib/demos";
+import { CATEGORY_ORDER, DEMOS, DEMO_DESCRIPTIONS as DESCRIPTIONS } from "@/lib/demos";
 
 export const Route = createFileRoute("/demos")({
   head: () => ({
@@ -23,49 +23,9 @@ export const Route = createFileRoute("/demos")({
   component: DemosIndex,
 });
 
-const DESCRIPTIONS: Record<string, string> = {
-  "device-switcher":
-    "Morph a skeleton app between desktop, iPad and mobile with container queries.",
-  "login-screens": "Centered, half/half and hero-overlay sign-in layouts per device.",
-  toasts: "Success, error, warning and info notifications anchored per device.",
-  modals: "Confirm, cancel and dismiss flows as sheets or centered dialogs.",
-  navigation: "Hamburger drawer on small screens, horizontal menu on desktop.",
-  dropdowns: "Bottom sheets, anchored popovers and compact menus.",
-  flex: "Interactive Flexbox playground for direction, alignment, wrap and gap.",
-  grid: "Grid templates and auto-placement presets with gap and track controls.",
-  accordions: "Animated expand/collapse panels using grid-template-rows.",
-  checkboxes: "Checkbox lists, select-all with indeterminate state, toggles.",
-  selects: "Single select plus chip-based multi-select in sheets and popovers.",
-  radios: "Classic lists, segmented controls and selectable cards.",
-  sliders: "Volume, stepped rating and dual-thumb range inputs.",
-  tabs: "Keyboard-navigable tabs with disabled items and overflow handling.",
-  uploaders: "Dropzones, upload queues and gallery pickers with progress.",
-  loaders: "Skeletons, spinners, shimmer feeds, blurred images and table rows.",
-  datepicker: "Popover, inline and bottom-sheet calendars with range selection.",
-  cards: "Content, media and stat card layouts that reflow per device.",
-  containers: "Page shells, max-width wrappers and fluid padding scales.",
-  dividers: "Horizontal, vertical and labelled separators.",
-  inputs: "Text fields with labels, hints, icons and error states.",
-  textareas: "Auto-growing and fixed multi-line inputs with counters.",
-  buttons: "Variants, sizes, icon buttons and loading states.",
-  switches: "Toggles and switch rows for settings screens.",
-  search: "Search fields with suggestions, clearing and filters.",
-  "form-validation": "Inline, summary and on-blur validation messaging.",
-  breadcrumbs: "Full trails, collapsed middles and back-link fallbacks.",
-  pagination: "Numbered pages, load-more and compact prev/next controls.",
-  alerts: "Inline alert cards and page banners, dismissible.",
-  progress: "Linear bars, rings and multi-step progress indicators.",
-  tooltips: "Hover, focus and long-press hints with smart placement.",
-  drawers: "Side and bottom drawers with overlay and focus handling.",
-  tables: "Sortable, sticky-header tables that collapse into cards.",
-  lists: "Simple, media and grouped lists with actions.",
-  badges: "Status pills, counts and dot indicators.",
-  "empty-states": "Centered heroes, no-results and offline placeholders.",
-};
-
 function DemosIndex() {
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl px-5 pb-24 pt-10 md:max-w-5xl xl:max-w-6xl">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">

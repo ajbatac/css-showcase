@@ -33,6 +33,28 @@ export default defineConfig(({ command }) => ({
               (process.env.CF_PAGES ? "cloudflare-pages" : "node-server"),
             cloudflare: { nodeCompat: true, deployConfig: true },
             routeRules: {
+              // Security headers for every route. CSP allows inline styles
+              // (demo <style> blocks + Tailwind) and inline scripts (theme
+              // init); tighten 'unsafe-inline' script-src when those move.
+              "/**": {
+                headers: {
+                  "X-Content-Type-Options": "nosniff",
+                  "X-Frame-Options": "DENY",
+                  "Referrer-Policy": "strict-origin-when-cross-origin",
+                  "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+                  "Content-Security-Policy": [
+                    "default-src 'self'",
+                    "script-src 'self' 'unsafe-inline'",
+                    "style-src 'self' 'unsafe-inline'",
+                    "img-src 'self' data:",
+                    "font-src 'self'",
+                    "connect-src 'self'",
+                    "frame-ancestors 'none'",
+                    "base-uri 'self'",
+                    "form-action 'self'",
+                  ].join("; "),
+                },
+              },
               "/changelog/rss": {
                 headers: { "content-type": "application/rss+xml; charset=utf-8" },
               },

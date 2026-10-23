@@ -1,6 +1,6 @@
 # CSS Showcase
 
-> Live CSS demos with the code for each example. 37 demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Mobile-first with light and dark themes.
+> Live CSS demos with the code for each example. 36 demos across layout, forms, navigation, feedback, overlays, data display, and utilities. Mobile-first with light and dark themes.
 
 Official URL: https://css.techhive.net/
 
@@ -30,5 +30,5 @@ Official URL: https://css.techhive.net/
 
 ## Notes
 
-- The site sets no cookies and runs no trackers. The only stored preference is the light/dark theme choice in local storage.
+- The site runs no trackers or analytics. It stores preferences in local storage (theme, recently viewed demos) and sets one functional cookie (sidebar_state) for sidebar layout.
 - Forms, logins, and uploads shown in demos are visual examples only; nothing is submitted anywhere.

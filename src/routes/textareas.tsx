@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { Bold, Italic, List, Send } from "lucide-react";
 import { CopyLinkButton } from "@/lib/demo-permalink";
-import { seedPatterns, useDemoSearch } from "@/lib/demo-state";
+import { seedPatterns, useDemoSearch, useDemoUrlSync } from "@/lib/demo-state";
+
+import { DeviceTabs, PatternList } from "@/components/patterns/pattern-switcher";
+import { CopyButton } from "@/components/copy-button";
 
 export const Route = createFileRoute("/textareas")({
   head: () => ({
@@ -28,12 +31,6 @@ export const Route = createFileRoute("/textareas")({
 
 type Device = "desktop" | "ipad" | "mobile";
 type Pattern = "auto-grow" | "fixed" | "toolbar" | "compact" | "sheet-composer";
-
-const DEVICES: { id: Device; label: string; hint: string }[] = [
-  { id: "desktop", label: "Desktop", hint: "16:10" },
-  { id: "ipad", label: "iPad", hint: "4:3" },
-  { id: "mobile", label: "Mobile", hint: "9:19.5" },
-];
 
 const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> = {
   desktop: [
@@ -85,7 +82,7 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .editor {
   display: grid;
   grid-template-rows: auto 1fr;
-  border: 1px solid hsl(var(--border));
+  border: 1px solid var(--border);
   border-radius: 0.75rem;
   overflow: clip;
 }
@@ -93,8 +90,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
 .editor-toolbar {
   display: flex;
   gap: 0.25rem;
-  border-bottom: 1px solid hsl(var(--border));
-  background: hsl(var(--muted) / 0.4);
+  border-bottom: 1px solid var(--border);
+  background: color-mix(in srgb, var(--muted) 40%, transparent);
   padding: 0.4rem;
 }
 
@@ -118,8 +115,8 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   align-items: end;
   gap: 0.5rem;
   padding: 0.5rem;
-  border-top: 1px solid hsl(var(--border));
-  background: hsl(var(--card));
+  border-top: 1px solid var(--border);
+  background: var(--card);
 }
 
 .composer textarea {
@@ -144,6 +141,7 @@ function TextareasDemo() {
   const [value, setValue] = useState("CSS Showcase lets a textarea grow with content.");
 
   const pattern = patterns[device];
+  useDemoUrlSync(device, pattern);
   const options = PATTERNS[device];
 
   const renderTextarea = () => {
@@ -199,7 +197,7 @@ function TextareasDemo() {
   };
 
   return (
-    <main className="min-h-screen bg-background text-foreground">
+    <main id="main-content" tabIndex={-1} className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-3xl md:max-w-5xl xl:max-w-6xl px-5 pb-24 pt-10">
         <header className="mb-8">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-muted-foreground">
@@ -239,37 +237,7 @@ function TextareasDemo() {
             </DeviceFrame>
           </div>
 
-          <div
-            role="tablist"
-            aria-label="Device viewport"
-            className="grid grid-cols-3 gap-2 border-t bg-background/50 p-3"
-          >
-            {DEVICES.map((d) => {
-              const active = device === d.id;
-              return (
-                <button
-                  key={d.id}
-                  role="tab"
-                  aria-selected={active}
-                  onClick={() => setDevice(d.id)}
-                  className={`flex min-h-11 flex-col items-center justify-center rounded-xl border px-3 py-2 text-xs font-semibold transition ${
-                    active
-                      ? "border-primary bg-primary text-primary-foreground shadow-sm"
-                      : "border-border bg-card text-foreground hover:bg-accent"
-                  }`}
-                >
-                  <span>{d.label}</span>
-                  <span
-                    className={`mt-0.5 text-[10px] font-normal ${
-                      active ? "text-primary-foreground/80" : "text-muted-foreground"
-                    }`}
-                  >
-                    {d.hint}
-                  </span>
-                </button>
-              );
-            })}
-          </div>
+          <DeviceTabs value={device} onChange={setDevice} />
 
           <div className="border-t bg-muted/20 p-3">
             <div className="mb-2 flex items-center justify-between gap-2">
@@ -278,36 +246,11 @@ function TextareasDemo() {
               </p>
               <CopyLinkButton device={device} pattern={pattern} />
             </div>
-            <div role="tablist" aria-label="Design pattern" className="grid gap-2">
-              {options.map((o) => {
-                const active = pattern === o.id;
-                return (
-                  <button
-                    key={o.id}
-                    role="tab"
-                    aria-selected={active}
-                    onClick={() => setPatterns((prev) => ({ ...prev, [device]: o.id }))}
-                    className={`grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
-                      active
-                        ? "border-primary bg-primary/10"
-                        : "border-border bg-card hover:bg-accent"
-                    }`}
-                  >
-                    <span className="min-w-0">
-                      <span className="block truncate text-xs font-semibold">{o.label}</span>
-                      <span className="block truncate text-[10px] text-muted-foreground">
-                        {o.desc}
-                      </span>
-                    </span>
-                    <span
-                      className={`h-2.5 w-2.5 shrink-0 rounded-full ${
-                        active ? "bg-primary" : "bg-border"
-                      }`}
-                    />
-                  </button>
-                );
-              })}
-            </div>
+            <PatternList
+              options={options}
+              value={pattern}
+              onChange={(p) => setPatterns((prev) => ({ ...prev, [device]: p }))}
+            />
           </div>
 
           <div className="border-t">
@@ -315,12 +258,7 @@ function TextareasDemo() {
               <span className="text-xs font-semibold text-muted-foreground">
                 textarea-{pattern}.css
               </span>
-              <button
-                onClick={() => navigator.clipboard?.writeText(CSS_BY_PATTERN[pattern])}
-                className="text-xs font-medium text-muted-foreground transition hover:text-foreground"
-              >
-                Copy
-              </button>
+              <CopyButton getText={() => CSS_BY_PATTERN[pattern]} />
             </div>
             <pre className="overflow-x-auto bg-card px-4 py-4 text-[11px] leading-relaxed sm:text-xs">
               <code>{CSS_BY_PATTERN[pattern]}</code>
@@ -346,10 +284,10 @@ function TextareasDemo() {
       <style>{`
         .textarea-demo textarea {
           width: 100%;
-          border: 1px solid hsl(var(--border));
+          border: 1px solid var(--border);
           border-radius: 0.5rem;
-          background: hsl(var(--card));
-          color: hsl(var(--foreground));
+          background: var(--card);
+          color: var(--foreground);
           font-size: 0.78rem;
           padding: 0.5rem;
           outline: none;
@@ -358,15 +296,15 @@ function TextareasDemo() {
         }
 
         .textarea-demo textarea:focus {
-          border-color: hsl(var(--primary));
-          box-shadow: 0 0 0 3px hsl(var(--primary) / 0.25);
+          border-color: var(--primary);
+          box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 25%, transparent);
         }
 
         .char-counter {
           margin-top: 0.4rem;
           text-align: right;
           font-size: 0.6rem;
-          color: hsl(var(--muted-foreground));
+          color: var(--muted-foreground);
         }
 
         .grow-wrap {
@@ -403,7 +341,7 @@ function TextareasDemo() {
         .editor {
           display: grid;
           grid-template-rows: auto 1fr;
-          border: 1px solid hsl(var(--border));
+          border: 1px solid var(--border);
           border-radius: 0.6rem;
           overflow: clip;
         }
@@ -411,8 +349,8 @@ function TextareasDemo() {
         .editor-toolbar {
           display: flex;
           gap: 0.25rem;
-          border-bottom: 1px solid hsl(var(--border));
-          background: hsl(var(--muted) / 0.4);
+          border-bottom: 1px solid var(--border);
+          background: color-mix(in srgb, var(--muted) 40%, transparent);
           padding: 0.35rem;
         }
 
@@ -423,13 +361,13 @@ function TextareasDemo() {
           align-items: center;
           justify-content: center;
           border-radius: 0.3rem;
-          color: hsl(var(--muted-foreground));
+          color: var(--muted-foreground);
           transition: background-color 0.15s ease, color 0.15s ease;
         }
 
         .toolbar-btn:hover {
-          background: hsl(var(--accent));
-          color: hsl(var(--foreground));
+          background: var(--accent);
+          color: var(--foreground);
         }
 
         .editor textarea {
@@ -455,8 +393,8 @@ function TextareasDemo() {
           align-items: end;
           gap: 0.4rem;
           padding: 0.4rem;
-          border-top: 1px solid hsl(var(--border));
-          background: hsl(var(--card));
+          border-top: 1px solid var(--border);
+          background: var(--card);
           border-radius: 0.75rem;
         }
 
@@ -473,8 +411,8 @@ function TextareasDemo() {
           align-items: center;
           justify-content: center;
           border-radius: 999px;
-          background: hsl(var(--primary));
-          color: hsl(var(--primary-foreground));
+          background: var(--primary);
+          color: var(--primary-foreground);
           transition: transform 0.15s ease, opacity 0.15s ease;
         }
 

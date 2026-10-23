@@ -39,7 +39,11 @@ const KEYFRAMES = `
 
 export function NotFoundPage() {
   return (
-    <main className="relative flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center overflow-hidden bg-background px-5 py-16 text-foreground">
+    <main
+      id="main-content"
+      tabIndex={-1}
+      className="relative flex min-h-[calc(100vh-6rem)] flex-col items-center justify-center overflow-hidden bg-background px-5 py-16 text-foreground"
+    >
       <style>{KEYFRAMES}</style>
 
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 select-none">

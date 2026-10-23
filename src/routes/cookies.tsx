@@ -16,15 +16,18 @@ function CookiesPage() {
     <LegalPage title="Cookie Policy">
       <LegalSection heading="Cookies on this site">
         <p>
-          CSS Showcase does not set cookies. There are no tracking cookies, advertising cookies, or
-          session cookies of any kind.
+          CSS Showcase sets one functional cookie, <code>sidebar_state</code>, which remembers
+          whether the desktop sidebar is expanded or collapsed. It contains no personal data, is
+          never shared, and expires after seven days. There are no tracking, advertising, or
+          analytics cookies of any kind.
         </p>
       </LegalSection>
       <LegalSection heading="Local storage">
         <p>
-          The site keeps one preference on your device using local storage: whether you picked the
-          light or dark theme. Local storage is not a cookie and is not sent to any server. Clearing
-          your browser's site data removes it.
+          The site keeps a few preferences on your device using local storage: whether you picked
+          the light or dark theme, the demos you visited most recently, and your expanded-sidebar
+          state. Local storage is not a cookie and is not sent to any server. Clearing your
+          browser's site data removes it.
         </p>
       </LegalSection>
       <LegalSection heading="Third parties">
