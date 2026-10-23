@@ -40,7 +40,7 @@ const PATTERNS: Record<Device, { id: Pattern; label: string; desc: string }[]> =
     { id: "native", label: "Native time field", desc: "input[type=time], restyled" },
     { id: "duration", label: "Start → end duration", desc: "Two times, one computed output" },
   ],
-  mobile: [{ id: "sheet-row", label: "From / to row", desc: "Two large time fields side by side" }],
+  mobile: [{ id: "sheet-row", label: "From / to", desc: "Stacked time fields, big targets" }],
 };
 
 const CSS_BY_PATTERN: Record<Pattern, string> = {
@@ -142,11 +142,11 @@ const CSS_BY_PATTERN: Record<Pattern, string> = {
   font-size: 0.72rem;
   color: var(--muted-foreground);
 }`,
-  "sheet-row": `/* From / to row */
+  "sheet-row": `/* From / to, stacked */
 .times-row {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.6rem;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
 }
 
 .times-row label { display: grid; gap: 0.3rem; }
@@ -297,7 +297,7 @@ function TimePickersDemo() {
           </label>
         </div>
         <p className="text-[11px] text-muted-foreground">
-          Two native fields — the sheet pattern is layout, not new controls.
+          Two native fields, stacked — side-by-side needs ~290px, a phone frame gives 236.
         </p>
       </div>
     );
@@ -460,8 +460,8 @@ function TimePickersDemo() {
 
         .times-row {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 0.6rem;
+          grid-template-columns: 1fr;
+          gap: 0.7rem;
         }
         .times-row label { display: grid; gap: 0.3rem; }
         .times-row label span {

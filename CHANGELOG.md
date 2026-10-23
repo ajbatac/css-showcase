@@ -2,6 +2,12 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (7)
+
+### Fixed
+
+- **time-pickers (mobile device): the "To" time input was clipped** — two native `input[type=time]` fields side by side need ~290px (the UA slots are ~134px each in 12-hour locales) but the 260px frame gives 236px; the second field lost its AM/PM tail and picker icon. The From/to pattern now stacks vertically on the phone frame, and the pattern copy teaches the math.
+
 ## Unreleased — October 23, 2026 (6)
 
 ### Changed
