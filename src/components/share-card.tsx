@@ -17,13 +17,13 @@ import { SITE_URL } from "@/lib/seo";
  */
 
 const CARD_SIZE = 1024;
-const FIELD = "#0f1014";
-const BAND = "#15161b";
-const CHIP = "#1d2026";
-const INK = "#f4f5f7";
-const INK_SOFT = "rgba(244, 245, 247, 0.72)";
-const INK_FAINT = "rgba(244, 245, 247, 0.55)";
-const ACCENT = "#35c3ad";
+const FIELD = "#171a00";
+const BAND = "#202410";
+const CHIP = "#2b2f16";
+const INK = "#f0eddc";
+const INK_SOFT = "rgba(240, 237, 220, 0.72)";
+const INK_FAINT = "rgba(240, 237, 220, 0.55)";
+const ACCENT = "#c98f88";
 
 function ShareCard({
   h1,

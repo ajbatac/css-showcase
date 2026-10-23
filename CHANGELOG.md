@@ -2,6 +2,18 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — October 23, 2026 (8)
+
+### Changed
+
+- **Rebranded to the "Manila Sunrise" palette** (user-supplied: `#9E7C88 #9B5A56 #874300 #443100 #171A00`).
+  - Light mode: `--primary` (brand ink) is now `#171A00` (deep olive-black); neutrals warmed to ivory (`#FDFCF7` background, warm card/borders); ring is terracotta `#9B5A56`.
+  - Dark mode: surfaces built from `#171A00` (background `#171A00`, card `#202410`, accents `#262A14`–`#2B2F16`); primary inverts to warm cream `#EFEC D9` with `#171A00` as primary-foreground (a literal `#171A00` primary on a `#171A00` field would be invisible — the ink/ground relationship inverts, as before).
+  - Charts carry the five palette colors in light mode and lifted versions in dark mode for contrast.
+  - Share card hexes follow the brand (field `#171A00`, terracotta accent `#C98F88` replacing teal); `theme-color` metas updated.
+  - WCAG audit: all 15 critical fg/bg pairs pass (4.5:1 text, 3:1 large/UI) — computed, not eyeballed.
+  - Known follow-up: the violet logo/favicon are assets and still pre-date the palette.
+
 ## Unreleased — October 23, 2026 (7)
 
 ### Fixed

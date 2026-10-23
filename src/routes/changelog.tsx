@@ -24,6 +24,7 @@ export const Route = createFileRoute("/changelog")({
 });
 
 const NEW_ITEMS = [
+  "A warmer color identity: the whole site now wears the Manila Sunrise palette — ivory light mode, deep olive-black dark mode, and terracotta accents throughout.",
   "Eight new form demos: number steppers, color pickers, autocomplete comboboxes, fieldsets, meters, live output fields, time pickers, and one-time-code inputs — the native HTML controls, styled properly.",
   "A shareable image for every demo: download or copy a 1:1 snapshot with the live preview, title, and CSS features for social posts and docs.",
   "Search everything with a ⌘K command palette, and demo links that remember the exact device and pattern you picked.",
