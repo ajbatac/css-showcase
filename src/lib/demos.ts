@@ -36,6 +36,7 @@ import {
   Rows3,
   Search,
   SlidersHorizontal,
+  Snowflake,
   Smartphone,
   SquarePen,
   Table,
@@ -471,6 +472,15 @@ export const DEMOS: Demo[] = [
     status: "live",
     category: "Utilities",
   },
+  {
+    slug: "snow",
+    name: "Snowfall · CSS Only",
+    short: "Snow",
+    path: "/snow",
+    icon: Snowflake,
+    status: "live",
+    category: "Overlays",
+  },
 ];
 
 /** One-line description per demo slug; used by the /demos index and the search palette. */
@@ -520,4 +530,5 @@ export const DEMO_DESCRIPTIONS: Record<string, string> = {
   outputs: "Live invoice totals, unit conversion and a tip calculator on the output element.",
   "time-pickers": "Styled native time fields, minute steps, and a live duration readout.",
   "otp-input": "Six-cell verification codes with auto-advance, backspace and paste split.",
+  snow: "Pure-CSS snowfall: layered drift, swaying flakes, blizzards, night scenes, aurora skies and a swirlable snow globe.",
 };

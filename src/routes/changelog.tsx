@@ -23,6 +23,10 @@ export const Route = createFileRoute("/changelog")({
   component: ChangelogPage,
 });
 
+const UPNEXT_NEW_ITEMS = [
+  "A new demo, and a seasonal one: pure-CSS snowfall. Layered drift and blizzards on desktop, snow over a real card and a swirlable snow globe on iPad, and a frosted-glass hero on mobile — every flake is CSS, with no JavaScript or canvas, and if your device asks for reduced motion the snow pauses instead of disappearing.",
+];
+
 const V3_NEW_ITEMS = [
   "A warmer color identity: the whole site now wears the Manila Sunrise palette — ivory light mode, deep olive-black dark mode, and terracotta accents throughout.",
   "Eight new form demos: number steppers, color pickers, autocomplete comboboxes, fieldsets, meters, live output fields, time pickers, and one-time-code inputs — the native HTML controls, styled properly.",
@@ -77,6 +81,12 @@ const SECTION_ICONS: Record<SectionLabel, { icon: typeof PlusCircle; className: 
 };
 
 const RELEASES = [
+  {
+    version: "Up next",
+    date: "November 21, 2026",
+    dateTime: "2026-11-21",
+    sections: [{ label: "New" as SectionLabel, items: UPNEXT_NEW_ITEMS }],
+  },
   {
     version: "v0.3",
     date: "October 23, 2026",

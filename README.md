@@ -29,7 +29,7 @@ CSS Showcase is a free, open-source library of live CSS demos. Every page pairs 
 
 ## Highlights
 
-- **44 demos** across layout, forms, navigation, feedback, overlays, data display, and utilities — including native form controls like number steppers, color pickers, comboboxes, meters, time pickers, and one-time-code inputs
+- **45 demos** across layout, forms, navigation, feedback, overlays, data display, and utilities — including native form controls like number steppers, color pickers, comboboxes, meters, time pickers, and one-time-code inputs, plus a pure-CSS snowfall
 - **The device switcher**: a skeleton app that reshapes itself between desktop, iPad, and mobile using pure CSS
 - **Share every demo as a 1:1 image**: a downloadable 2048×2048 snapshot with the live preview, title, and CSS features
 - **Search everything with ⌘K**, or **Send to LLM**: one click copies instructions so your AI assistant can rebuild any demo in your project

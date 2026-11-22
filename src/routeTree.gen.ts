@@ -19,6 +19,7 @@ import { Route as TermsRouteImport } from './routes/terms'
 import { Route as TabsRouteImport } from './routes/tabs'
 import { Route as TablesRouteImport } from './routes/tables'
 import { Route as SwitchesRouteImport } from './routes/switches'
+import { Route as SnowRouteImport } from './routes/snow'
 import { Route as SlidersRouteImport } from './routes/sliders'
 import { Route as SelectsRouteImport } from './routes/selects'
 import { Route as SearchRouteImport } from './routes/search'
@@ -112,6 +113,11 @@ const TablesRoute = TablesRouteImport.update({
 const SwitchesRoute = SwitchesRouteImport.update({
   id: '/switches',
   path: '/switches',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SnowRoute = SnowRouteImport.update({
+  id: '/snow',
+  path: '/snow',
   getParentRoute: () => rootRouteImport,
 } as any)
 const SlidersRoute = SlidersRouteImport.update({
@@ -380,6 +386,7 @@ export interface FileRoutesByFullPath {
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/snow': typeof SnowRoute
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
@@ -436,6 +443,7 @@ export interface FileRoutesByTo {
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/snow': typeof SnowRoute
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
@@ -493,6 +501,7 @@ export interface FileRoutesById {
   '/search': typeof SearchRoute
   '/selects': typeof SelectsRoute
   '/sliders': typeof SlidersRoute
+  '/snow': typeof SnowRoute
   '/switches': typeof SwitchesRoute
   '/tables': typeof TablesRoute
   '/tabs': typeof TabsRoute
@@ -551,6 +560,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/selects'
     | '/sliders'
+    | '/snow'
     | '/switches'
     | '/tables'
     | '/tabs'
@@ -607,6 +617,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/selects'
     | '/sliders'
+    | '/snow'
     | '/switches'
     | '/tables'
     | '/tabs'
@@ -663,6 +674,7 @@ export interface FileRouteTypes {
     | '/search'
     | '/selects'
     | '/sliders'
+    | '/snow'
     | '/switches'
     | '/tables'
     | '/tabs'
@@ -720,6 +732,7 @@ export interface RootRouteChildren {
   SearchRoute: typeof SearchRoute
   SelectsRoute: typeof SelectsRoute
   SlidersRoute: typeof SlidersRoute
+  SnowRoute: typeof SnowRoute
   SwitchesRoute: typeof SwitchesRoute
   TablesRoute: typeof TablesRoute
   TabsRoute: typeof TabsRoute
@@ -802,6 +815,13 @@ declare module '@tanstack/react-router' {
       path: '/switches'
       fullPath: '/switches'
       preLoaderRoute: typeof SwitchesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/snow': {
+      id: '/snow'
+      path: '/snow'
+      fullPath: '/snow'
+      preLoaderRoute: typeof SnowRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/sliders': {
@@ -1160,6 +1180,7 @@ const rootRouteChildren: RootRouteChildren = {
   SearchRoute: SearchRoute,
   SelectsRoute: SelectsRoute,
   SlidersRoute: SlidersRoute,
+  SnowRoute: SnowRoute,
   SwitchesRoute: SwitchesRoute,
   TablesRoute: TablesRoute,
   TabsRoute: TabsRoute,

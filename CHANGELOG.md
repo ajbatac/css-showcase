@@ -2,6 +2,17 @@
 
 Technical record of changes. The public-facing version lives at `/changelog` (src/routes/changelog.tsx) and stays non-technical.
 
+## Unreleased — November 21, 2026
+
+### Added
+
+- **New demo: `/snow` — Snowfall · CSS Only** (44 → 45), in the Overlays category. Nine pure-CSS snowfall patterns across the device switcher, no JS and no canvas:
+  - Desktop: layered drift (three `radial-gradient` sheets on a shared `.snow-layer` scaffold, seamless one-tile `translateY` loop via `var()` inside `@keyframes`), swaying flakes (per-flake `--x/--s/--t/--d/--sway/--st/--o` custom properties, fall on the wrapper + sway on `::before` so the two transforms never conflict, negative delays start every flake mid-fall), blizzard (field rotated `-9deg` with a gust cycle riding the individual `translate` property, plus a streak layer built from 1.5px × 22px stretched radials), night scene (moon/clip-path pines sized in `cqw`/ellipse snowbank under the falling layers).
+  - iPad: card overlay (`pointer-events: none` snow inside an `overflow: hidden` promo card with a real clickable button), aurora sky (two blurred gradient bands drifting behind the layers), snow globe (hover/:active wobble + `swirl-jitter` as a second animation on `translate` composing with `snow-fall`'s `transform`).
+  - Mobile: frosted hero (`backdrop-filter` pane with far/mid layers blurred behind it and a sharp `.hero-front` sheet in front), light flurry (sparse by default; container query at 420px adds the hidden extra flake + layer — reads the frame width, not the viewport).
+  - `prefers-reduced-motion: reduce` pauses every stage animation in place (`animation-play-state: paused !important`), so negative-delay flakes freeze as a natural static scatter instead of disappearing.
+  - Night-sky art uses a fixed Manila Sunrise palette (`--snow-*` custom properties on `.snow-stage`: `#171a00` ink sky, `#f4f1e4` cream flakes, terracotta/mauve glows, olive-bark pines) instead of theme tokens — `--primary-foreground` inverts per theme, so a token-driven sky would have rendered khaki in dark mode.
+- Registry (`demos.ts`: DEMOS entry + `DEMO_DESCRIPTIONS` + `Snowflake` icon), share metadata (`demo-share.ts`), sitemap.xml (+1 URL, 2026-11-21), llms.txt/README counts (45), public changelog "Up next" entry.
 
 ## v0.3 — October 23, 2026
 

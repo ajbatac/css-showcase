@@ -544,4 +544,18 @@ export const DEMO_SHARE: Record<string, DemoShareMeta> = {
       "Semantic tokens",
     ],
   },
+  snow: {
+    h1: "Snowfall, zero JavaScript.",
+    sub: "Layered gradient drift, swaying flakes, a blizzard, an aurora sky and a swirlable globe — every flake is CSS. Reduced motion pauses the sky.",
+    features: [
+      "radial-gradient flake sheets",
+      "Seamless background tiles",
+      "Per-flake custom properties",
+      "Negative animation delays",
+      "Individual transform properties",
+      "pointer-events: none overlay",
+      "backdrop-filter glass",
+      "prefers-reduced-motion",
+    ],
+  },
 };
